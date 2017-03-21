@@ -3,7 +3,7 @@
 import semver
 import tensorflow as tf
 
-
+# wtf what is this function up to? 
 def get_uninitialized_variables(variables=None):
     """Return a list of uninitialized tf variables.
 
@@ -36,7 +36,6 @@ def get_uninitialized_variables(variables=None):
             tf.stack([tf.is_variable_initialized(v) for v in variables]))
     return [v for v, f in zip(variables, init_flag) if not f]
 
-
 def get_soft_target_model_updates(target, source, tau):
     r"""Return list of target model update ops.
 
@@ -65,7 +64,6 @@ def get_soft_target_model_updates(target, source, tau):
       List of tensor update ops.
     """
     pass
-
 
 def get_hard_target_model_updates(target, source):
     """Return list of target model update ops.

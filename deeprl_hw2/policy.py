@@ -6,6 +6,7 @@ in your code.
 """
 import numpy as np
 import attr
+import random
 
 class Policy:
     """Base class representing an MDP policy.
@@ -91,7 +92,8 @@ class GreedyEpsilonPolicy(Policy):
      over time.
     """
     def __init__(self, epsilon):
-        pass
+        self.epsilon = epsilon
+
     def select_action(self, q_values, **kwargs):
         """Run Greedy-Epsilon for the given Q-values.
 
@@ -106,7 +108,12 @@ class GreedyEpsilonPolicy(Policy):
         int:
           The action index chosen.
         """
-        pass
+        greedy_action_idx = np.argmax(q_values)
+        action_indices = range(len(q_values)) # list of 0,1,2,....n
+        if random.random() < epsilon:
+            return random.choice(action_indices)
+        else:
+            return greedy_action_idx
 
 class LinearDecayGreedyEpsilonPolicy(Policy):
     """Policy with a parameter that decays linearly.
@@ -127,7 +134,11 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
 
     def __init__(self, policy, attr_name, start_value, end_value,
                  num_steps):  # noqa: D102
-        pass
+        self.policy = policy;
+        self.start_value = start_value
+        self.end_value = end_value
+        self.num_steps = num_steps
+        self.epsilon = start_value
 
     def select_action(self, **kwargs):
         """Decay parameter and select action.
@@ -144,8 +155,20 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
         Any:
           Selected action.
         """
-        pass
+
+        greedy_action_idx = np.argmax(kwargs['q_values'])
+        action_indices = range(len(q_values)) # list of 0,1,2,....n
+        if random.random() < epsilon:
+            return random.choice(action_indices)
+        else:
+            return greedy_action_idx
+
+        # if opt arg is present and if opt arg is true, then decay 
+        if ('is_training' in kwargs):
+            if kwargs['is_training']:
+                if self.epsilon > end_value:
+                    self.epsilon = self.epsilon - ((self.end_value - self.start_value) / num_steps)
 
     def reset(self):
         """Start the decay over at the start value."""
-        pass
+        self.epsilon = self.start_value

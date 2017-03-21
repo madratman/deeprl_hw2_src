@@ -3,7 +3,6 @@
 import tensorflow as tf
 import semver
 
-
 def huber_loss(y_true, y_pred, max_grad=1.):
     """Calculate the huber loss.
 
@@ -24,8 +23,19 @@ def huber_loss(y_true, y_pred, max_grad=1.):
     tf.Tensor
       The huber loss.
     """
-    pass
-
+    # logic
+    # if fabs(diff) <= delta:
+    #     return 0.5 * diff * diff.transpose;
+    # else:
+    #     return delta*(fabs(diff) - 0.5*delta);
+    
+    delta = 1. # somewhere in piazza. does this need to be a tf constant
+    diff = tf.abs(y_true-y_pred)
+    huber_if_diff_less_than_delta = 0.5*tf.square(diff)
+    huber_if_diff_more_than_delta = delta*(diff - 0.5*diff)
+    is_diff_less_than_delta = tf.less_equal(diff, delta)
+    final = tf.cond(is_diff_less_than_delta, huber_if_diff_less_than_delta, huber_if_diff_more_than_delta) 
+    return final
 
 def mean_huber_loss(y_true, y_pred, max_grad=1.):
     """Return mean huber loss.
@@ -47,5 +57,5 @@ def mean_huber_loss(y_true, y_pred, max_grad=1.):
     -------
     tf.Tensor
       The mean huber loss.
-    """
-    pass
+    """ 
+    return tf.reduce_mean(huber_loss(y_true, y_pred, max_grad)) # todo no need to specify axis right

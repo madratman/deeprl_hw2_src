@@ -1,7 +1,5 @@
 """Core classes."""
 
-
-
 class Sample:
     """Represents a reinforcement learning sample.
 
@@ -32,8 +30,8 @@ class Sample:
     is_terminal: boolean
       True if this action finished the episode. False otherwise.
     """
-    pass
-
+    def __init__(self, state, action, reward, next_state, is_terminal):
+        self.sample = (state, action, reward, next_state, is_terminal)
 
 class Preprocessor:
     """Preprocessor base class.
@@ -80,7 +78,8 @@ class Preprocessor:
           modified in anyway.
 
         """
-        return state
+        raise NotImplementedError
+        # return state.astype('float32')        
 
     def process_state_for_memory(self, state):
         """Preprocess the given state before giving it to the replay memory.
@@ -105,7 +104,8 @@ class Preprocessor:
           modified in any manner.
 
         """
-        return state
+        raise NotImplementedError
+        # return state.astype('uint8')
 
     def process_batch(self, samples):
         """Process batch of samples.
@@ -125,7 +125,8 @@ class Preprocessor:
           Samples after processing. Can be modified in anyways, but
           the list length will generally stay the same.
         """
-        return samples
+        # return samples
+        raise NotImplementedError
 
     def process_reward(self, reward):
         """Process the reward.
@@ -205,10 +206,24 @@ class ReplayMemory:
         We recommend using a list as a ring buffer. Just track the
         index where the next sample should be inserted in the list.
         """
-        pass
+        self.max_size = max_size
+        self.window_length = window_length
+        self.experience = [None] * max_size
+        self.index_for_insertion = 0
 
-    def append(self, state, action, reward):
-        raise NotImplementedError('This method should be overridden')
+    # def __iter__(self):
+    # def __len__(self):
+    # def __getitem__(self):
+
+    def append(self, state, action, reward, next_state, is_terminal): 
+        new_sample = Sample(state, action, reward, next_state, is_terminal)
+        if len(self.experience) < self.max_size:
+            self.experience[self.index_for_insertion] = 
+        if len(self.experience) == self.max_size:
+
+        else:
+
+        # raise NotImplementedError('This method should be overridden')
 
     def end_episode(self, final_state, is_terminal):
         raise NotImplementedError('This method should be overridden')

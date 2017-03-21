@@ -47,7 +47,6 @@ def create_model(window, input_shape, num_actions,
     """
     pass
 
-
 def get_output_folder(parent_dir, env_name):
     """Return save folder.
 
@@ -83,7 +82,6 @@ def get_output_folder(parent_dir, env_name):
     parent_dir = os.path.join(parent_dir, env_name)
     parent_dir = parent_dir + '-run{}'.format(experiment_id)
     return parent_dir
-
 
 def main():  # noqa: D103
     parser = argparse.ArgumentParser(description='Run DQN on Atari Breakout')

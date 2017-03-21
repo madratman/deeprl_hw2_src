@@ -6,7 +6,6 @@ from PIL import Image
 from deeprl_hw2 import utils
 from deeprl_hw2.core import Preprocessor
 
-
 class HistoryPreprocessor(Preprocessor):
     """Keeps the last k states.
 
@@ -19,27 +18,25 @@ class HistoryPreprocessor(Preprocessor):
     Parameters
     ----------
     history_length: int
-      Number of previous states to prepend to state being processed.
+      Number of states to feed to CNN (4 acc to paper).
 
     """
-
     def __init__(self, history_length=1):
-        pass
+        self.history = np.zeros([history_length, 84, 84, 1])
 
     def process_state_for_network(self, state):
         """You only want history when you're deciding the current action to take."""
-        pass
+        self.history = np.roll(self.history, -1, axis=0) # todo check if this is correct
+        self.history[-1] = state
 
-    def reset(self):
-        """Reset the history sequence.
-
+    def reset(self):    
+        """Reset the history sequence.4
         Useful when you start a new episode.
         """
-        pass
+        self.history = np.zeros([history_length, 84, 84, 1])
 
     def get_config(self):
         return {'history_length': self.history_length}
-
 
 class AtariPreprocessor(Preprocessor):
     """Converts images to greyscale and downscales.
@@ -78,7 +75,7 @@ class AtariPreprocessor(Preprocessor):
     """
 
     def __init__(self, new_size):
-        pass
+        self.new_size = new_size
 
     def process_state_for_memory(self, state):
         """Scale, convert to greyscale and store as uint8.
@@ -90,7 +87,12 @@ class AtariPreprocessor(Preprocessor):
         We recommend using the Python Image Library (PIL) to do the
         image conversions.
         """
-        pass
+        # if not (state.shape == (84,84)):
+            # raise ValueError('AtariPreprocessor.process_state_for_memory : input state is not 84*84')
+        state_gray = Image.fromarray(state/255.).convert('L')
+        state_gray = state_gray.resize((110,84)) # section 4.1
+        state_gray = state_gray.crop((0,0,84,84))
+        return np.uint8(np.asarray(state_gray))
 
     def process_state_for_network(self, state):
         """Scale, convert to greyscale and store as float32.
@@ -98,8 +100,12 @@ class AtariPreprocessor(Preprocessor):
         Basically same as process state for memory, but this time
         outputs float32 images.
         """
-        pass
+        state_gray = Image.fromarray(state/255.).convert('L')
+        state_gray = state_gray.resize((110,84)) # section 4.1
+        state_gray = state_gray.crop((0,0,84,84))
+        return np.float32(np.asarray(state_gray))
 
+    # todo check 
     def process_batch(self, samples):
         """The batches from replay memory will be uint8, convert to float32.
 
@@ -107,12 +113,14 @@ class AtariPreprocessor(Preprocessor):
         samples from the replay memory. Meaning you need to convert
         both state and next state values.
         """
-        pass
+        for idx in range(len(samples)):
+            if idx==0 or idx==3:
+                samples[idx] = samples[idx].astype('float32')
+        return samples
 
     def process_reward(self, reward):
         """Clip reward between -1 and 1."""
-        pass
-
+        return np.clip(reward, -1, 1)
 
 class PreprocessorSequence(Preprocessor):
     """You may find it useful to stack multiple prepcrocesosrs (such as the History and the AtariPreprocessor).
