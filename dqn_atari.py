@@ -16,37 +16,6 @@ from deeprl_hw2.dqn import DQNAgent
 from deeprl_hw2.objectives import mean_huber_loss
 
 
-def create_model(window, input_shape, num_actions,
-                 model_name='q_network'):  # noqa: D103
-    """Create the Q-network model.
-
-    Use Keras to construct a keras.models.Model instance (you can also
-    use the SequentialModel class).
-
-    We highly recommend that you use tf.name_scope as discussed in
-    class when creating the model and the layers. This will make it
-    far easier to understnad your network architecture if you are
-    logging with tensorboard.
-
-    Parameters
-    ----------
-    window: int
-      Each input to the network is a sequence of frames. This value
-      defines how many frames are in the sequence.
-    input_shape: tuple(int, int)
-      The expected input image size.
-    num_actions: int
-      Number of possible actions. Defined by the gym environment.
-    model_name: str
-      Useful when debugging. Makes the model show up nicer in tensorboard.
-
-    Returns
-    -------
-    keras.models.Model
-      The Q-model.
-    """
-    pass
-
 def get_output_folder(parent_dir, env_name):
     """Return save folder.
 

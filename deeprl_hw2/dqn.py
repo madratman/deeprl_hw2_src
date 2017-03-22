@@ -1,4 +1,8 @@
 """Main DQN agent."""
+from keras.models import Sequential, Model
+from keras.layers import Dense, Activation, Dropout, Reshape, Flatten, Lambda
+from keras.layers.convolutional import Convolution2D, ZeroPadding2D, AveragePooling2D, MaxPooling2D
+from objectives import mean_huber_loss
 
 class DQNAgent:
     """Class implementing DQN.
@@ -43,23 +47,63 @@ class DQNAgent:
                  preprocessor,
                  memory,
                  policy,
+                 num_of_actions,
                  gamma,
                  target_update_freq,
                  num_burn_in,
                  train_freq,
                  batch_size):
 
-        self.q_network = q_network
+        self.q_network = q_network #todo
         self.preprocessor = preprocessor
         self.memory = memory
-        self.policy = policy
+        self.policy = policy #todo don't need this
+        self.num_of_actions = num_of_actions
         self.gamma = gamma
         self.target_update_freq = target_update_freq
         self.num_burn_in = num_burn_in
         self.train_freq = train_freq
         self.batch_size = batch_size
 
-    def compile(self, optimizer, loss_func):
+    def create_model(window, input_shape, num_actions,
+                     model_name='q_network'):  # noqa: D103
+        """Create the Q-network model.
+
+        Use Keras to construct a keras.models.Model instance (you can also
+        use the SequentialModel class).
+
+        We highly recommend that you use tf.name_scope as discussed in
+        class when creating the model and the layers. This will make it
+        far easier to understnad your network architecture if you are
+        logging with tensorboard.
+
+        Parameters
+        ----------
+        window: int
+          Each input to the network is a sequence of frames. This value
+          defines how many frames are in the sequence.
+        input_shape: tuple(int, int)
+          The expected input image size.
+        num_actions: int
+          Number of possible actions. Defined by the gym environment.
+        model_name: str
+          Useful when debugging. Makes the model show up nicer in tensorboard.
+
+        Returns
+        -------
+        keras.models.Model
+          The Q-model.
+        """
+        model = Sequential()
+        model.add(Convolution2D(16,8,8, strides=(4,4), input_shape=(4,84,84), activation='relu', name='conv_1'))
+        model.add(Convolution2D(32,4,4, strides=(2,2), activation='relu', name='conv_2'))
+        model.add(Dense(32,4,4, strides=(2,2), activation='relu', name='fc_1'))
+        model.add(Flatten())
+        model.add(Dense, 256, activation='relu', name='fc_2')
+        model.add(Dense, num_of_actions, activation='relu', name='final')
+        return model
+
+    def compile(self, optimizer='Adam', loss_func):
         """Setup all of the TF graph variables/ops.
 
         This is inspired by the compile method on the
@@ -76,18 +120,22 @@ class DQNAgent:
         keras.optimizers.Optimizer class. Specifically the Adam
         optimizer.
         """
-        pass
+        self.q_network = self.create_model()
+        self.target_q_network = self.create_model()
+        self.q_network.compile(optimizer=loss_func, loss=mean_huber_loss) 
+        self.target_q_network.compile(optimizer=loss_func, loss=mean_huber_loss) #todo metrics 
 
     def calc_q_values(self, state):
         """Given a state (or batch of states) calculate the Q-values.
-
         Basically run your network on these states.
 
         Return
         ------
         Q-values for the state(s)
-        """
-        pass
+        """ 
+        state = self.preprocessor.process_state_for_network(state)
+        q_vals = self.q_network.predict(state)
+        return q_vals
 
     def select_action(self, state, **kwargs):
         """Select the action based on the current state.
@@ -110,7 +158,19 @@ class DQNAgent:
         --------
         selected action
         """
-        pass
+        q_values = self.calc_q_values(self.preprocessor.process_state_for_network(state))
+        
+        if kwargs['stage'] == "burning_in"
+            self.policy = UniformRandomPolicy()
+            return self.policy.select_action()
+
+        if kwargs['stage'] == "training":
+            self.policy = LinearDecayGreedyEpsilonPolicy()
+            return self.policy.select_action(q_values)
+
+        if kwargs['stage'] == "testing":
+            self.policy = GreedyPolicy()
+            return self.policy.select_action()
 
     def update_policy(self):
         """Update your policy.
@@ -127,7 +187,7 @@ class DQNAgent:
         You might want to return the loss and other metrics as an
         output. They can help you monitor how training is going.
         """
-        pass
+
 
     def fit(self, env, num_iterations, max_episode_length=None):
         """Fit your model to the provided environment.
@@ -154,7 +214,66 @@ class DQNAgent:
           How long a single episode should last before the agent
           resets. Can help exploration.
         """
-        pass
+
+        iter_ctr = 0
+        state = env.reset()
+
+        random_policy = UniformRandomPolicy() # for burn in 
+        self.policy = LinearDecayGreedyEpsilonPolicy() # for training
+        history_memory = HistoryPreprocessor()
+
+        while 1:
+            iter_ctr+=1
+            if iter_ctr < self.num_burn_in:
+                action = random_policy.select_action()
+                next_state, reward, is_terminal, _ = env.step(action)
+                state_dump = atari_processor.process_state_for_memory(state)
+
+                self.memory.append((state_dump, action, reward, is_terminal))
+                state = next_state
+
+            else:
+                # note that history_memory is just saving the last 4 states. It ain't doing any image manipulation. 
+                history_memory.process_state_for_network(atari_processor.process_state_for_memory(state))
+                q_values = self.calc_q_values(history_memory)
+                action = self.policy.select_action()
+                next_state, reward, is_terminal, _ = env.step(action)
+
+                self.memory.append((atari_processor.process_state_for_memory(state), action, \
+                                    atari_processor.process_reward(reward), is_terminal))
+                
+                if not(is_terminal):
+                    if ctr_episode_timestep > max_episode_length-2:
+                        self.memory.end_episode()
+                        break
+                    else:
+                        state = next_state
+                else:
+                    break
+
+                if not (iter_ctr%train_freq):
+                    # this is update_policy 
+                    # sample batch of 32 from the memory
+                    sample_batch = self.memory.sample(self.batch_size)
+                    sample_states = [sample(0) for sample in sample_batch]
+                    # make numpy array 
+                    sample_batch = self.processor.process_batch(sample_states)
+
+                    states = 
+
+                    if is_terminal:
+                        y_target = reward
+                    else:
+                        y_target = reward + self.gamma*np.max(self.q_network.predict(stack_of_4_states))
+
+                    x_batch = [sample_batch[] for each_sample in sample_batch]
+                    y_batch = 
+
+                    if iter_ctr % target_update_freq:
+                        # copy weights
+
+                    # train on batch of 32 
+                    # self.q_network.train_on_batch()
 
     def evaluate(self, env, num_episodes, max_episode_length=None):
         """Test your agent with a provided environment.
@@ -169,4 +288,6 @@ class DQNAgent:
         You can also call the render function here if you want to
         visually inspect your policy.
         """
-        pass
+        initial_state = env.reset()
+        self.policy = GreedyPolicy()
+

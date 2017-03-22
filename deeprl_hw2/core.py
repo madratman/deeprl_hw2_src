@@ -32,8 +32,8 @@ class Sample:
     is_terminal: boolean
       True if this action finished the episode. False otherwise.
     """
-    def __init__(self, state, action, reward, next_state, is_terminal):
-        self.sample = (state, action, reward, next_state, is_terminal)
+    def __init__(self, state, action, reward, is_terminal):
+        self.sample = (state, action, reward, is_terminal)
 
 class Preprocessor:
     """Preprocessor base class.
@@ -57,10 +57,8 @@ class Preprocessor:
     episode.
     """
 
-    scoreboard=0
-
     def __init__(self):
-        Preprocessor.scoreboard=0
+        raise NotImplementedError
 
     def process_state_for_network(self, state):
         """Preprocess the given state before giving it to the network.
@@ -135,7 +133,7 @@ class Preprocessor:
         # return samples
         raise NotImplementedError
 
-    def process_reward(self, current_scoreboard):
+    def process_reward(self, reward):
         """Process the reward.
 
         Useful for things like reward clipping. The Atari environments
@@ -152,12 +150,7 @@ class Preprocessor:
         processed_reward: float
           The processed reward
         """
-        # todo: maybe have another input as previous score and current score, and compute sign of difference as the reward?
-        # maybe have an internal state as the scoreboard, and pass only current score in function
-        
-        reward=np.sign(current_scoreboard - Preprocessor.scoreboard)
-
-        return reward
+        raise NotImplementedError
 
     def reset(self):
         """Reset any internal state.
@@ -165,8 +158,7 @@ class Preprocessor:
         Will be called at the start of every new episode. Makes it
         possible to do history snapshots.
         """
-        Preprocessor.scoreboard=0
-
+        pass
 
 class ReplayMemory:
     """Interface for replay memories.
@@ -220,33 +212,36 @@ class ReplayMemory:
         """
         self.max_size = max_size
         self.window_length = window_length
-        self.experience = []
+        self.experience = [] # list of tuples
         self.index_for_insertion = 0
 
-    # def __iter__(self):
-    # def __len__(self):
-    # def __getitem__(self):
+    def append(self, state, action, reward, is_terminal):
+        # pseudo ring buffer. Keep appending stuff till it reaches max size. 
+        # once, it has reach max size, we start to replace the oldest items. 
+        
+        new_sample = Sample(state, action, reward, is_terminal)
 
-    def append(self, state, action, reward, next_state, is_terminal):
-        # could not find tensorflow_rl.core object online. should we keep the states here as the tuple? is performance decreased? 
-        new_sample = Sample(state, action, reward, next_state, is_terminal)
         if len(self.experience) < self.max_size:
             self.experience.append(new_sample)
-            index_for_insertion+=1 
-        else : # Replay Memory already has max size
+        else: # Replay Memory already has max size
             if index_for_insertion==max_size:
-                index_for_insertion=0
-            self.experience[index_for_insertion]=new_sample
+                index_for_insertion = 0
+            self.experience[index_for_insertion] = new_sample
             index_for_insertion+=1
 
-        # raise NotImplementedError('This method should be overridden')
-
-    def end_episode(self, final_state, is_terminal):
-        raise NotImplementedError('This method should be overridden')
+    def end_episode(self):
+        # make the is_terminal (last element of tuple) of the last inserted (SAR+is_terminal) sequence True
+        self.experience[index_for_insertion-1][-1] = True
 
     def sample(self, batch_size, indexes=None):
-        raise NotImplementedError('This method should be overridden')
+        import random
+        # sample 32 indices. but don't sample 0,1,2. 
+        indices = random.sample(range(len(self.experience))[3:], 32)
+        current_states_tuples = [self.experience[index-3:index+1] for index in indices]
+        next_states_tuples = [self.experience[index-4:index+2] for index in indices]
+
+        return 
+
 
     def clear(self):
-        # raise NotImplementedError('This method should be overridden')
         self.experience=[]
