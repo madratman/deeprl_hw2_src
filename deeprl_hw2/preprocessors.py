@@ -22,7 +22,7 @@ class HistoryPreprocessor(Preprocessor):
 
     """
     def __init__(self, history_length=1):
-        self.history = np.zeros([history_length, 84, 84, 1])
+        self.history = np.zeros([history_length, 84, 84])
 
     def process_state_for_network(self, state):
         """You only want history when you're deciding the current action to take."""
@@ -33,10 +33,10 @@ class HistoryPreprocessor(Preprocessor):
         """Reset the history sequence.4
         Useful when you start a new episode.
         """
-        self.history = np.zeros([history_length, 84, 84, 1])
+        self.history = np.zeros([history_length, 84, 84])
 
     def get_config(self):
-        return {'history_length': self.history_length}
+        return self.history_length
 
 class AtariPreprocessor(Preprocessor):
     """Converts images to greyscale and downscales.
@@ -91,7 +91,7 @@ class AtariPreprocessor(Preprocessor):
             # raise ValueError('AtariPreprocessor.process_state_for_memory : input state is not 84*84')
         state_gray = Image.fromarray(state/255.).convert('L')
         state_gray = state_gray.resize((110,84)) # section 4.1
-        state_gray = state_gray.crop((0,0,84,84))
+        state_gray = state_gray.crop((0,26,84,110)) #crops looking at the bottom of the image, not at the score
         return np.uint8(np.asarray(state_gray))
 
     def process_state_for_network(self, state):
@@ -102,7 +102,7 @@ class AtariPreprocessor(Preprocessor):
         """
         state_gray = Image.fromarray(state/255.).convert('L')
         state_gray = state_gray.resize((110,84)) # section 4.1
-        state_gray = state_gray.crop((0,0,84,84))
+        state_gray = state_gray.crop((0,26,84,110))
         return np.float32(np.asarray(state_gray))
 
     # todo check 

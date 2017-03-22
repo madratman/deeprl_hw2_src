@@ -37,7 +37,7 @@ def get_uninitialized_variables(variables=None):
     return [v for v, f in zip(variables, init_flag) if not f]
 
 def get_soft_target_model_updates(target, source, tau):
-    r"""Return list of target model update ops.
+    """Return list of target model update ops.
 
     These are soft target updates. Meaning that the target values are
     slowly adjusted, rather than directly copied over from the source

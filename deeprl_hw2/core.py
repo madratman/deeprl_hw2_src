@@ -1,5 +1,7 @@
 """Core classes."""
 
+import numpy as np
+
 class Sample:
     """Represents a reinforcement learning sample.
 
@@ -54,6 +56,11 @@ class Preprocessor:
     episode begins so that state doesn't leak in from episode to
     episode.
     """
+
+    scoreboard=0
+
+    def __init__(self):
+        Preprocessor.scoreboard=0
 
     def process_state_for_network(self, state):
         """Preprocess the given state before giving it to the network.
@@ -128,7 +135,7 @@ class Preprocessor:
         # return samples
         raise NotImplementedError
 
-    def process_reward(self, reward):
+    def process_reward(self, current_scoreboard):
         """Process the reward.
 
         Useful for things like reward clipping. The Atari environments
@@ -145,6 +152,11 @@ class Preprocessor:
         processed_reward: float
           The processed reward
         """
+        # todo: maybe have another input as previous score and current score, and compute sign of difference as the reward?
+        # maybe have an internal state as the scoreboard, and pass only current score in function
+        
+        reward=np.sign(current_scoreboard - Preprocessor.scoreboard)
+
         return reward
 
     def reset(self):
@@ -153,7 +165,7 @@ class Preprocessor:
         Will be called at the start of every new episode. Makes it
         possible to do history snapshots.
         """
-        pass
+        Preprocessor.scoreboard=0
 
 
 class ReplayMemory:
@@ -208,20 +220,24 @@ class ReplayMemory:
         """
         self.max_size = max_size
         self.window_length = window_length
-        self.experience = [None] * max_size
+        self.experience = []
         self.index_for_insertion = 0
 
     # def __iter__(self):
     # def __len__(self):
     # def __getitem__(self):
 
-    def append(self, state, action, reward, next_state, is_terminal): 
+    def append(self, state, action, reward, next_state, is_terminal):
+        # could not find tensorflow_rl.core object online. should we keep the states here as the tuple? is performance decreased? 
         new_sample = Sample(state, action, reward, next_state, is_terminal)
         if len(self.experience) < self.max_size:
-            self.experience[self.index_for_insertion] = 
-        if len(self.experience) == self.max_size:
-
-        else:
+            self.experience.append(new_sample)
+            index_for_insertion+=1 
+        else : # Replay Memory already has max size
+            if index_for_insertion==max_size:
+                index_for_insertion=0
+            self.experience[index_for_insertion]=new_sample
+            index_for_insertion+=1
 
         # raise NotImplementedError('This method should be overridden')
 
@@ -232,4 +248,5 @@ class ReplayMemory:
         raise NotImplementedError('This method should be overridden')
 
     def clear(self):
-        raise NotImplementedError('This method should be overridden')
+        # raise NotImplementedError('This method should be overridden')
+        self.experience=[]
