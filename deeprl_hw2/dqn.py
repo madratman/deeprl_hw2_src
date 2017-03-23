@@ -65,6 +65,10 @@ class DQNAgent:
         self.train_freq = train_freq
         self.batch_size = batch_size
 
+        self.qavg_list=np.array([0])
+        self.reward_list=np.array([0])
+        self.numEpochs_list=np.array([0])
+
     def create_model(window, input_shape, num_actions,
                      model_name='q_network'):  # noqa: D103
         """Create the Q-network model.
@@ -289,5 +293,58 @@ class DQNAgent:
         visually inspect your policy.
         """
         initial_state = env.reset()
-        self.policy = GreedyPolicy()
+        evaluation_policy = GreedyPolicy()
+
+        state = env.reset()
+        episode_ctr=0
+        steps_ctr=0
+        Q_sum
+        Q_avg=0
+        episode_reward_sum=0
+        episode_reward_avg=0
+
+        # get the stats for 10000 iterations with the environment
+        while episode_ctr<20:
+
+            state_processed = atari_processor.process_state_for_memory(state)
+            Q_sum+=np.argmax(calc_q_values(state))
+
+            # run one step of the episode
+            action = evaluation_policy.select_action(state_processed)
+            next_state, reward, is_terminal, _ = env.step(action)
+            reward=atari_processor.process_reward(reward)
+            episode_reward_sum+=reward
+            
+            steps_ctr+=1
+
+            if is_terminal:
+                state = env.reset()
+                episode_ctr+=1
+
+        Q_avg=Q_sum/steps_ctr
+        episode_reward_avg=episode_reward_sum/episode_ctr
+
+        # make a list
+        self.qavg_list=np.append(self.qavg_list,Q_avg)
+        self.reward_list=np.append(self.reward_list,episode_reward_avg)
+        self.numEpochs_list=np.append(self.numEpochs_list,self.numEpochs_list[self.numEpochs.size]+1)
+
+        plt.figure(1)
+        plt.plot(self.numEpochs_list,self.reward_list)
+        plt.xlabel('Epochs')
+        plt.ylabel('Avg reward per episode')
+        plt.title('Avg reward per episode during training')
+        plt.grid(True)
+        plt.savefig("rewardPlot.png")
+        plt.show()
+
+        plt.figure(2)
+        plt.plot(self.numEpochs_list,self.qavg_list)
+        plt.xlabel('Epochs')
+        plt.ylabel('Avg Q per step')
+        plt.title('Avg Q per step during training')
+        plt.grid(True)
+        plt.savefig("qPlot.png")
+        plt.show()
+
 
