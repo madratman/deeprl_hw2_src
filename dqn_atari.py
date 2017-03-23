@@ -77,9 +77,11 @@ def main():  # noqa: D103
     num_burn_in=50000
     train_freq=4
     batch_size=32
+    num_iterations = int(5e6)
 
-    DQNAgent=DQNAgent(num_of_actions, gamma, target_update_freq, num_burn_in, train_freq, batch_size)
-    model=DQNAgent.create_model(num_actions=num_of_actions)
+    DQNAgent = DQNAgent(num_of_actions, gamma, target_update_freq, num_burn_in, train_freq, batch_size)
+    DQNAgent.fit(env, num_iterations, max_episode_length=250):
+    # model=DQNAgent.create_model(num_actions=num_of_actions)
 
 if __name__ == '__main__':
     main()

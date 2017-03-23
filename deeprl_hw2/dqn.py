@@ -57,6 +57,7 @@ class DQNAgent:
         self.num_burn_in = num_burn_in
         self.train_freq = train_freq
         self.batch_size = batch_size
+        self.iter_ctr = 0
 
         self.qavg_list=np.array([0])
         self.reward_list=np.array([0])
@@ -100,10 +101,10 @@ class DQNAgent:
         model.add(Dense(32,4,4, strides=(2,2), activation='relu', name='fc_1'))
         model.add(Flatten())
         model.add(Dense, 256, activation='relu', name='fc_2')
-        model.add(Dense, num_of_actions, activation='relu', name='final')
+        model.add(Dense, num_actions, activation='relu', name='final')
         return model
 
-    def compile(self, optimizer='Adam', loss_func):
+    def compile(self, num_actions, optimizer='Adam'):
         """Setup all of the TF graph variables/ops.
 
         This is inspired by the compile method on the
@@ -120,10 +121,10 @@ class DQNAgent:
         keras.optimizers.Optimizer class. Specifically the Adam
         optimizer.
         """
-        self.q_network = self.create_model()
-        self.target_q_network = self.create_model()
-        self.q_network.compile(optimizer=loss_func, loss=mean_huber_loss) 
-        self.target_q_network.compile(optimizer=loss_func, loss=mean_huber_loss) #todo metrics 
+        self.q_network = self.create_model(num_actions)
+        self.target_q_network = self.create_model(num_actions)
+        self.q_network.compile(optimizer='Adam', loss=mean_huber_loss) 
+        self.target_q_network.compile(optimizer='Adam', loss=mean_huber_loss) #todo metrics 
 
     def calc_q_values(self, state):
         """Given a state (or batch of states) calculate the Q-values.
@@ -133,7 +134,7 @@ class DQNAgent:
         ------
         Q-values for the state(s)
         """ 
-        state = self.preprocessor.process_state_for_network(state)
+        # state = self.atari_preprocessor.process_state_for_network(state)
         q_vals = self.q_network.predict(state)
         return q_vals
 
@@ -187,7 +188,40 @@ class DQNAgent:
         You might want to return the loss and other metrics as an
         output. They can help you monitor how training is going.
         """
+        # this is update_policy 
+        # sample batch of 32 from the memory
+        batch_of_samples = self.memory.sample()
+        current_state_samples = batch_of_samples['current_state_samples']
+        next_state_samples = batch_of_samples['next_state_samples']
 
+        # fetch stuff we need from samples
+        current_state_images = np.dstack([each_sample.state for each_sample in current_state_samples])
+        next_state_images = np.dstack([each_sample.state for each_tuple in next_state_samples])
+
+        # preprocess
+        current_states = self.processor.process_batch(current_states)
+        next_states = self.processor.process_batch(next_states)
+
+        q_current = self.q_network.predict(current_states) # 32*num_actions
+        q_next = self.target_q_network.predict(next_states)
+
+        # targets
+        y_targets_all = q_current #32*num_actions
+
+        for (idx, each_sample) in enumerate(current_state_samples):
+            if each_sample.is_terminal:
+                y_targets_all[idx, each_sample.action] = each_sample.reward
+            else:
+                y_targets_all[idx, each_sample.action] = each_sample.reward + self.gamma*np.max(q_next[idx])
+                # bla = self.target_q_network.predict(next_state_images[idx])
+                # y_target_curr = reward_proc + self.gamma*bla[np.argmax(self.q_network(next_state_images[idx]))]
+
+        loss = self.q_network.train_on_batch(current_states, np.float32(y_targets_all))
+
+        if iter_ctr % target_update_freq:
+            # copy weights
+            [self.target_q_network.trainable_weights[i].assign(self.q_network.trainable_weights[i]) \
+                for i in range(len(self.target_q_network.trainable_weights))]
 
     def fit(self, env, num_iterations, max_episode_length=None):
         """Fit your model to the provided environment.
@@ -214,66 +248,49 @@ class DQNAgent:
           How long a single episode should last before the agent
           resets. Can help exploration.
         """
+        self.compile(env.action_space.n)
 
-        iter_ctr = 0
-        state = env.reset()
-
-        random_policy = UniformRandomPolicy() # for burn in 
+        random_policy = UniformRandomPolicy(1., 0.1, 1e6) # for burn in 
         self.policy = LinearDecayGreedyEpsilonPolicy() # for training
         history_memory = HistoryPreprocessor()
+        while self.iter_ctr < num_iterations:
+            self.iter_ctr+=1
+            state = env.reset()
 
-        while 1:
-            iter_ctr+=1
-            if iter_ctr < self.num_burn_in:
-                action = random_policy.select_action()
-                next_state, reward, is_terminal, _ = env.step(action)
-                state_dump = atari_processor.process_state_for_memory(state)
+            episode_ctr = 0
+            while episode_ctr < max_episode_length:
+                episode_ctr += 1
+                print "iter_ctr {}, episode_ctr {}".format(iter_ctr, episode_ctr)
 
-                self.memory.append((state_dump, action, reward, is_terminal))
-                state = next_state
-
-            else:
-                # note that history_memory is just saving the last 4 states. It ain't doing any image manipulation. 
                 history_memory.process_state_for_network(atari_processor.process_state_for_memory(state))
-                q_values = self.calc_q_values(history_memory)
-                action = self.policy.select_action()
-                next_state, reward, is_terminal, _ = env.step(action)
 
-                self.memory.append((atari_processor.process_state_for_memory(state), action, \
-                                    atari_processor.process_reward(reward), is_terminal))
-                
-                if not(is_terminal):
-                    if ctr_episode_timestep > max_episode_length-2:
+                if iter_ctr < self.num_burn_in:
+                    action = random_policy.select_action()
+                    next_state, reward, is_terminal, _ = env.step(action)
+                    self.memory.append((atari_processor.process_state_for_memory(state), action, \
+                                        atari_processor.process_reward(reward), is_terminal))
+ 
+                else:
+                    # note that history_memory is just saving the last 4 states. It ain't doing any image manipulation. 
+                    history = history_memory.get_history() #todo batch size index
+                    q_values = self.calc_q_values(history)
+                    action = self.policy.select_action(q_values)
+                    next_state, reward, is_terminal, _ = env.step(action)
+
+                    self.memory.append((atari_processor.process_state_for_memory(state), action, \
+                                        atari_processor.process_reward(reward), is_terminal))
+
+                    if not(is_terminal) and (episode_ctr > max_episode_length-2):
                         self.memory.end_episode()
                         break
-                    else:
-                        state = next_state
-                else:
-                    break
-
-                if not (iter_ctr%train_freq):
-                    # this is update_policy 
-                    # sample batch of 32 from the memory
-                    sample_batch = self.memory.sample(self.batch_size)
-                    sample_states = [sample(0) for sample in sample_batch]
-                    # make numpy array 
-                    sample_batch = self.processor.process_batch(sample_states)
-
-                    states = 
 
                     if is_terminal:
-                        y_target = reward
-                    else:
-                        y_target = reward + self.gamma*np.max(self.q_network.predict(stack_of_4_states))
+                        break
 
-                    x_batch = [sample_batch[] for each_sample in sample_batch]
-                    y_batch = 
-
-                    if iter_ctr % target_update_freq:
-                        # copy weights
-
-                    # train on batch of 32 
-                    # self.q_network.train_on_batch()
+                    if not(iter_ctr % self.train_freq):
+                        self.update_policy()
+                
+                state = next_state
 
     def evaluate(self, env, num_episodes, max_episode_length=None):
         """Test your agent with a provided environment.

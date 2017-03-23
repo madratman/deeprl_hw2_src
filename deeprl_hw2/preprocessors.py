@@ -35,6 +35,9 @@ class HistoryPreprocessor(Preprocessor):
         """
         self.history = np.zeros([history_length, 84, 84, 1])
 
+    def get_history(self):
+        return self.history
+
     def get_config(self):
         return self.history_length
 

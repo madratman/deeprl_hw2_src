@@ -132,9 +132,7 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
 
     """
 
-    def __init__(self, policy, attr_name, start_value, end_value,
-                 num_steps):  # noqa: D102
-        self.policy = policy;
+    def __init__(self, start_value, end_value, num_steps):
         self.start_value = start_value
         self.end_value = end_value
         self.num_steps = num_steps

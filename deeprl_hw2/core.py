@@ -33,7 +33,10 @@ class Sample:
       True if this action finished the episode. False otherwise.
     """
     def __init__(self, state, action, reward, is_terminal):
-        self.sample = (state, action, reward, is_terminal)
+        self.state = state
+        self.action = action
+        self.reward = reward
+        self.is_terminal = is_terminal
 
 class Preprocessor:
     """Preprocessor base class.
@@ -231,17 +234,21 @@ class ReplayMemory:
 
     def end_episode(self):
         # make the is_terminal (last element of tuple) of the last inserted (SAR+is_terminal) sequence True
-        self.experience[index_for_insertion-1][-1] = True
+        self.experience[index_for_insertion-1].is_terminal = True
 
     def sample(self, batch_size, indexes=None):
         import random
         # sample 32 indices. but don't sample 0,1,2. 
-        indices = random.sample(range(len(self.experience))[3:], 32)
-        current_states_tuples = [self.experience[index-3:index+1] for index in indices]
-        next_states_tuples = [self.experience[index-4:index+2] for index in indices]
+        indices = random.sample(range(len(self.experience))[3:], batch_size)
+        
+        # list of list of samples. (32 outside and 4 inside)
+        current_state_samples = [self.experience[index-4:index] for index in indices]
+        next_state_samples = [self.experience[index-3:index+1] for index in indices]
 
-        return 
-
+        return {
+                    'current_state_samples':current_state_samples,
+                    'next_state_samples':next_state_samples, 
+                } 
 
     def clear(self):
         self.experience=[]
