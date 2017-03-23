@@ -53,8 +53,8 @@ def get_output_folder(parent_dir, env_name):
     return parent_dir
 
 def main():  # noqa: D103
-    parser = argparse.ArgumentParser(description='Run DQN on Atari Breakout')
-    parser.add_argument('--env', default='Breakout-v0', help='Atari env name')
+    parser = argparse.ArgumentParser(description='Run DQN on Atari SpaceInvaders')
+    parser.add_argument('--env', default='SpaceInvaders-v0', help='Atari env name')
     parser.add_argument(
         '-o', '--output', default='atari-v0', help='Directory to save data to')
     parser.add_argument('--seed', default=0, type=int, help='Random seed')
@@ -68,5 +68,26 @@ def main():  # noqa: D103
     # create your DQN agent, create your model, etc.
     # then you can run your fit method.
 
+    # define parameters for our problem:
+    env=gym.make('SpaceInvaders-v0')
+
+    num_of_actions=env.action_space.n
+    gamma=0.99
+    target_update_freq=10000
+    num_burn_in=50000
+    train_freq=4
+    batch_size=32
+
+    DQNAgent=DQNAgent(num_of_actions, gamma, target_update_freq, num_burn_in, train_freq, batch_size)
+    model=DQNAgent.create_model(num_actions=num_of_actions)
+
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
+
+

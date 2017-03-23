@@ -3,6 +3,7 @@ from keras.models import Sequential, Model
 from keras.layers import Dense, Activation, Dropout, Reshape, Flatten, Lambda
 from keras.layers.convolutional import Convolution2D, ZeroPadding2D, AveragePooling2D, MaxPooling2D
 from objectives import mean_huber_loss
+import gym
 
 class DQNAgent:
     """Class implementing DQN.
@@ -43,10 +44,6 @@ class DQNAgent:
       How many samples in each minibatch.
     """
     def __init__(self,
-                 q_network,
-                 preprocessor,
-                 memory,
-                 policy,
                  num_of_actions,
                  gamma,
                  target_update_freq,
@@ -54,10 +51,6 @@ class DQNAgent:
                  train_freq,
                  batch_size):
 
-        self.q_network = q_network #todo
-        self.preprocessor = preprocessor
-        self.memory = memory
-        self.policy = policy #todo don't need this
         self.num_of_actions = num_of_actions
         self.gamma = gamma
         self.target_update_freq = target_update_freq
@@ -69,8 +62,11 @@ class DQNAgent:
         self.reward_list=np.array([0])
         self.numEpochs_list=np.array([0])
 
-    def create_model(window, input_shape, num_actions,
-                     model_name='q_network'):  # noqa: D103
+        env=gym.make('SpaceInvaders-v0')
+
+
+
+    def create_model(self, num_actions):  # noqa: D103
         """Create the Q-network model.
 
         Use Keras to construct a keras.models.Model instance (you can also
