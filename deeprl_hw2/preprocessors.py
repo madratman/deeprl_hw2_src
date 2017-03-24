@@ -26,7 +26,7 @@ class HistoryPreprocessor(Preprocessor):
 
     def process_state_for_network(self, state):
         """You only want history when you're deciding the current action to take."""
-        self.history = np.roll(self.history, -1, axis=0) # todo check if this is correct
+        self.history = np.roll(self.history, -1, axis=0) 
         self.history[-1] = state
 
     def reset(self):    
@@ -77,8 +77,8 @@ class AtariPreprocessor(Preprocessor):
       (84, 84) will make each image in the output have shape (84, 84).
     """
 
-    def __init__(self, new_size):
-        self.new_size = new_size
+    def __init__(self):
+        pass
 
     def process_state_for_memory(self, state):
         """Scale, convert to greyscale and store as uint8.

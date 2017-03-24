@@ -202,7 +202,7 @@ class ReplayMemory:
     clear()
       Reset the memory. Deletes all references to the samples.
     """
-    def __init__(self, max_size, window_length):
+    def __init__(self, max_size):
         """Setup memory.
 
         You should specify the maximum size o the memory. Once the
@@ -214,7 +214,6 @@ class ReplayMemory:
         index where the next sample should be inserted in the list.
         """
         self.max_size = max_size
-        self.window_length = window_length
         self.experience = [] # list of tuples
         self.index_for_insertion = 0
 
@@ -230,7 +229,7 @@ class ReplayMemory:
             if index_for_insertion==max_size:
                 index_for_insertion = 0
             self.experience[index_for_insertion] = new_sample
-            index_for_insertion+=1
+        index_for_insertion+=1
 
     def end_episode(self):
         # make the is_terminal (last element of tuple) of the last inserted (SAR+is_terminal) sequence True
@@ -239,7 +238,11 @@ class ReplayMemory:
     def sample(self, batch_size, indexes=None):
         import random
         # sample 32 indices. but don't sample 0,1,2. 
-        indices = random.sample(range(len(self.experience))[3:], batch_size)
+        # TODO: if there is a terminal state in the middle of the sample, then resample
+        if len(self.experience) < 1000000:
+            indices = random.sample(range(len(self.experience))[3:], batch_size)
+        else:
+            indices = random.sample(range(len(self.experience)), batch_size)
         
         # list of list of samples. (32 outside and 4 inside)
         current_state_samples = [self.experience[index-4:index] for index in indices]

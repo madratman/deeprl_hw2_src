@@ -248,34 +248,37 @@ class DQNAgent:
         """
         self.compile(self.num_of_actions)
 
-        random_policy = UniformRandomPolicy(1., 0.1, 1e6) # for burn in 
-        self.policy = LinearDecayGreedyEpsilonPolicy() # for training
-        history_memory = HistoryPreprocessor()
+        random_policy = UniformRandomPolicy(num_actions=self.num_of_actions) # for burn in 
+        self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6) # for training
+        history_memory = HistoryPreprocessor(history_length=4)
+        atari_preprocessor=AtariPreprocessor()
+        self.replay_memory=ReplayMemory(max_size=1000000)
+
         while self.iter_ctr < num_iterations:
-            self.iter_ctr+=1
+            
             state = self.env.reset()
 
             episode_ctr = 0
             while episode_ctr < max_episode_length:
-                episode_ctr += 1
+                self.iter_ctr+=1 # number of steps overall
+                episode_ctr += 1 # number of steps in the current episode
                 print "iter_ctr {}, episode_ctr {}".format(iter_ctr, episode_ctr)
 
-                history_memory.process_state_for_network(atari_processor.process_state_for_memory(state))
+                history_memory.process_state_for_network(atari_preprocessor.process_state_for_memory(state))
 
                 if iter_ctr < self.num_burn_in:
-                    action = random_policy.select_action()
+                    action = random_policy.select_action() # goes from 0 to n-1
                     next_state, reward, is_terminal, _ = self.env.step(action)
-                    self.memory.append((atari_processor.process_state_for_memory(state), action, \
-                                        atari_processor.process_reward(reward), is_terminal))
+                    self.replay_memory.append(atari_preprocessor.process_state_for_memory(state), action, \
+                                        atari_preprocessor.process_reward(reward), is_terminal)
  
                 else:
-                    # note that history_memory is just saving the last 4 states. It ain't doing any image manipulation. 
                     history = history_memory.get_history() #todo batch size index
                     q_values = self.calc_q_values(history)
                     action = self.policy.select_action(q_values)
                     next_state, reward, is_terminal, _ = self.env.step(action)
 
-                    self.memory.append((atari_processor.process_state_for_memory(state), action, \
+                    self.replay_memory.append((atari_processor.process_state_for_memory(state), action, \
                                         atari_processor.process_reward(reward), is_terminal))
 
                     if not(is_terminal) and (episode_ctr > max_episode_length-2):
