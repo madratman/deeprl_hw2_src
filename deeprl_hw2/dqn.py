@@ -4,6 +4,7 @@ from keras.layers import Dense, Activation, Dropout, Reshape, Flatten, Lambda
 from keras.layers.convolutional import Convolution2D, ZeroPadding2D, AveragePooling2D, MaxPooling2D
 from objectives import mean_huber_loss
 import gym
+import numpy as np
 
 class DQNAgent:
     """Class implementing DQN.
@@ -26,7 +27,7 @@ class DQNAgent:
       details.
     memory: deeprl_hw2.core.Memory
       Your replay memory.
-    gamma: float
+    gamma: fl   oat
       Discount factor.
     target_update_freq: float
       Frequency to update the target network. You can either provide a
@@ -44,16 +45,15 @@ class DQNAgent:
       How many samples in each minibatch.
     """
     def __init__(self,
+                 env,
                  gamma,
                  target_update_freq,
                  num_burn_in,
                  train_freq,
                  batch_size):
 
-        env=gym.make('SpaceInvaders-v0')
-        num_of_actions=env.action_space.n
-
-        self.num_of_actions = num_of_actions
+        self.env = gym.make(env)
+        self.num_of_actions = self.env.action_space.n
         self.gamma = gamma
         self.target_update_freq = target_update_freq
         self.num_burn_in = num_burn_in
@@ -64,7 +64,6 @@ class DQNAgent:
         self.qavg_list=np.array([0])
         self.reward_list=np.array([0])
         self.numEpochs_list=np.array([0])
-
 
     def create_model(self, num_actions):  # noqa: D103
         """Create the Q-network model.
@@ -95,12 +94,12 @@ class DQNAgent:
           The Q-model.
         """
         model = Sequential()
-        model.add(Convolution2D(16,8,8, strides=(4,4), input_shape=(4,84,84), activation='relu', name='conv_1'))
-        model.add(Convolution2D(32,4,4, strides=(2,2), activation='relu', name='conv_2'))
-        model.add(Dense(32,4,4, strides=(2,2), activation='relu', name='fc_1'))
+        model.add(Convolution2D(filters=16, kernel_size=(8,8), strides=(4,4), input_shape=(84,84,4), activation='relu', name='conv_1'))
+        model.add(Convolution2D(filters=32, kernel_size=(4,4), strides=(2,2), activation='relu', name='conv_2'))
+        model.add(Convolution2D(filters=32, kernel_size=(4,4), strides=(2,2), activation='relu', name='fc_1'))
         model.add(Flatten())
-        model.add(Dense, 256, activation='relu', name='fc_2')
-        model.add(Dense, num_actions, activation='relu', name='final')
+        model.add(Dense(256, activation='relu', name='fc_2'))
+        model.add(Dense(num_actions, activation='relu', name='final'))
         return model
 
     def compile(self, num_actions, optimizer='Adam'):
@@ -122,8 +121,8 @@ class DQNAgent:
         """
         self.q_network = self.create_model(num_actions)
         self.target_q_network = self.create_model(num_actions)
-        self.q_network.compile(optimizer='Adam', loss=mean_huber_loss) 
-        self.target_q_network.compile(optimizer='Adam', loss=mean_huber_loss) #todo metrics 
+        self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
+        # self.target_q_network.compile(optimizer='Adam', loss=mean_huber_loss) #todo metrics 
 
     def calc_q_values(self, state):
         """Given a state (or batch of states) calculate the Q-values.
@@ -160,7 +159,7 @@ class DQNAgent:
         """
         q_values = self.calc_q_values(self.preprocessor.process_state_for_network(state))
         
-        if kwargs['stage'] == "burning_in"
+        if kwargs['stage'] == "burning_in":
             self.policy = UniformRandomPolicy()
             return self.policy.select_action()
 
@@ -247,7 +246,7 @@ class DQNAgent:
           How long a single episode should last before the agent
           resets. Can help exploration.
         """
-        self.compile(self.env.action_space.n)
+        self.compile(self.num_of_actions)
 
         random_policy = UniformRandomPolicy(1., 0.1, 1e6) # for burn in 
         self.policy = LinearDecayGreedyEpsilonPolicy() # for training
@@ -323,7 +322,7 @@ class DQNAgent:
 
             # run one step of the episode
             action = evaluation_policy.select_action(state_processed)
-            next_state, reward, is_terminal, _ = env.step(action)
+            next_state, reward, is_terminal, _ = self.env.step(action)
             reward=atari_processor.process_reward(reward)
             episode_reward_sum+=reward
             

@@ -16,7 +16,6 @@ from deeprl_hw2.dqn import DQNAgent
 from deeprl_hw2.objectives import mean_huber_loss
 import gym
 
-
 def get_output_folder(parent_dir, env_name):
     """Return save folder.
 
@@ -36,7 +35,7 @@ def get_output_folder(parent_dir, env_name):
     parent_dir/run_dir
       Path to this run's save directory.
     """
-    os.makedirs(parent_dir, exist_ok=True)
+    os.makedirs(parent_dir)
     experiment_id = 0
     for folder_name in os.listdir(parent_dir):
         if not os.path.isdir(os.path.join(parent_dir, folder_name)):
@@ -61,27 +60,18 @@ def main():  # noqa: D103
     parser.add_argument('--seed', default=0, type=int, help='Random seed')
 
     args = parser.parse_args()
-    args.input_shape = tuple(args.input_shape)
+    # args.input_shape = tuple(args.input_shape)
 
-    args.output = get_output_folder(args.output, args.env)
+    # args.output = get_output_folder(args.output, args.env)
 
     # here is where you should start up a session,
     # create your DQN agent, create your model, etc.
     # then you can run your fit method.
 
     # define parameters for our problem:
-    
-    gamma=0.99
-    target_update_freq=10000
-    num_burn_in=50000
-    train_freq=4
-    batch_size=32
-    num_iterations = int(5e6)
-    max_episode_length=250
-
-    DQNAgent = DQNAgent(gamma=gamma, target_update_freq=target_update_freq, num_burn_in=num_burn_in, train_freq=train_freq, batch_size=batch_size)
-    DQNAgent.fit(num_iterations=num_iterations, max_episode_length=max_episode_length)
-    # model=DQNAgent.create_model(num_actions=num_of_actions)
+        
+    agent = DQNAgent(env='SpaceInvaders-v0', gamma=0.99, target_update_freq=10000, num_burn_in=50000, train_freq=4, batch_size=32)
+    agent.fit(num_iterations = int(5e6), max_episode_length=250)
 
 if __name__ == '__main__':
     main()
