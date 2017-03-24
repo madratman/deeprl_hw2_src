@@ -150,12 +150,11 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
         Returns
         -------
         Any:
-          Selected action.
+          Selected action.is_training
         """
-
         greedy_action_idx = np.argmax(kwargs['q_values'])
-        action_indices = range(len(q_values)) # list of 0,1,2,....n
-        if random.random() < epsilon:
+        action_indices = range(len(kwargs['q_values'])) # list of 0,1,2,....n
+        if random.random() < self.epsilon:
             return random.choice(action_indices)
         else:
             return greedy_action_idx

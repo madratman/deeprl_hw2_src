@@ -5,6 +5,9 @@ from keras.layers.convolutional import Convolution2D, ZeroPadding2D, AveragePool
 from objectives import mean_huber_loss
 import gym
 import numpy as np
+from policy import *
+from preprocessors import *
+from core import *
 
 class DQNAgent:
     """Class implementing DQN.
@@ -64,6 +67,7 @@ class DQNAgent:
         self.qavg_list=np.array([0])
         self.reward_list=np.array([0])
         self.numEpochs_list=np.array([0])
+        self.atari_preprocessor = AtariPreprocessor()
 
     def create_model(self, num_actions):  # noqa: D103
         """Create the Q-network model.
@@ -133,7 +137,7 @@ class DQNAgent:
         Q-values for the state(s)
         """ 
         # state = self.atari_preprocessor.process_state_for_network(state)
-        q_vals = self.q_network.predict(state)
+        q_vals = self.q_network.predict(np.swapaxes(state,0,3))
         return q_vals
 
     def select_action(self, state, **kwargs):
@@ -188,35 +192,46 @@ class DQNAgent:
         """
         # this is update_policy 
         # sample batch of 32 from the memory
-        batch_of_samples = self.memory.sample()
+        batch_of_samples = self.replay_memory.sample(batch_size=32)
         current_state_samples = batch_of_samples['current_state_samples']
         next_state_samples = batch_of_samples['next_state_samples']
+        #print type(current_state_samples[0])
 
-        # fetch stuff we need from samples
-        current_state_images = np.dstack([each_sample.state for each_sample in current_state_samples])
-        next_state_images = np.dstack([each_sample.state for each_tuple in next_state_samples])
+        # fetch stuff we need from samples 32*84*84*4
+        current_state_images = np.zeros([32, 84, 84, 4])
+        for (idx, each_list_of_samples) in enumerate(current_state_samples):
+            print "sample 0 ::", each_list_of_samples[0].state.shape
+            print "sample 1 ::",each_list_of_samples[1].state.shape
+            print "sample 2 ::", each_list_of_samples[2].state.shape
+            print "sample 3 ::",each_list_of_samples[3].state.shape
+            current_state_images[idx, ...] = np.dstack([sample.state for sample in each_list_of_samples])
+
+        next_state_images = np.zeros([32, 84, 84, 4])
+        for (idx, each_list_of_samples) in enumerate(next_state_samples):
+            next_state_images[idx, ...] = np.dstack([sample.state for sample in each_list_of_samples])
 
         # preprocess
-        current_states = self.processor.process_batch(current_states)
-        next_states = self.processor.process_batch(next_states)
+        current_state_images = self.atari_preprocessor.process_batch(current_state_images)
+        next_state_images = self.atari_preprocessor.process_batch(next_state_images)
 
-        q_current = self.q_network.predict(current_states) # 32*num_actions
-        q_next = self.target_q_network.predict(next_states)
+        q_current = self.q_network.predict(current_state_images) # 32*num_actions
+        q_next = self.target_q_network.predict(next_state_images)
 
         # targets
         y_targets_all = q_current #32*num_actions
 
-        for (idx, each_sample) in enumerate(current_state_samples):
-            if each_sample.is_terminal:
-                y_targets_all[idx, each_sample.action] = each_sample.reward
+        for (idx, each_list_of_samples) in enumerate(current_state_samples):
+            last_sample = each_list_of_samples[-1]
+            if last_sample.is_terminal:
+                y_targets_all[idx, last_sample.action] = last_sample.reward
             else:
-                y_targets_all[idx, each_sample.action] = each_sample.reward + self.gamma*np.max(q_next[idx])
+                y_targets_all[idx, last_sample.action] = last_sample.reward + self.gamma*np.max(q_next[idx])
                 # bla = self.target_q_network.predict(next_state_images[idx])
                 # y_target_curr = reward_proc + self.gamma*bla[np.argmax(self.q_network(next_state_images[idx]))]
 
-        loss = self.q_network.train_on_batch(current_states, np.float32(y_targets_all))
+        loss = self.q_network.train_on_batch(current_state_images, np.float32(y_targets_all))
 
-        if iter_ctr % target_update_freq:
+        if self.iter_ctr % self.target_update_freq:
             # copy weights
             [self.target_q_network.trainable_weights[i].assign(self.q_network.trainable_weights[i]) \
                 for i in range(len(self.target_q_network.trainable_weights))]
@@ -251,8 +266,8 @@ class DQNAgent:
         random_policy = UniformRandomPolicy(num_actions=self.num_of_actions) # for burn in 
         self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6) # for training
         history_memory = HistoryPreprocessor(history_length=4)
-        atari_preprocessor=AtariPreprocessor()
-        self.replay_memory=ReplayMemory(max_size=1000000)
+        atari_preprocessor = AtariPreprocessor()
+        self.replay_memory = ReplayMemory(max_size=1000000)
 
         while self.iter_ctr < num_iterations:
             
@@ -262,33 +277,34 @@ class DQNAgent:
             while episode_ctr < max_episode_length:
                 self.iter_ctr+=1 # number of steps overall
                 episode_ctr += 1 # number of steps in the current episode
-                print "iter_ctr {}, episode_ctr {}".format(iter_ctr, episode_ctr)
+                print "iter_ctr {}, episode_ctr {}".format(self.iter_ctr, episode_ctr)
 
                 history_memory.process_state_for_network(atari_preprocessor.process_state_for_memory(state))
 
-                if iter_ctr < self.num_burn_in:
+                if self.iter_ctr < self.num_burn_in:
                     action = random_policy.select_action() # goes from 0 to n-1
                     next_state, reward, is_terminal, _ = self.env.step(action)
+                    #print atari_preprocessor
                     self.replay_memory.append(atari_preprocessor.process_state_for_memory(state), action, \
                                         atari_preprocessor.process_reward(reward), is_terminal)
  
                 else:
                     history = history_memory.get_history() #todo batch size index
                     q_values = self.calc_q_values(history)
-                    action = self.policy.select_action(q_values)
+                    #print "q_values.shape ", q_values.shape
+                    action = self.policy.select_action(q_values=q_values, is_training=True)
                     next_state, reward, is_terminal, _ = self.env.step(action)
-
-                    self.replay_memory.append((atari_processor.process_state_for_memory(state), action, \
-                                        atari_processor.process_reward(reward), is_terminal))
+                    self.replay_memory.append(atari_preprocessor.process_state_for_memory(state), action, \
+                                        atari_preprocessor.process_reward(reward), is_terminal)
 
                     if not(is_terminal) and (episode_ctr > max_episode_length-2):
-                        self.memory.end_episode()
+                        self.replay_memory.end_episode()
                         break
 
                     if is_terminal:
                         break
 
-                    if not(iter_ctr % self.train_freq):
+                    if not(self.iter_ctr % self.train_freq):
                         self.update_policy()
                 
                 state = next_state

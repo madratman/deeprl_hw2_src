@@ -27,7 +27,7 @@ class HistoryPreprocessor(Preprocessor):
     def process_state_for_network(self, state):
         """You only want history when you're deciding the current action to take."""
         self.history = np.roll(self.history, -1, axis=0) 
-        self.history[-1] = state
+        self.history[-1] = state[..., np.newaxis]
 
     def reset(self):    
         """Reset the history sequence.4
@@ -92,9 +92,9 @@ class AtariPreprocessor(Preprocessor):
         """
         # if not (state.shape == (84,84)):
             # raise ValueError('AtariPreprocessor.process_state_for_memory : input state is not 84*84')
-        state_gray = Image.fromarray(state/255.).convert('L')
-        state_gray = state_gray.resize((110,84)) # section 4.1
-        state_gray = state_gray.crop((0,26,84,110)) #crops looking at the bottom of the image, not at the score
+        state_gray = Image.fromarray(state).convert('L')
+        state_gray = state_gray.resize((84,84)) # section 4.1
+        #state_gray = state_gray.crop((0,26,84,110)) #crops looking at the bottom of the image, not at the score
         return np.uint8(np.asarray(state_gray))
 
     def process_state_for_network(self, state):
@@ -103,10 +103,8 @@ class AtariPreprocessor(Preprocessor):
         Basically same as process state for memory, but this time
         outputs float32 images.
         """
-        state_gray = Image.fromarray(state/255.).convert('L')
-        state_gray = state_gray.resize((110,84)) # section 4.1
-        state_gray = state_gray.crop((0,26,84,110))
-        return np.float32(np.asarray(state_gray))
+        state_gray = self.process_state_for_memory(state)
+        return np.float32(state_gray)/255.
 
     # todo check 
     def process_batch(self, samples):
@@ -116,10 +114,7 @@ class AtariPreprocessor(Preprocessor):
         samples from the replay memory. Meaning you need to convert
         both state and next state values.
         """
-        for idx in range(len(samples)):
-            if idx==0 or idx==3:
-                samples[idx] = samples[idx].astype('float32')
-        return samples
+        return samples.astype('float32')
 
     def process_reward(self, reward):
         """Clip reward between -1 and 1."""

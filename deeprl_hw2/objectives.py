@@ -34,7 +34,7 @@ def huber_loss(y_true, y_pred, max_grad=1.):
     huber_if_diff_less_than_delta = 0.5*tf.square(diff)
     huber_if_diff_more_than_delta = delta*(diff - 0.5*diff)
     is_diff_less_than_delta = tf.less_equal(diff, delta)
-    final = tf.cond(is_diff_less_than_delta, huber_if_diff_less_than_delta, huber_if_diff_more_than_delta) 
+    final = tf.where(is_diff_less_than_delta, huber_if_diff_less_than_delta, huber_if_diff_more_than_delta) 
     return final
 
 def mean_huber_loss(y_true, y_pred, max_grad=1.):

@@ -226,16 +226,16 @@ class ReplayMemory:
         if len(self.experience) < self.max_size:
             self.experience.append(new_sample)
         else: # Replay Memory already has max size
-            if index_for_insertion==max_size:
-                index_for_insertion = 0
-            self.experience[index_for_insertion] = new_sample
-        index_for_insertion+=1
+            if self.index_for_insertion==max_size:
+                self.index_for_insertion = 0
+            self.experience[self.index_for_insertion] = new_sample
+        self.index_for_insertion+=1
 
     def end_episode(self):
         # make the is_terminal (last element of tuple) of the last inserted (SAR+is_terminal) sequence True
-        self.experience[index_for_insertion-1].is_terminal = True
+        self.experience[self.index_for_insertion-1].is_terminal = True
 
-    def sample(self, batch_size, indexes=None):
+    def sample(self, batch_size):
         import random
         # sample 32 indices. but don't sample 0,1,2. 
         # TODO: if there is a terminal state in the middle of the sample, then resample
