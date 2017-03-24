@@ -30,7 +30,7 @@ class DQNAgent:
       details.
     memory: deeprl_hw2.core.Memory
       Your replay memory.
-    gamma: fl   oat
+    gamma: float
       Discount factor.
     target_update_freq: float
       Frequency to update the target network. You can either provide a
@@ -126,7 +126,7 @@ class DQNAgent:
         self.q_network = self.create_model(num_actions)
         self.target_q_network = self.create_model(num_actions)
         self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
-        # self.target_q_network.compile(optimizer='Adam', loss=mean_huber_loss) #todo metrics 
+        self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics 
 
     def calc_q_values(self, state):
         """Given a state (or batch of states) calculate the Q-values.
@@ -200,10 +200,6 @@ class DQNAgent:
         # fetch stuff we need from samples 32*84*84*4
         current_state_images = np.zeros([32, 84, 84, 4])
         for (idx, each_list_of_samples) in enumerate(current_state_samples):
-            print "sample 0 ::", each_list_of_samples[0].state.shape
-            print "sample 1 ::",each_list_of_samples[1].state.shape
-            print "sample 2 ::", each_list_of_samples[2].state.shape
-            print "sample 3 ::",each_list_of_samples[3].state.shape
             current_state_images[idx, ...] = np.dstack([sample.state for sample in each_list_of_samples])
 
         next_state_images = np.zeros([32, 84, 84, 4])
@@ -231,8 +227,9 @@ class DQNAgent:
 
         loss = self.q_network.train_on_batch(current_state_images, np.float32(y_targets_all))
 
-        if self.iter_ctr % self.target_update_freq:
+        if not (self.iter_ctr%self.target_update_freq):
             # copy weights
+            print "copy weights"
             [self.target_q_network.trainable_weights[i].assign(self.q_network.trainable_weights[i]) \
                 for i in range(len(self.target_q_network.trainable_weights))]
 
@@ -270,14 +267,17 @@ class DQNAgent:
         self.replay_memory = ReplayMemory(max_size=1000000)
 
         while self.iter_ctr < num_iterations:
-            
             state = self.env.reset()
-
             episode_ctr = 0
+
+            if not (self.iter_ctr%1000):
+                evaluate(self, num_episodes=20, max_episode_length=max_episode_length)
+            
             while episode_ctr < max_episode_length:
                 self.iter_ctr+=1 # number of steps overall
                 episode_ctr += 1 # number of steps in the current episode
-                print "iter_ctr {}, episode_ctr {}".format(self.iter_ctr, episode_ctr)
+                if not self.iter_ctr % 100:
+                    print "iter_ctr {}, episode_ctr {}".format(self.iter_ctr, episode_ctr)
 
                 history_memory.process_state_for_network(atari_preprocessor.process_state_for_memory(state))
 
@@ -298,18 +298,19 @@ class DQNAgent:
                                         atari_preprocessor.process_reward(reward), is_terminal)
 
                     if not(is_terminal) and (episode_ctr > max_episode_length-2):
-                        self.replay_memory.end_episode()
-                        break
+                         self.replay_memory.end_episode()
+                         break
 
                     if is_terminal:
                         break
 
                     if not(self.iter_ctr % self.train_freq):
+                        #print "calling update_policy()"
                         self.update_policy()
                 
                 state = next_state
 
-    def evaluate(self, env, num_episodes, max_episode_length=None):
+    def evaluate(self, num_episodes, max_episode_length=None):
         """Test your agent with a provided environment.
         
         You shouldn't update your network parameters here. Also if you
@@ -322,10 +323,10 @@ class DQNAgent:
         You can also call the render function here if you want to
         visually inspect your policy.
         """
-        initial_state = env.reset()
+        initial_state = self.env.reset()
         evaluation_policy = GreedyPolicy()
 
-        state = env.reset()
+        state = self.env.reset()
         episode_ctr=0
         steps_ctr=0
         Q_sum
@@ -333,31 +334,30 @@ class DQNAgent:
         episode_reward_sum=0
         episode_reward_avg=0
 
-        # get the stats for 10000 iterations with the environment
-        while episode_ctr<20:
-
-            state_processed = atari_processor.process_state_for_memory(state)
-            Q_sum+=np.argmax(calc_q_values(state))
+        while episode_ctr < num_episodes:
+            state_processed = self.atari_processor.process_state_for_memory(state)
+            Q_sum += np.argmax(calc_q_values(state))
 
             # run one step of the episode
             action = evaluation_policy.select_action(state_processed)
             next_state, reward, is_terminal, _ = self.env.step(action)
-            reward=atari_processor.process_reward(reward)
-            episode_reward_sum+=reward
+            reward = atari_processor.process_reward(reward)
+            episode_reward_sum += reward
             
-            steps_ctr+=1
+            steps_ctr += 1
 
             if is_terminal:
-                state = env.reset()
-                episode_ctr+=1
+                state = self.env.reset()
+                episode_ctr += 1
 
-        Q_avg=Q_sum/steps_ctr
-        episode_reward_avg=episode_reward_sum/episode_ctr
+        Q_avg = Q_sum/steps_ctr
+        episode_reward_avg = episode_reward_sum/episode_ctr
+        print "episode_reward_avg ", episode_reward_avg
 
         # make a list
-        self.qavg_list=np.append(self.qavg_list,Q_avg)
-        self.reward_list=np.append(self.reward_list,episode_reward_avg)
-        self.numEpochs_list=np.append(self.numEpochs_list,self.numEpochs_list[self.numEpochs.size]+1)
+        self.qavg_list = np.append(self.qavg_list,Q_avg)
+        self.reward_list = np.append(self.reward_list,episode_reward_avg)
+        self.numEpochs_list = np.append(self.numEpochs_list,self.numEpochs_list[self.numEpochs.size]+1)
 
         plt.figure(1)
         plt.plot(self.numEpochs_list,self.reward_list)

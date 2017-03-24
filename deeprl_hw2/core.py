@@ -239,18 +239,26 @@ class ReplayMemory:
         import random
         # sample 32 indices. but don't sample 0,1,2. 
         # TODO: if there is a terminal state in the middle of the sample, then resample
-        if len(self.experience) < 1000000:
-            indices = random.sample(range(len(self.experience))[3:], batch_size)
-        else:
-            indices = random.sample(range(len(self.experience)), batch_size)
+        # if len(self.experience) < 1000000:
+        indices = random.sample(range(len(self.experience))[4:], batch_size)
+        # else:
+            # indices = random.sample(range(len(self.experience)), batch_size)
         
         # list of list of samples. (32 outside and 4 inside)
         current_state_samples = [self.experience[index-4:index] for index in indices]
         next_state_samples = [self.experience[index-3:index+1] for index in indices]
 
+        # for index in indices:
+        #     current_state_samples = [self.experience[index-4:index]]
+        #     for (idx, each_list_of_samples) in enumerate(current_state_samples):
+        #         print "sample 0 :: index ", index, each_list_of_samples[0].state.shape
+        #         print "sample 1 :: index ", index, each_list_of_samples[1].state.shape
+        #         print "sample 2 :: index ", index, each_list_of_samples[2].state.shape
+        #         print "sample 3 :: index ", index, each_list_of_samples[3].state.shape
+
         return {
                     'current_state_samples':current_state_samples,
-                    'next_state_samples':next_state_samples, 
+                    'next_state_samples':next_state_samples
                 } 
 
     def clear(self):
