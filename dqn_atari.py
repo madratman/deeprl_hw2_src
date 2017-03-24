@@ -14,6 +14,7 @@ from keras.optimizers import Adam
 import deeprl_hw2 as tfrl
 from deeprl_hw2.dqn import DQNAgent
 from deeprl_hw2.objectives import mean_huber_loss
+import gym
 
 
 def get_output_folder(parent_dir, env_name):
@@ -69,18 +70,17 @@ def main():  # noqa: D103
     # then you can run your fit method.
 
     # define parameters for our problem:
-    env=gym.make('SpaceInvaders-v0')
-
-    num_of_actions=env.action_space.n
+    
     gamma=0.99
     target_update_freq=10000
     num_burn_in=50000
     train_freq=4
     batch_size=32
     num_iterations = int(5e6)
+    max_episode_length=250
 
-    DQNAgent = DQNAgent(num_of_actions, gamma, target_update_freq, num_burn_in, train_freq, batch_size)
-    DQNAgent.fit(env, num_iterations, max_episode_length=250):
+    DQNAgent = DQNAgent(gamma=gamma, target_update_freq=target_update_freq, num_burn_in=num_burn_in, train_freq=train_freq, batch_size=batch_size)
+    DQNAgent.fit(num_iterations=num_iterations, max_episode_length=max_episode_length)
     # model=DQNAgent.create_model(num_actions=num_of_actions)
 
 if __name__ == '__main__':

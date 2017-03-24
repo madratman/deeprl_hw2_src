@@ -44,12 +44,14 @@ class DQNAgent:
       How many samples in each minibatch.
     """
     def __init__(self,
-                 num_of_actions,
                  gamma,
                  target_update_freq,
                  num_burn_in,
                  train_freq,
                  batch_size):
+
+        env=gym.make('SpaceInvaders-v0')
+        num_of_actions=env.action_space.n
 
         self.num_of_actions = num_of_actions
         self.gamma = gamma
@@ -62,9 +64,6 @@ class DQNAgent:
         self.qavg_list=np.array([0])
         self.reward_list=np.array([0])
         self.numEpochs_list=np.array([0])
-
-        env=gym.make('SpaceInvaders-v0')
-
 
 
     def create_model(self, num_actions):  # noqa: D103
@@ -223,7 +222,7 @@ class DQNAgent:
             [self.target_q_network.trainable_weights[i].assign(self.q_network.trainable_weights[i]) \
                 for i in range(len(self.target_q_network.trainable_weights))]
 
-    def fit(self, env, num_iterations, max_episode_length=None):
+    def fit(self, num_iterations, max_episode_length=None):
         """Fit your model to the provided environment.
 
         Its a good idea to print out things like loss, average reward,
@@ -248,14 +247,14 @@ class DQNAgent:
           How long a single episode should last before the agent
           resets. Can help exploration.
         """
-        self.compile(env.action_space.n)
+        self.compile(self.env.action_space.n)
 
         random_policy = UniformRandomPolicy(1., 0.1, 1e6) # for burn in 
         self.policy = LinearDecayGreedyEpsilonPolicy() # for training
         history_memory = HistoryPreprocessor()
         while self.iter_ctr < num_iterations:
             self.iter_ctr+=1
-            state = env.reset()
+            state = self.env.reset()
 
             episode_ctr = 0
             while episode_ctr < max_episode_length:
@@ -266,7 +265,7 @@ class DQNAgent:
 
                 if iter_ctr < self.num_burn_in:
                     action = random_policy.select_action()
-                    next_state, reward, is_terminal, _ = env.step(action)
+                    next_state, reward, is_terminal, _ = self.env.step(action)
                     self.memory.append((atari_processor.process_state_for_memory(state), action, \
                                         atari_processor.process_reward(reward), is_terminal))
  
@@ -275,7 +274,7 @@ class DQNAgent:
                     history = history_memory.get_history() #todo batch size index
                     q_values = self.calc_q_values(history)
                     action = self.policy.select_action(q_values)
-                    next_state, reward, is_terminal, _ = env.step(action)
+                    next_state, reward, is_terminal, _ = self.env.step(action)
 
                     self.memory.append((atari_processor.process_state_for_memory(state), action, \
                                         atari_processor.process_reward(reward), is_terminal))
