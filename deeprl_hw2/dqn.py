@@ -8,6 +8,8 @@ import numpy as np
 from policy import *
 from preprocessors import *
 from core import *
+import matplotlib.pyplot as plt
+import cPickle as pkl
 
 class DQNAgent:
     """Class implementing DQN.
@@ -55,6 +57,7 @@ class DQNAgent:
                  train_freq,
                  batch_size):
 
+        self.env_string = env
         self.env = gym.make(env)
         self.num_of_actions = self.env.action_space.n
         self.gamma = gamma
@@ -64,9 +67,9 @@ class DQNAgent:
         self.batch_size = batch_size
         self.iter_ctr = 0
 
-        self.qavg_list=np.array([0])
-        self.reward_list=np.array([0])
-        self.numEpochs_list=np.array([0])
+        self.qavg_list = np.array([0])
+        self.reward_list = []
+        self.eval_episode_ctr = 0
         self.atari_preprocessor = AtariPreprocessor()
 
     def create_model(self, num_actions):  # noqa: D103
@@ -140,6 +143,7 @@ class DQNAgent:
         q_vals = self.q_network.predict(np.swapaxes(state,0,3))
         return q_vals
 
+    # we're not using this at all 
     def select_action(self, state, **kwargs):
         """Select the action based on the current state.
 
@@ -227,13 +231,13 @@ class DQNAgent:
 
         loss = self.q_network.train_on_batch(current_state_images, np.float32(y_targets_all))
 
-        if not (self.iter_ctr%self.target_update_freq):
+        if (self.iter_ctr > (self.num_burn_in+1)) and not(self.iter_ctr%self.target_update_freq):
             # copy weights
-            print "copy weights"
+            print "Iter {} Updating target Q network".format(self.iter_ctr)
             [self.target_q_network.trainable_weights[i].assign(self.q_network.trainable_weights[i]) \
                 for i in range(len(self.target_q_network.trainable_weights))]
 
-    def fit(self, num_iterations, max_episode_length=None):
+    def fit(self, num_iterations, max_episode_length=250, eval_every_nth=1000, save_model_every_nth=1000):
         """Fit your model to the provided environment.
 
         Its a good idea to print out things like loss, average reward,
@@ -263,51 +267,80 @@ class DQNAgent:
         random_policy = UniformRandomPolicy(num_actions=self.num_of_actions) # for burn in 
         self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6) # for training
         history_memory = HistoryPreprocessor(history_length=4)
-        atari_preprocessor = AtariPreprocessor()
         self.replay_memory = ReplayMemory(max_size=1000000)
 
+        num_episodes = 0
         while self.iter_ctr < num_iterations:
             state = self.env.reset()
-            episode_ctr = 0
+            num_timesteps_in_curr_episode = 0
 
-            if not (self.iter_ctr%1000):
-                evaluate(self, num_episodes=20, max_episode_length=max_episode_length)
-            
-            while episode_ctr < max_episode_length:
+            while num_timesteps_in_curr_episode < max_episode_length:
                 self.iter_ctr+=1 # number of steps overall
-                episode_ctr += 1 # number of steps in the current episode
-                if not self.iter_ctr % 100:
-                    print "iter_ctr {}, episode_ctr {}".format(self.iter_ctr, episode_ctr)
+                num_timesteps_in_curr_episode += 1 # number of steps in the current episode
 
-                history_memory.process_state_for_network(atari_preprocessor.process_state_for_memory(state))
+                # logging
+                # if not self.iter_ctr % 1000:
+                    # print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
 
+                # append to history
+                history_memory.process_state_for_network(self.atari_preprocessor.process_state_for_memory(state))
+
+                # burning in 
                 if self.iter_ctr < self.num_burn_in:
                     action = random_policy.select_action() # goes from 0 to n-1
                     next_state, reward, is_terminal, _ = self.env.step(action)
-                    #print atari_preprocessor
-                    self.replay_memory.append(atari_preprocessor.process_state_for_memory(state), action, \
-                                        atari_preprocessor.process_reward(reward), is_terminal)
- 
+                    self.replay_memory.append(self.atari_preprocessor.process_state_for_memory(state), action, \
+                                                self.atari_preprocessor.process_reward(reward), is_terminal)
+
+                    if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
+                        state = self.env.reset()
+                        print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
+                        num_episodes += 1
+                        num_timesteps_in_curr_episode = 0
+                        # this should be called when num_timesteps_in_curr_episode > max_episode_length, but we can call it in is_terminal as well. 
+                        # it won't change anything as it just sets the last entry's is_terminal to True
+                        self.replay_memory.end_episode() 
+                        break
+
+                # training
                 else:
-                    history = history_memory.get_history() #todo batch size index
+                    # print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
+                    history = history_memory.get_history()
                     q_values = self.calc_q_values(history)
                     #print "q_values.shape ", q_values.shape
                     action = self.policy.select_action(q_values=q_values, is_training=True)
                     next_state, reward, is_terminal, _ = self.env.step(action)
-                    self.replay_memory.append(atari_preprocessor.process_state_for_memory(state), action, \
-                                        atari_preprocessor.process_reward(reward), is_terminal)
+                    self.replay_memory.append(self.atari_preprocessor.process_state_for_memory(state), action, \
+                                                self.atari_preprocessor.process_reward(reward), is_terminal)
 
-                    if not(is_terminal) and (episode_ctr > max_episode_length-2):
-                         self.replay_memory.end_episode()
-                         break
+                    # validation. keep this clause before the breaks!
+                    if not(self.iter_ctr%eval_every_nth):
+                        print "\n\nEvaluating at iter {}".format(self.iter_ctr)
+                        self.evaluate(num_episodes=20, max_episode_length=max_episode_length)
+                        print "Done Evaluating\n\n"
+
+                    # save model
+                    if not(self.iter_ctr%save_model_every_nth):
+                        self.q_network.save('/data/datasets/ratneshm/deeprl_hw2/q_network_{}.h5'.format(str(self.iter_ctr).zfill(7)))
+
+                    if num_timesteps_in_curr_episode > max_episode_length-1:
+                        state = self.env.reset() # being safe
+                        print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
+                        self.replay_memory.end_episode()
+                        num_episodes += 1
+                        num_timesteps_in_curr_episode = 0
+                        break
 
                     if is_terminal:
+                        state = self.env.reset()
+                        print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
+                        num_episodes += 1
+                        num_timesteps_in_curr_episode = 0
                         break
 
                     if not(self.iter_ctr % self.train_freq):
-                        #print "calling update_policy()"
                         self.update_policy()
-                
+
                 state = next_state
 
     def evaluate(self, num_episodes, max_episode_length=None):
@@ -323,58 +356,69 @@ class DQNAgent:
         You can also call the render function here if you want to
         visually inspect your policy.
         """
-        initial_state = self.env.reset()
         evaluation_policy = GreedyPolicy()
 
-        state = self.env.reset()
-        episode_ctr=0
-        steps_ctr=0
-        Q_sum
-        Q_avg=0
-        episode_reward_sum=0
-        episode_reward_avg=0
+        iter_ctr_valid = 0
+        Q_sum = 0
+        history_memory = HistoryPreprocessor(history_length=4)
+        eval_episode_ctr_valid = 0
+        env_valid = gym.make(self.env_string)
 
-        while episode_ctr < num_episodes:
-            state_processed = self.atari_processor.process_state_for_memory(state)
-            Q_sum += np.argmax(calc_q_values(state))
+        while eval_episode_ctr_valid < num_episodes:
+            state = env_valid.reset()
+            num_timesteps_in_curr_episode = 0
+            total_reward_all_episodes = []
+            total_reward_curr_episode = 0
 
-            # run one step of the episode
-            action = evaluation_policy.select_action(state_processed)
-            next_state, reward, is_terminal, _ = self.env.step(action)
-            reward = atari_processor.process_reward(reward)
-            episode_reward_sum += reward
-            
-            steps_ctr += 1
+            while num_timesteps_in_curr_episode < max_episode_length:
+                num_timesteps_in_curr_episode += 1
+                iter_ctr_valid += 1
 
-            if is_terminal:
-                state = self.env.reset()
-                episode_ctr += 1
+                history_memory.process_state_for_network(self.atari_preprocessor.process_state_for_memory(state))
+                history = history_memory.get_history()
+                q_values = self.calc_q_values(history)
+                Q_sum += np.max(q_values) # todo fix this
 
-        Q_avg = Q_sum/steps_ctr
-        episode_reward_avg = episode_reward_sum/episode_ctr
-        print "episode_reward_avg ", episode_reward_avg
+                action = evaluation_policy.select_action(q_values)
+                next_state, reward, is_terminal, _ = env_valid.step(action)
+                reward = self.atari_preprocessor.process_reward(reward)
+                total_reward_curr_episode += reward
 
-        # make a list
-        self.qavg_list = np.append(self.qavg_list,Q_avg)
-        self.reward_list = np.append(self.reward_list,episode_reward_avg)
-        self.numEpochs_list = np.append(self.numEpochs_list,self.numEpochs_list[self.numEpochs.size]+1)
+                if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
+                    state = env_valid.reset() 
+                    # print "Evaluate() : iter_ctr_valid {}, eval_episode_ctr_valid : {} num_timesteps_in_curr_episode {}".format(iter_ctr_valid, eval_episode_ctr_valid, num_timesteps_in_curr_episode)
+                    total_reward_all_episodes.append(total_reward_curr_episode)
+                    print "total_reward_curr_episode ", total_reward_curr_episode
+                    eval_episode_ctr_valid += 1
+                    num_timesteps_in_curr_episode = 0
+                    break
 
-        plt.figure(1)
-        plt.plot(self.numEpochs_list,self.reward_list)
-        plt.xlabel('Epochs')
-        plt.ylabel('Avg reward per episode')
-        plt.title('Avg reward per episode during training')
-        plt.grid(True)
-        plt.savefig("rewardPlot.png")
-        plt.show()
+                state = next_state
 
-        plt.figure(2)
-        plt.plot(self.numEpochs_list,self.qavg_list)
-        plt.xlabel('Epochs')
-        plt.ylabel('Avg Q per step')
-        plt.title('Avg Q per step during training')
-        plt.grid(True)
-        plt.savefig("qPlot.png")
-        plt.show()
+        Q_avg = Q_sum/float(iter_ctr_valid)
+        all_episode_avg_reward = sum(total_reward_all_episodes)/float(len(total_reward_all_episodes))
+        self.qavg_list = np.append(self.qavg_list, Q_avg)
+        self.reward_list.append(all_episode_avg_reward)
+
+        pkl.dump(self.reward_list, open("/data/datasets/ratneshm/deeprl_hw2/eval_rewards.pkl", "wb"))
+        
+        print "all_episode_avg_reward ", all_episode_avg_reward
+        print "\n\n\n self.reward_list \n\n\n", self.reward_list
+
+
+        # plt.plot(np.asarray(range(eval_episode_ctr_valid)), self.reward_list)
+        # plt.xlabel('Epochs')
+        # plt.ylabel('Avg reward per episode')
+        # plt.title('Avg reward per episode during training')
+        # plt.grid(True)
+        # plt.savefig("rewardPlot.png")
+
+        # plt.clear()
+        # plt.plot(np.asarray(range(eval_episode_ctr_valid)), self.qavg_list)
+        # plt.xlabel('Epochs')
+        # plt.ylabel('Avg Q per step')
+        # plt.title('Avg Q per step during training')
+        # plt.grid(True)
+        # plt.savefig("qPlot.png")
 
 
