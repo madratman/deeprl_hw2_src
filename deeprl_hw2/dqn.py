@@ -143,42 +143,6 @@ class DQNAgent:
         q_vals = self.q_network.predict(np.swapaxes(state,0,3))
         return q_vals
 
-    # we're not using this at all 
-    def select_action(self, state, **kwargs):
-        """Select the action based on the current state.
-
-        You will probably want to vary your behavior here based on
-        which stage of training your in. For example, if you're still
-        collecting random samples you might want to use a
-        UniformRandomPolicy.
-
-        If you're testing, you might want to use a GreedyEpsilonPolicy
-        with a low epsilon.
-
-        If you're training, you might want to use the
-        LinearDecayGreedyEpsilonPolicy.
-
-        This would also be a good place to call
-        process_state_for_network in your preprocessor.
-
-        Returns
-        --------
-        selected action
-        """
-        q_values = self.calc_q_values(self.preprocessor.process_state_for_network(state))
-        
-        if kwargs['stage'] == "burning_in":
-            self.policy = UniformRandomPolicy()
-            return self.policy.select_action()
-
-        if kwargs['stage'] == "training":
-            self.policy = LinearDecayGreedyEpsilonPolicy()
-            return self.policy.select_action(q_values)
-
-        if kwargs['stage'] == "testing":
-            self.policy = GreedyPolicy()
-            return self.policy.select_action()
-
     def update_policy(self):
         """Update your policy.
 
@@ -263,11 +227,11 @@ class DQNAgent:
           resets. Can help exploration.
         """
         self.compile(self.num_of_actions)
+        self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6) # for training
+        self.replay_memory = ReplayMemory(max_size=1000000)
 
         random_policy = UniformRandomPolicy(num_actions=self.num_of_actions) # for burn in 
-        self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6) # for training
         history_memory = HistoryPreprocessor(history_length=4)
-        self.replay_memory = ReplayMemory(max_size=1000000)
 
         num_episodes = 0
         while self.iter_ctr < num_iterations:
@@ -294,7 +258,7 @@ class DQNAgent:
 
                     if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
                         state = self.env.reset()
-                        print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
+                        print "iter_ctr {}, num_episodes : {}, num_timesteps_in_curr_episode {}, epsilon {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_episodes += 1
                         num_timesteps_in_curr_episode = 0
                         # this should be called when num_timesteps_in_curr_episode > max_episode_length, but we can call it in is_terminal as well. 
@@ -323,19 +287,12 @@ class DQNAgent:
                     if not(self.iter_ctr%save_model_every_nth):
                         self.q_network.save('/data/datasets/ratneshm/deeprl_hw2/q_network_{}.h5'.format(str(self.iter_ctr).zfill(7)))
 
-                    if num_timesteps_in_curr_episode > max_episode_length-1:
-                        state = self.env.reset() # being safe
-                        print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
-                        self.replay_memory.end_episode()
-                        num_episodes += 1
-                        num_timesteps_in_curr_episode = 0
-                        break
-
-                    if is_terminal:
+                    if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
                         state = self.env.reset()
-                        print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
+                        print "iter_ctr {}, num_episodes : {}, num_timesteps_in_curr_episode {}, epsilon {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_episodes += 1
                         num_timesteps_in_curr_episode = 0
+                        self.replay_memory.end_episode() 
                         break
 
                     if not(self.iter_ctr % self.train_freq):
