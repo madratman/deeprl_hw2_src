@@ -59,8 +59,12 @@ def main():  # noqa: D103
 
     args = parser.parse_args()
     print " MODE IS", args.mode
+    if args.env == "breakout":
+        args.env = 'Breakout-v0'
+    if args.env == "space_invaders":
+        args.env = 'SpaceInvaders-v0'
         
-    agent = DQNAgent(env='SpaceInvaders-v0', gamma=0.99, target_update_freq=10000, num_burn_in=50000, train_freq=4, batch_size=32, mode=args.mode)
+    agent = DQNAgent(env=args.env, gamma=0.99, target_update_freq=10000, num_burn_in=50000, train_freq=4, batch_size=32, mode=args.mode)
     agent.fit(num_iterations = int(5e6), max_episode_length=100000, save_model_every_nth=10000, eval_every_nth=10000, log_loss_every_nth=1000)
 
 if __name__ == '__main__':

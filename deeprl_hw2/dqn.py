@@ -156,7 +156,7 @@ class DQNAgent:
     def make_log_dir(self):
         import datetime, os
         current_timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        self.log_dir = os.path.join(self.log_parent_dir, self.mode, current_timestamp)
+        self.log_dir = os.path.join(self.log_parent_dir, self.env_string, self.mode, current_timestamp)
         os.makedirs(self.log_dir)
         os.makedirs(self.log_dir + '/weights')
         # create empty logfiles now

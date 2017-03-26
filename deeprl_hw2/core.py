@@ -226,7 +226,7 @@ class ReplayMemory:
         if len(self.experience) < self.max_size:
             self.experience.append(new_sample)
         else: # Replay Memory already has max size
-            if self.index_for_insertion==max_size:
+            if self.index_for_insertion==self.max_size:
                 self.index_for_insertion = 0
             self.experience[self.index_for_insertion] = new_sample
         self.index_for_insertion+=1
