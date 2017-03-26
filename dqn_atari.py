@@ -55,23 +55,13 @@ def get_output_folder(parent_dir, env_name):
 def main():  # noqa: D103
     parser = argparse.ArgumentParser(description='Run DQN on Atari SpaceInvaders')
     parser.add_argument('--env', default='SpaceInvaders-v0', help='Atari env name')
-    parser.add_argument(
-        '-o', '--output', default='atari-v0', help='Directory to save data to')
-    parser.add_argument('--seed', default=0, type=int, help='Random seed')
+    parser.add_argument('--mode', default='vanilla', type=str, help='vanilla or double dqn')
 
     args = parser.parse_args()
-    # args.input_shape = tuple(args.input_shape)
-
-    # args.output = get_output_folder(args.output, args.env)
-
-    # here is where you should start up a session,
-    # create your DQN agent, create your model, etc.
-    # then you can run your fit method.
-
-    # define parameters for our problem:
+    print " MODE IS", args.mode
         
-    agent = DQNAgent(env='SpaceInvaders-v0', gamma=0.99, target_update_freq=10000, num_burn_in=50000, train_freq=4, batch_size=32)
-    agent.fit(num_iterations = int(5e6), max_episode_length=100000, save_model_every_nth=10000, eval_every_nth=10000, log_loss_every_nth=1000, mode='vanilla')
+    agent = DQNAgent(env='SpaceInvaders-v0', gamma=0.99, target_update_freq=10000, num_burn_in=50000, train_freq=4, batch_size=32, mode=args.mode)
+    agent.fit(num_iterations = int(5e6), max_episode_length=100000, save_model_every_nth=10000, eval_every_nth=10000, log_loss_every_nth=1000)
 
 if __name__ == '__main__':
     main()

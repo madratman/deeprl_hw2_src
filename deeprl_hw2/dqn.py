@@ -56,7 +56,8 @@ class DQNAgent:
                  target_update_freq,
                  num_burn_in,
                  train_freq,
-                 batch_size, 
+                 batch_size,
+                 mode,
                  log_parent_dir = '/data/datasets/ratneshm/deeprl_hw2/'):
 
         self.env_string = env
@@ -77,6 +78,7 @@ class DQNAgent:
         self.reward_list = []
         self.loss_log = []
         self.loss_last = None
+        self.mode = mode
         self.log_parent_dir = log_parent_dir
         self.make_log_dir() # makes empty dir and logfiles based on current timestamp inside self.log_parent_dir
 
@@ -109,12 +111,12 @@ class DQNAgent:
           The Q-model.
         """
         model = Sequential()
-        model.add(Convolution2D(filters=16, kernel_size=(8,8), strides=(4,4), input_shape=(84,84,4), activation='relu', name='conv_1'))
-        model.add(Convolution2D(filters=32, kernel_size=(4,4), strides=(2,2), activation='relu', name='conv_2'))
-        model.add(Convolution2D(filters=32, kernel_size=(4,4), strides=(2,2), activation='relu', name='fc_1'))
+        model.add(Convolution2D(filters=32, kernel_size=(8,8), strides=(4,4), input_shape=(84,84,4), activation='relu', name='conv_1'))
+        model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='conv_2'))
+        model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='fc_1'))
         model.add(Flatten())
-        model.add(Dense(256, activation='relu', name='fc_2'))
-        model.add(Dense(num_actions, activation='relu', name='final'))
+        model.add(Dense(512, activation='relu', name='fc_2'))
+        model.add(Dense(num_actions, name='final'))
         return model
 
     def compile(self, num_actions, optimizer='Adam'):
@@ -154,7 +156,7 @@ class DQNAgent:
     def make_log_dir(self):
         import datetime, os
         current_timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        self.log_dir = os.path.join(self.log_parent_dir, current_timestamp)
+        self.log_dir = os.path.join(self.log_parent_dir, self.mode, current_timestamp)
         os.makedirs(self.log_dir)
         os.makedirs(self.log_dir + '/weights')
         # create empty logfiles now
@@ -180,7 +182,7 @@ class DQNAgent:
         with open(self.log_files['test_episode_reward'], "a") as f:
             f.write(str(episode_reward) + '\n')
 
-    def update_policy(self, mode='vanilla'):
+    def update_policy(self):
         """Update your policy.
 
         Behavior may differ based on what stage of training your
@@ -226,9 +228,9 @@ class DQNAgent:
             if last_sample.is_terminal:
                 y_targets_all[idx, last_sample.action] = last_sample.reward
             else:
-                if mode == 'vanilla':
+                if self.mode == 'vanilla':
                     y_targets_all[idx, last_sample.action] = np.float32(last_sample.reward) + self.gamma*np.max(q_next[idx])
-                if mode == 'double':				
+                if self.mode == 'double':				
                     y_targets_all[idx, last_sample.action] = np.float32(last_sample.reward) + self.gamma*q_next[idx, np.argmax(q_current[idx])] 
 
         loss = self.q_network.train_on_batch(current_state_images, np.float32(y_targets_all))
@@ -243,7 +245,7 @@ class DQNAgent:
             # [self.target_q_network.trainable_weights[i].assign(self.q_network.trainable_weights[i]) \
             #     for i in range(len(self.target_q_network.trainable_weights))]
 
-    def fit(self, num_iterations, max_episode_length=250, eval_every_nth=1000, save_model_every_nth=1000, log_loss_every_nth=1000, mode='vanilla'):
+    def fit(self, num_iterations, max_episode_length=250, eval_every_nth=1000, save_model_every_nth=1000, log_loss_every_nth=1000):
         """Fit your model to the provided environment.
 
         Its a good idea to print out things like loss, average reward,
@@ -348,7 +350,7 @@ class DQNAgent:
                         break
 
                     if not(self.iter_ctr % self.train_freq):
-                        self.update_policy(mode=mode)
+                        self.update_policy()
 
                 state = next_state
 
