@@ -26,17 +26,15 @@ class HistoryPreprocessor(Preprocessor):
 
     def process_state_for_network(self, state):
         """You only want history when you're deciding the current action to take."""
-        self.history = np.roll(self.history, -1, axis=0) 
-        self.history[-1] = state[..., np.newaxis]
+        self.history = np.roll(self.history, -1, axis=0) # makes something like [0,1,2,3] -> [1,2,3,0]
+        self.history[-1] = state[..., np.newaxis] # replaces last item by 4. => [1,2,3,4]
+        return self.history
 
     def reset(self):    
         """Reset the history sequence.4
         Useful when you start a new episode.
         """
         self.history = np.zeros([history_length, 84, 84, 1])
-
-    def get_history(self):
-        return self.history
 
     def get_config(self):
         return self.history_length
@@ -114,7 +112,7 @@ class AtariPreprocessor(Preprocessor):
         samples from the replay memory. Meaning you need to convert
         both state and next state values.
         """
-        return samples.astype('float32')
+        return np.float32(state)/255.
 
     def process_reward(self, reward):
         """Clip reward between -1 and 1."""
@@ -133,5 +131,22 @@ class PreprocessorSequence(Preprocessor):
     state = atari.process_state_for_network(state)
     return history.process_state_for_network(state)
     """
-    def __init__(self, preprocessors):
-        pass
+    def __init__(self):
+        self.history_preprocessor = HistoryPreprocessor()
+        self.atari_preprocessor = AtariPreprocessor()
+
+    def process_state_for_network(self, state):
+        state = self.atari_preprocessor.process_state_for_network(state)
+        return self.history_preprocessor.process_state_for_network(state)
+
+    def process_state_for_memory(self, state):
+        return self.atari_preprocessor.process_state_for_memory(state)
+
+    def process_batch(self, batch):
+        return self.atari_preprocessor.process_batch(batch)
+
+    def process_reward(self, reward):
+        return self.atari_preprocessor.process_reward(reward)
+
+    def reset_history_memory(self):
+        self.history_preprocessor.reset()

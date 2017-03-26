@@ -71,7 +71,7 @@ def main():  # noqa: D103
     # define parameters for our problem:
         
     agent = DQNAgent(env='SpaceInvaders-v0', gamma=0.99, target_update_freq=10000, num_burn_in=50000, train_freq=4, batch_size=32)
-    agent.fit(num_iterations = int(5e6), max_episode_length=100000, save_model_every_nth=10000, eval_every_nth=10000)
+    agent.fit(num_iterations = int(5e6), max_episode_length=100000, save_model_every_nth=10000, eval_every_nth=10000, log_loss_every_nth=1000, mode='vanilla')
 
 if __name__ == '__main__':
     main()

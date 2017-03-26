@@ -163,6 +163,7 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
         if ('is_training' in kwargs):
             if kwargs['is_training']:
                 if self.epsilon > end_value:
+                    print "updating self.epsilon : old {} : new {}".format(self.epsilon, self.epsilon - ((self.end_value - self.start_value) / num_steps))
                     self.epsilon = self.epsilon - ((self.end_value - self.start_value) / num_steps)
 
     def reset(self):
