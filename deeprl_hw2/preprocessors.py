@@ -21,7 +21,8 @@ class HistoryPreprocessor(Preprocessor):
       Number of states to feed to CNN (4 acc to paper).
 
     """
-    def __init__(self, history_length=1):
+    def __init__(self, history_length=4):
+        self.history_length = history_length
         self.history = np.zeros([history_length, 84, 84, 1])
 
     def process_state_for_network(self, state):
@@ -34,7 +35,7 @@ class HistoryPreprocessor(Preprocessor):
         """Reset the history sequence.4
         Useful when you start a new episode.
         """
-        self.history = np.zeros([history_length, 84, 84, 1])
+        self.history = np.zeros([self.history_length, 84, 84, 1])
 
     def get_config(self):
         return self.history_length
@@ -112,7 +113,7 @@ class AtariPreprocessor(Preprocessor):
         samples from the replay memory. Meaning you need to convert
         both state and next state values.
         """
-        return np.float32(state)/255.
+        return np.float32(samples)/255.
 
     def process_reward(self, reward):
         """Clip reward between -1 and 1."""

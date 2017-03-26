@@ -109,7 +109,7 @@ class GreedyEpsilonPolicy(Policy):
         """
         greedy_action_idx = np.argmax(q_values)
         action_indices = range(len(q_values)) # list of 0,1,2,....n
-        if random.random() < epsilon:
+        if random.random() < self.epsilon:
             return random.choice(action_indices)
         else:
             return greedy_action_idx
@@ -131,13 +131,14 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
 
     """
 
-    def __init__(self, start_value, end_value, num_steps):
+    def __init__(self, num_actions, start_value, end_value, num_steps):
         self.start_value = start_value
         self.end_value = end_value
         self.num_steps = num_steps
         self.epsilon = start_value
+        self.num_actions = num_actions
 
-    def select_action(self, **kwargs):
+    def select_action(self, q_values, is_training):
         """Decay parameter and select action.
 
         Parameters
@@ -152,30 +153,18 @@ class LinearDecayGreedyEpsilonPolicy(Policy):
         Any:
           Selected action.is_training
         """
-        greedy_action_idx = np.argmax(kwargs['q_values'])
-        action_indices = range(len(kwargs['q_values'])) # list of 0,1,2,....n
-        if random.random() < self.epsilon:
-            return random.choice(action_indices)
-        else:
-            return greedy_action_idx
+        if is_training:
+            if self.epsilon > self.end_value:
+                # print "updating self.epsilon : old {} : new {}".format(self.epsilon, self.epsilon - ((self.start_value - self.end_value) /self.num_steps))
+                self.epsilon = self.epsilon - ((self.start_value - self.end_value) / self.num_steps)
+            else:
+                self.epsilon = self.end_value
 
-        # if opt arg is present and if opt arg is true, then decay 
-        if ('is_training' in kwargs):
-            if kwargs['is_training']:
-                if self.epsilon > end_value:
-                    print "updating self.epsilon : old {} : new {}".format(self.epsilon, self.epsilon - ((self.end_value - self.start_value) / num_steps))
-                    self.epsilon = self.epsilon - ((self.end_value - self.start_value) / num_steps)
+        if random.random() < self.epsilon:
+            return np.random.randint(0, self.num_actions) # first arg inclusive, second is not. interval [0, num_actions) effectively
+        else:
+            return np.argmax(q_values)
 
     def reset(self):
         """Start the decay over at the start value."""
         self.epsilon = self.start_value
-
-
-
-
-
-
-
-
-
-        

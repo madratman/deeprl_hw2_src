@@ -32,7 +32,7 @@ def huber_loss(y_true, y_pred, max_grad=1.):
     delta = max_grad # somewhere in piazza. does this need to be a tf constant
     diff = tf.abs(y_true-y_pred)
     huber_if_diff_less_than_delta = 0.5*tf.square(diff)
-    huber_if_diff_more_than_delta = delta*(diff - 0.5*diff)
+    huber_if_diff_more_than_delta = delta*(diff - 0.5*delta)
     is_diff_less_than_delta = tf.less_equal(diff, delta)
     final = tf.where(is_diff_less_than_delta, huber_if_diff_less_than_delta, huber_if_diff_more_than_delta) 
     return final

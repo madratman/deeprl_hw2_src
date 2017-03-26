@@ -10,6 +10,7 @@ import preprocessors
 from core import *
 import matplotlib.pyplot as plt
 import cPickle as pkl
+import os
 
 class DQNAgent:
     """Class implementing DQN.
@@ -75,6 +76,7 @@ class DQNAgent:
         self.qavg_list = np.array([0])
         self.reward_list = []
         self.loss_log = []
+        self.loss_last = None
         self.log_parent_dir = log_parent_dir
         self.make_log_dir() # makes empty dir and logfiles based on current timestamp inside self.log_parent_dir
 
@@ -136,6 +138,7 @@ class DQNAgent:
         self.target_q_network = self.create_model(num_actions)
         self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
         self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics 
+        print self.q_network.summary()
 
     def calc_q_values(self, state):
         """Given a state (or batch of states) calculate the Q-values.
@@ -153,6 +156,7 @@ class DQNAgent:
         current_timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         self.log_dir = os.path.join(self.log_parent_dir, current_timestamp)
         os.makedirs(self.log_dir)
+        os.makedirs(self.log_dir + '/weights')
         # create empty logfiles now
         self.log_files = {
                             'train_loss': os.path.join(self.log_dir, 'train_loss.txt'),
@@ -164,6 +168,7 @@ class DQNAgent:
             open(os.path.join(self.log_dir, self.log_files[key]), 'a').close()
 
     def dump_train_loss(self, loss):
+        self.loss_last = loss
         with open(self.log_files['train_loss'], "a") as f:
             f.write(str(loss) + '\n')
 
@@ -264,7 +269,7 @@ class DQNAgent:
           resets. Can help exploration.
         """
         self.compile(self.num_of_actions)
-        self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6) # for training
+        self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6, num_actions=self.num_of_actions) # for training
         self.replay_memory = ReplayMemory(max_size=1000000)
         self.log_loss_every_nth = log_loss_every_nth
         random_policy = UniformRandomPolicy(num_actions=self.num_of_actions) # for burn in 
@@ -272,8 +277,10 @@ class DQNAgent:
 
         while self.iter_ctr < num_iterations:
             state = self.env.reset()
+            self.preprocessor.reset_history_memory()
+
             num_timesteps_in_curr_episode = 0
-            total_reward_curr_episode = 0            
+            total_reward_curr_episode = 0       
 
             while num_timesteps_in_curr_episode < max_episode_length:
                 self.iter_ctr+=1 # number of steps overall
@@ -298,8 +305,9 @@ class DQNAgent:
 
                     if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
                         state = self.env.reset()
-                        print "iter_ctr {}, num_episodes : {}, num_timesteps_in_curr_episode {}, epsilon {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_episodes += 1
+                        print "iter_ctr {}, num_episodes : {}, episode_reward : {}, loss : {}, episode_timesteps : {}, epsilon : {}".format\
+                                (self.iter_ctr, num_episodes, total_reward_curr_episode, self.loss_last, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_timesteps_in_curr_episode = 0
                         self.dump_train_episode_reward(total_reward_curr_episode)
                         # this should be called when num_timesteps_in_curr_episode > max_episode_length, but we can call it in is_terminal as well. 
@@ -327,18 +335,19 @@ class DQNAgent:
 
                     # save model
                     if not(self.iter_ctr%save_model_every_nth):
-                        self.q_network.save(os.path.join(self.log_dir, 'q_network_{}.h5'.format(str(self.iter_ctr).zfill(7))))
+                        self.q_network.save(os.path.join(self.log_dir, 'weights/q_network_{}.h5'.format(str(self.iter_ctr).zfill(7))))
 
                     if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
                         state = self.env.reset()
-                        print "iter_ctr {}, num_episodes : {}, num_timesteps_in_curr_episode {}, epsilon {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_episodes += 1
+                        print "iter_ctr {}, num_episodes : {}, episode_reward : {}, loss : {}, episode_timesteps : {}, epsilon : {}".format\
+                                (self.iter_ctr, num_episodes, total_reward_curr_episode, self.loss_last, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_timesteps_in_curr_episode = 0
                         self.dump_train_episode_reward(total_reward_curr_episode)
                         self.replay_memory.end_episode() 
                         break
 
-                    if not(self.iter_ctr % self.train_pafreq):
+                    if not(self.iter_ctr % self.train_freq):
                         self.update_policy(mode=mode)
 
                 state = next_state
@@ -356,48 +365,52 @@ class DQNAgent:
         You can also call the render function here if you want to
         visually inspect your policy.
         """
-        evaluation_policy = GreedyPolicy()
+        evaluation_policy = GreedyEpsilonPolicy(epsilon=0.05)
+        eval_preprocessor = preprocessors.PreprocessorSequence()
+        env_valid = gym.make(self.env_string)
 
         iter_ctr_valid = 0
         Q_sum = 0
-        history_memory = HistoryPreprocessor(history_length=4)
         eval_episode_ctr_valid = 0
-        env_valid = gym.make(self.env_string)
-
+        total_reward_all_episodes = []
+  
         while eval_episode_ctr_valid < num_episodes:
             state = env_valid.reset()
+            eval_preprocessor.reset_history_memory()
             num_timesteps_in_curr_episode = 0
-            total_reward_all_episodes = []
-            total_reward_curr_episode = 0
+            total_reward_curr_episode = 0.0
 
             while num_timesteps_in_curr_episode < max_episode_length:
                 num_timesteps_in_curr_episode += 1
                 iter_ctr_valid += 1
 
-                history_memory.process_state_for_network(self.atari_preprocessor.process_state_for_memory(state))
-                history = history_memory.get_history()
-                q_values = self.calc_q_values(history)
+                state_network = self.preprocessor.process_state_for_network(state)
+                q_values = self.calc_q_values(state_network)
                 Q_sum += np.max(q_values) # todo fix this
 
                 action = evaluation_policy.select_action(q_values)
+                # print "action {}".format(action)
                 next_state, reward, is_terminal, _ = env_valid.step(action)
-                #reward = self.atari_preprocessor.process_reward(reward) no clipping reqd here
                 total_reward_curr_episode += reward
+                if total_reward_all_episodes==0.0:
+                    print "its zero"
+                # print "each step reward {}".format(reward)
 
                 if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
-                    state = env_valid.reset() 
-                    # print "Evaluate() : iter_ctr_valid {}, eval_episode_ctr_valid : {} num_timesteps_in_curr_episode {}".format(iter_ctr_valid, eval_episode_ctr_valid, num_timesteps_in_curr_episode)
-                    total_reward_all_episodes.append(total_reward_curr_episode)
-                    self.dump_train_episode_reward(total_reward_curr_episode)
-                    print "total_reward_curr_episode ", total_reward_curr_episode
                     eval_episode_ctr_valid += 1
-                    num_timesteps_in_curr_episode = 0
+                    print "Evaluate() : iter_ctr_valid {}, eval_episode_ctr_valid : {}, total_reward_curr_episode : {}, num_timesteps_in_curr_episode {}"\
+                            .format(iter_ctr_valid, eval_episode_ctr_valid, total_reward_curr_episode, num_timesteps_in_curr_episode)
+                    total_reward_all_episodes.append(total_reward_curr_episode)
+                    # num_timesteps_in_curr_episode = 0
                     break
 
                 state = next_state
 
         Q_avg = Q_sum/float(iter_ctr_valid)
+        print " sum(total_reward_all_episodes) : {} , float(len(total_reward_all_episodes)) : {}".format\
+                (sum(total_reward_all_episodes), float(len(total_reward_all_episodes)))
         all_episode_avg_reward = sum(total_reward_all_episodes)/float(len(total_reward_all_episodes))
+        self.dump_test_episode_reward(all_episode_avg_reward)
         self.qavg_list = np.append(self.qavg_list, Q_avg)
         self.reward_list.append(all_episode_avg_reward)
 
