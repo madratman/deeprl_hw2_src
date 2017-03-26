@@ -216,6 +216,7 @@ class DQNAgent:
         # preprocess
         current_state_images = self.preprocessor.process_batch(current_state_images)
         next_state_images = self.preprocessor.process_batch(next_state_images)
+        # print "current_state_images {} max {} ".format(current_state_images.shape, np.max(current_state_images))
 
         q_current = self.q_network.predict(current_state_images) # 32*num_actions
         q_next = self.target_q_network.predict(next_state_images)
@@ -293,7 +294,8 @@ class DQNAgent:
                     # print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
 
                 # this appends to uint8 history and also returns stuff ready to be spit into the  network
-                state_network = self.preprocessor.process_state_for_network(state)
+                state_network = self.preprocessor.process_state_for_network(state) #shape is (4,84,84,1). axis are swapped in cal_q_vals
+                # print "shape {}, max {}, min {}, type {} ".format(state_network.shape, np.max(state_network), np.min(state_network), state_network.dtype)
 
                 # burning in 
                 if self.iter_ctr < self.num_burn_in:
@@ -321,6 +323,7 @@ class DQNAgent:
                 else:
                     # print "iter_ctr {}, num_episodes : {} num_timesteps_in_curr_episode {}".format(self.iter_ctr, num_episodes, num_timesteps_in_curr_episode)
                     q_values = self.calc_q_values(state_network)
+                    # print "q_values {} q_values.shape {}".format(q_values, q_values.shape)
                     #print "q_values.shape ", q_values.shape
                     action = self.policy.select_action(q_values=q_values, is_training=True)
                     next_state, reward, is_terminal, _ = self.env.step(action)

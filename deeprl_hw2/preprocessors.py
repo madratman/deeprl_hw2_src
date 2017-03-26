@@ -23,7 +23,7 @@ class HistoryPreprocessor(Preprocessor):
     """
     def __init__(self, history_length=4):
         self.history_length = history_length
-        self.history = np.zeros([history_length, 84, 84, 1])
+        self.history = np.zeros([history_length, 84, 84, 1], dtype='float32')
 
     def process_state_for_network(self, state):
         """You only want history when you're deciding the current action to take."""
@@ -35,7 +35,7 @@ class HistoryPreprocessor(Preprocessor):
         """Reset the history sequence.4
         Useful when you start a new episode.
         """
-        self.history = np.zeros([self.history_length, 84, 84, 1])
+        self.history = np.zeros([self.history_length, 84, 84, 1], dtype='float32')
 
     def get_config(self):
         return self.history_length

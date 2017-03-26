@@ -243,7 +243,8 @@ class ReplayMemory:
         indices = random.sample(range(len(self.experience))[4:], batch_size)
         # else:
             # indices = random.sample(range(len(self.experience)), batch_size)
-        
+        # print "indices {}".format(indices)
+
         # list of list of samples. (32 outside and 4 inside)
         current_state_samples = [self.experience[index-4:index] for index in indices]
         next_state_samples = [self.experience[index-3:index+1] for index in indices]
