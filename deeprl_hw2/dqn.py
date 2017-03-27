@@ -118,7 +118,7 @@ class DQNAgent:
 
         model = Sequential()
         model.add(Dense(self.num_actions, activation=None,  name='final', input_shape=(84,84,4)))
-        model.add(Flatten())
+        # model.add(Flatten())
         return model
 
     def compile(self):
