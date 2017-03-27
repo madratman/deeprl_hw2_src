@@ -60,8 +60,8 @@ def main():  # noqa: D103
     args = parser.parse_args()
     print " MODE IS", args.mode
 
-    video_every_nth = 20000
-    eval_every_nth = 10000
+    video_every_nth = 50000
+    eval_every_nth = 50000
 
     if args.env == "breakout":
         args.env = 'Breakout-v0'
