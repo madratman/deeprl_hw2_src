@@ -139,9 +139,9 @@ class DQNAgent:
         optimizer.
         """
         self.q_network = self.create_model()
-        self.target_q_network = self.create_model()
+        # self.target_q_network = self.create_model()
         self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
-        self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics 
+        # self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics 
         print self.q_network.summary()
 
     def calc_q_values(self, state):
@@ -222,7 +222,7 @@ class DQNAgent:
         # print "current_state_images {} max {} ".format(current_state_images.shape, np.max(current_state_images))
 
         q_current = self.q_network.predict(current_state_images) # 32*num_actions
-        q_next = self.target_q_network.predict(next_state_images)
+        q_next = self.q_network.predict(next_state_images)
 
         # targets
         y_targets_all = q_current #32*num_actions
@@ -242,11 +242,11 @@ class DQNAgent:
         if not (self.iter_ctr % self.log_loss_every_nth):
             self.dump_train_loss(loss)
 
-        if (self.iter_ctr > (self.num_burn_in+1)) and not(self.iter_ctr%self.target_update_freq):
-            # copy weights
-            print "Iter {} Updating target Q network".format(self.iter_ctr)
-            self.target_q_network.set_weights(self.q_network.get_weights())
-            # [self.target_q_network.trainable_weights[i].assign(self.q_network.trainable_weights[i]) \
+        # if (self.iter_ctr > (self.num_burn_in+1)) and not(self.iter_ctr%self.target_update_freq):
+        #     # copy weights
+        #     print "Iter {} Updating target Q network".format(self.iter_ctr)
+        #     self.target_q_network.set_weights(self.q_network.get_weights())
+        #     # [self.target_q_network.trainable_weights[i].assign(self.q_network.trainable_weights[i]) \
             #     for i in range(len(self.target_q_network.trainable_weights))]
 
     def fit(self, num_iterations, max_episode_length=250, eval_every_nth=1000, save_model_every_nth=1000, log_loss_every_nth=1000, video_every_nth=20000):
