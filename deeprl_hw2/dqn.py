@@ -59,6 +59,8 @@ class DQNAgent:
                  train_freq,
                  batch_size,
                  mode,
+                 target_fixing = True,
+                 experience_replay = True,
                  log_parent_dir = '/data/datasets/ratneshm/deeprl_hw2/'):
 
         self.env_string = env
@@ -73,6 +75,8 @@ class DQNAgent:
 
         self.eval_episode_ctr = 0
         self.preprocessor = preprocessors.PreprocessorSequence()
+        self.target_fixing = target_fixing
+        self.experience_replay = experience_replay
 
         # loggers
         self.qavg_list = np.array([0])
@@ -120,6 +124,12 @@ class DQNAgent:
         model.add(Dense(self.num_actions, name='final'))
         return model
 
+    def create_model_linear(self):  # noqa: D103
+        model = Sequential()
+        model.add(Flatten(input_shape=(84,84,4)))
+        model.add(Dense(self.num_actions, name='final'))
+        return model
+
     def compile(self):
         """Setup all of the TF graph variables/ops.
 
@@ -137,10 +147,12 @@ class DQNAgent:
         keras.optimizers.Optimizer class. Specifically the Adam
         optimizer.
         """
+        self.target_q_network = None
         self.q_network = self.create_model()
-        self.target_q_network = self.create_model()
-        self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
         self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics 
+        if self.target_fixing:
+            self.target_q_network = self.create_model()
+            self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
         print self.q_network.summary()
 
     def calc_q_values(self, state):
