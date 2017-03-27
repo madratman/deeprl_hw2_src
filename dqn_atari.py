@@ -55,7 +55,7 @@ def get_output_folder(parent_dir, env_name):
 def main():  # noqa: D103
     parser = argparse.ArgumentParser(description='Run DQN on Atari SpaceInvaders')
     parser.add_argument('--env', default='SpaceInvaders-v0', help='Atari env name')
-    parser.add_argument('--mode', default='vanilla', type=str, help='vanilla or double dqn')
+    parser.add_argument('--mode', default='double', type=str, help='vanilla or double dqn')
 
     args = parser.parse_args()
     print " MODE IS", args.mode
