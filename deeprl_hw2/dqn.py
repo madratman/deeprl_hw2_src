@@ -11,6 +11,7 @@ from core import *
 import matplotlib.pyplot as plt
 import cPickle as pkl
 import os
+from gym import wrappers
 
 class DQNAgent:
     """Class implementing DQN.
@@ -158,7 +159,8 @@ class DQNAgent:
         current_timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         self.log_dir = os.path.join(self.log_parent_dir, self.env_string, self.mode, current_timestamp)
         os.makedirs(self.log_dir)
-        os.makedirs(self.log_dir + '/weights')
+        os.makedirs(os.path.join(self.log_dir, 'weights'))
+        os.makedirs(os.path.join(self.log_dir, 'gym_monitor'))
         # create empty logfiles now
         self.log_files = {
                             'train_loss': os.path.join(self.log_dir, 'train_loss.txt'),
@@ -335,7 +337,7 @@ class DQNAgent:
                     # validation. keep this clause before the breaks!
                     if not(self.iter_ctr%eval_every_nth):
                         print "\n\nEvaluating at iter {}".format(self.iter_ctr)
-                        self.evaluate(num_episodes=20, max_episode_length=max_episode_length)
+                        self.evaluate(num_episodes=20, max_episode_length=max_episode_length, gen_video=True)
                         print "Done Evaluating\n\n"
 
                     # save model
@@ -357,7 +359,7 @@ class DQNAgent:
 
                 state = next_state
 
-    def evaluate(self, num_episodes, max_episode_length=None):
+    def evaluate(self, num_episodes, max_episode_length=None, gen_video=False):
         """Test your agent with a provided environment.
         
         You shouldn't update your network parameters here. Also if you
@@ -379,6 +381,12 @@ class DQNAgent:
         eval_episode_ctr_valid = 0
         total_reward_all_episodes = []
   
+        # https://github.com/openai/gym/blob/master/gym/wrappers/monitoring.py video_callable takes function as arg. so we hack with true lambda
+        # https://github.com/openai/gym/issues/494  
+        if gen_video:
+            video_dir = os.path.join(self.log_dir, 'gym_monitor', str(self.iter_ctr).zfill(7))
+            os.makedirs(video_dir)
+            env_valid = wrappers.Monitor(env_valid, video_dir, video_callable=lambda x:True, mode='evaluation')
         while eval_episode_ctr_valid < num_episodes:
             state = env_valid.reset()
             eval_preprocessor.reset_history_memory()
@@ -394,12 +402,10 @@ class DQNAgent:
                 Q_sum += np.max(q_values) # todo fix this
 
                 action = evaluation_policy.select_action(q_values)
-                # print "action {}".format(action)
                 next_state, reward, is_terminal, _ = env_valid.step(action)
                 total_reward_curr_episode += reward
-                if total_reward_all_episodes==0.0:
-                    print "its zero"
-                # print "each step reward {}".format(reward)
+                # print "Evalution : timestep {}, episode {}, action {}, reward {}, total_reward {}"\
+                        # .format(iter_ctr_valid, eval_episode_ctr_valid, action, reward, total_reward_curr_episode)
 
                 if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
                     eval_episode_ctr_valid += 1
