@@ -63,7 +63,7 @@ class DQNAgent:
 
         self.env_string = env
         self.env = gym.make(env)
-        self.num_of_actions = self.env.action_space.n
+        self.num_actions = self.env.action_space.n
         self.gamma = gamma
         self.target_update_freq = target_update_freq
         self.num_burn_in = num_burn_in
@@ -83,7 +83,7 @@ class DQNAgent:
         self.log_parent_dir = log_parent_dir
         self.make_log_dir() # makes empty dir and logfiles based on current timestamp inside self.log_parent_dir
 
-    def create_model(self, num_actions):  # noqa: D103
+    def create_model(self):  # noqa: D103
         """Create the Q-network model.
 
         Use Keras to construct a keras.models.Model instance (you can also
@@ -117,10 +117,10 @@ class DQNAgent:
         model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='fc_1'))
         model.add(Flatten())
         model.add(Dense(512, activation='relu', name='fc_2'))
-        model.add(Dense(num_actions, name='final'))
+        model.add(Dense(self.num_actions, name='final'))
         return model
 
-    def compile(self, num_actions, optimizer='Adam'):
+    def compile(self):
         """Setup all of the TF graph variables/ops.
 
         This is inspired by the compile method on the
@@ -137,8 +137,8 @@ class DQNAgent:
         keras.optimizers.Optimizer class. Specifically the Adam
         optimizer.
         """
-        self.q_network = self.create_model(num_actions)
-        self.target_q_network = self.create_model(num_actions)
+        self.q_network = self.create_model()
+        self.target_q_network = self.create_model()
         self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
         self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics 
         print self.q_network.summary()
@@ -248,7 +248,7 @@ class DQNAgent:
             # [self.target_q_network.trainable_weights[i].assign(self.q_network.trainable_weights[i]) \
             #     for i in range(len(self.target_q_network.trainable_weights))]
 
-    def fit(self, num_iterations, max_episode_length=250, eval_every_nth=1000, save_model_every_nth=1000, log_loss_every_nth=1000):
+    def fit(self, num_iterations, max_episode_length=250, eval_every_nth=1000, save_model_every_nth=1000, log_loss_every_nth=1000, video_every_nth=20000):
         """Fit your model to the provided environment.
 
         Its a good idea to print out things like loss, average reward,
@@ -273,11 +273,11 @@ class DQNAgent:
           How long a single episode should last before the agent
           resets. Can help exploration.
         """
-        self.compile(self.num_of_actions)
-        self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6, num_actions=self.num_of_actions) # for training
+        self.compile()
+        self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6, num_actions=self.num_actions) # for training
         self.replay_memory = ReplayMemory(max_size=1000000)
         self.log_loss_every_nth = log_loss_every_nth
-        random_policy = UniformRandomPolicy(num_actions=self.num_of_actions) # for burn in 
+        random_policy = UniformRandomPolicy(num_actions=self.num_actions) # for burn in 
         num_episodes = 0
 
         while self.iter_ctr < num_iterations:
@@ -337,7 +337,10 @@ class DQNAgent:
                     # validation. keep this clause before the breaks!
                     if not(self.iter_ctr%eval_every_nth):
                         print "\n\nEvaluating at iter {}".format(self.iter_ctr)
-                        self.evaluate(num_episodes=20, max_episode_length=max_episode_length, gen_video=True)
+                        if not(self.iter_ctr%video_every_nth):
+                            self.evaluate(num_episodes=20, max_episode_length=max_episode_length, gen_video=True)
+                        else:
+                            self.evaluate(num_episodes=20, max_episode_length=max_episode_length, gen_video=False)
                         print "Done Evaluating\n\n"
 
                     # save model
@@ -372,7 +375,7 @@ class DQNAgent:
         You can also call the render function here if you want to
         visually inspect your policy.
         """
-        evaluation_policy = GreedyEpsilonPolicy(epsilon=0.05)
+        evaluation_policy = GreedyEpsilonPolicy(epsilon=0.05, num_actions=self.num_actions)
         eval_preprocessor = preprocessors.PreprocessorSequence()
         env_valid = gym.make(self.env_string)
 
@@ -387,6 +390,7 @@ class DQNAgent:
             video_dir = os.path.join(self.log_dir, 'gym_monitor', str(self.iter_ctr).zfill(7))
             os.makedirs(video_dir)
             env_valid = wrappers.Monitor(env_valid, video_dir, video_callable=lambda x:True, mode='evaluation')
+
         while eval_episode_ctr_valid < num_episodes:
             state = env_valid.reset()
             eval_preprocessor.reset_history_memory()
