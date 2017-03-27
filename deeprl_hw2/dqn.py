@@ -116,8 +116,8 @@ class DQNAgent:
         # model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='fc_1'))
         # model.add(Flatten())
 
-        model = Sequential(input_shape=(84,84,4))
-        model.add(Flatten())
+        model = Sequential()
+        model.add(Flatten(), input_shape=(84,84,4))
         model.add(Dense(self.num_actions, activation=None,  name='final'))
         return model
 
