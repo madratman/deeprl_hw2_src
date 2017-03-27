@@ -111,13 +111,14 @@ class DQNAgent:
         keras.models.Model
           The Q-model.
         """
-        model = Sequential()
-        model.add(Convolution2D(filters=32, kernel_size=(8,8), strides=(4,4), input_shape=(84,84,4), activation='relu', name='conv_1'))
-        model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='conv_2'))
-        model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='fc_1'))
+        # model.add(Convolution2D(filters=32, kernel_size=(8,8), strides=(4,4), input_shape=(84,84,4), activation='relu', name='conv_1'))
+        # model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='conv_2'))
+        # model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='fc_1'))
+        # model.add(Flatten())
+
+        model = Sequential(input_shape=(84,84,4))
         model.add(Flatten())
-        model.add(Dense(512, activation='relu', name='fc_2'))
-        model.add(Dense(self.num_actions, name='final'))
+        model.add(Dense(self.num_actions, activation=None,  name='final'))
         return model
 
     def compile(self):
