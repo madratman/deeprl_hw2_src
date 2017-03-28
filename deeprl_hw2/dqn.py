@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 import cPickle as pkl
 import os
 from gym import wrappers
+import tensorflow as tf
+import keras.backend as K
 
 class DQNAgent:
     """Class implementing DQN.
@@ -120,6 +122,10 @@ class DQNAgent:
         model.add(Flatten( input_shape=(84,84,4)))
         model.add(Dense(self.num_actions, activation=None,  name='final'))
         return model
+
+    def tf_log_scaler(self, tag, value, step):
+        summary = tf.Summary(value=[tf.Summary.Value(tag=tag, simple_value=value)])
+        self.tf_summary_writer.add_summary(summary, step)
 
     def compile(self):
         """Setup all of the TF graph variables/ops.
@@ -263,6 +269,9 @@ class DQNAgent:
             loss = self.q_network.train_on_batch(current_state_images, np.float32(y_targets_all))
         else:
             loss = self.q_network2.train_on_batch(current_state_images, np.float32(y_targets_all))
+
+        with tf.name_scope('summaries'):
+            self.tf_log_scaler(tag='train_loss', value=loss, step=self.iter_ctr)
         
 
         if not (self.iter_ctr % self.log_loss_every_nth):
@@ -307,6 +316,9 @@ class DQNAgent:
         random_policy = UniformRandomPolicy(num_actions=self.num_actions) # for burn in 
         num_episodes = 0
 
+        self.tf_session = K.get_session()
+        self.tf_summary_writer = tf.summary.FileWriter(self.log_dir, self.tf_session.graph)
+
         while self.iter_ctr < num_iterations:
             state = self.env.reset()
             self.preprocessor.reset_history_memory()
@@ -339,6 +351,9 @@ class DQNAgent:
                     if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
                         state = self.env.reset()
                         num_episodes += 1
+                        with tf.name_scope('summaries'):
+                            self.tf_log_scaler(tag='train_reward_per_episode_wrt_no_of_episodes', value=total_reward_curr_episode, step=num_episodes)
+                            self.tf_log_scaler(tag='train_reward_per_episode_wrt_iterations', value=total_reward_curr_episode, step=self.iter_ctr)
                         print "iter_ctr {}, num_episodes : {}, episode_reward : {}, loss : {}, episode_timesteps : {}, epsilon : {}".format\
                                 (self.iter_ctr, num_episodes, total_reward_curr_episode, self.loss_last, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_timesteps_in_curr_episode = 0
@@ -377,6 +392,9 @@ class DQNAgent:
                     if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
                         state = self.env.reset()
                         num_episodes += 1
+                        with tf.name_scope('summaries'):
+                            self.tf_log_scaler(tag='train_reward_per_episode_wrt_no_of_episodes', value=total_reward_curr_episode, step=num_episodes)
+                            self.tf_log_scaler(tag='train_reward_per_episode_wrt_iterations', value=total_reward_curr_episode, step=self.iter_ctr)
                         print "iter_ctr {}, num_episodes : {}, episode_reward : {}, loss : {}, episode_timesteps : {}, epsilon : {}".format\
                                 (self.iter_ctr, num_episodes, total_reward_curr_episode, self.loss_last, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_timesteps_in_curr_episode = 0
@@ -452,6 +470,9 @@ class DQNAgent:
         print " sum(total_reward_all_episodes) : {} , float(len(total_reward_all_episodes)) : {}".format\
                 (sum(total_reward_all_episodes), float(len(total_reward_all_episodes)))
         all_episode_avg_reward = sum(total_reward_all_episodes)/float(len(total_reward_all_episodes))
+        with tf.name_scope('summaries'):
+            self.tf_log_scaler(tag='test_mean_avg_reward', value=all_episode_avg_reward, step=self.iter_ctr)
+            self.tf_log_scaler(tag='test_mean_Q_max', value=Q_avg, step=self.iter_ctr)
         self.dump_test_episode_reward(all_episode_avg_reward)
         self.qavg_list = np.append(self.qavg_list, Q_avg)
         self.reward_list.append(all_episode_avg_reward)
