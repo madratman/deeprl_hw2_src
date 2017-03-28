@@ -1,0 +1,2 @@
+rm *err
+rm *out
