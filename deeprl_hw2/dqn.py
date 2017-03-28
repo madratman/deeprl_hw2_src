@@ -443,6 +443,7 @@ class DQNAgent:
         all_episode_avg_reward = sum(total_reward_all_episodes)/float(len(total_reward_all_episodes))
         with tf.name_scope('summaries'):
             self.tf_log_scaler(tag='test_mean_avg_reward', value=all_episode_avg_reward, step=self.iter_ctr)
+            self.tf_log_scaler(tag='test_mean_Q_max', value=Q_avg, step=self.iter_ctr)
         self.dump_test_episode_reward(all_episode_avg_reward)
         self.qavg_list = np.append(self.qavg_list, Q_avg)
         self.reward_list.append(all_episode_avg_reward)
