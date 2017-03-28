@@ -4,9 +4,9 @@
 #SBATCH -t 5-00:00              # Runtime in D-HH:MM
 #SBATCH -p gpu                  # Partition to submit to
 #SBATCH --gres=gpu:1            # Number of gpus
-#SBATCH -o deeprl_hw2_%j.out      # File to which STDOUT will be written
-#SBATCH -e deeprl_hw2_%j.err      # File to which STDERR will be written
-#SBATCH -w clamps                  # Partition to submit to
+#SBATCH -o vanilla_dqn_enduro_%j.out      # File to which STDOUT will be written
+#SBATCH -e vanilla_dqn_enduro_%j.err      # File to which STDERR will be written
+#SBATCH -w roberto                  # Partition to submit to
 
 srun echo "I am on"
 srun echo $HOSTNAME
