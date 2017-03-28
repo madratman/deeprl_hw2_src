@@ -123,8 +123,23 @@ class DQNAgent:
         # model.add(Flatten())
 
         model = Sequential()
+<<<<<<< HEAD
         model.add(Flatten( input_shape=(84,84,4)))
         model.add(Dense(self.num_actions, activation=None,  name='final'))
+=======
+        model.add(Convolution2D(filters=32, kernel_size=(8,8), strides=(4,4), input_shape=(84,84,4), activation='relu', name='conv_1'))
+        model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='conv_2'))
+        model.add(Convolution2D(filters=64, kernel_size=(3,3), strides=(2,2), activation='relu', name='fc_1'))
+        model.add(Flatten())
+        model.add(Dense(512, activation='relu', name='fc_2'))
+        model.add(Dense(self.num_actions, name='final'))
+>>>>>>> master
+        return model
+
+    def create_model_linear(self):  # noqa: D103
+        model = Sequential()
+        model.add(Flatten(input_shape=(84,84,4)))
+        model.add(Dense(self.num_actions, name='final'))
         return model
 
     def compile(self):
@@ -146,8 +161,9 @@ class DQNAgent:
         """
         self.q_network = self.create_model()
         self.target_q_network = self.create_model()
-        self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
         self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics 
+        self.target_q_network = self.create_model()
+        self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
         print self.q_network.summary()
 
     def tf_log_scaler(self, tag, value, step):
@@ -194,6 +210,12 @@ class DQNAgent:
     def dump_test_episode_reward(self, episode_reward):
         with open(self.log_files['test_episode_reward'], "a") as f:
             f.write(str(episode_reward) + '\n')
+
+    # ref http://stackoverflow.com/questions/37902705/how-to-manually-create-a-tf-summary 
+    # https://gist.github.com/gyglim/1f8dfb1b5c82627ae3efcfbbadb9f514#file-tensorboard_logging-py-L41
+    def tf_log_scaler(self, tag, value, step):
+        summary = tf.Summary(value=[tf.Summary.Value(tag=tag, simple_value=value)])
+        self.tf_summary_writer.add_summary(summary, step)
 
     def update_policy(self):
         """Update your policy.
@@ -248,8 +270,15 @@ class DQNAgent:
                     y_targets_all[idx, last_sample.action] = np.float32(last_sample.reward) + self.gamma*q_next[idx, np.argmax(q_current[idx])] 
 
         loss = self.q_network.train_on_batch(current_state_images, np.float32(y_targets_all))
+<<<<<<< HEAD
         with tf.name_scope('summaries'):
             self.tf_log_scaler(tag='train_loss', value=loss, step=self.iter_ctr)
+=======
+
+        with tf.name_scope('summaries'):
+            self.tf_log_scaler(tag='train_loss', value=loss, step=self.iter_ctr)
+
+>>>>>>> master
         if not (self.iter_ctr % self.log_loss_every_nth):
             self.dump_train_loss(loss)
 
@@ -291,8 +320,16 @@ class DQNAgent:
         self.log_loss_every_nth = log_loss_every_nth
         random_policy = UniformRandomPolicy(num_actions=self.num_actions) # for burn in 
         num_episodes = 0
+<<<<<<< HEAD
         self.tf_session = K.get_session()
         self.tf_summary_writer = tf.summary.FileWriter(self.log_dir, self.tf_session.graph)
+=======
+
+        # tf logging
+        self.tf_session = K.get_session()
+        self.tf_summary_writer = tf.summary.FileWriter(self.log_dir, self.tf_session.graph)
+
+>>>>>>> master
         while self.iter_ctr < num_iterations:
             state = self.env.reset()
             self.preprocessor.reset_history_memory()
@@ -325,6 +362,9 @@ class DQNAgent:
                     if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
                         state = self.env.reset()
                         num_episodes += 1
+                        with tf.name_scope('summaries'):
+                            self.tf_log_scaler(tag='train_reward_per_episode_wrt_no_of_episodes', value=total_reward_curr_episode, step=num_episodes)
+                            self.tf_log_scaler(tag='train_reward_per_episode_wrt_iterations', value=total_reward_curr_episode, step=self.iter_ctr)
                         print "iter_ctr {}, num_episodes : {}, episode_reward : {}, loss : {}, episode_timesteps : {}, epsilon : {}".format\
                                 (self.iter_ctr, num_episodes, total_reward_curr_episode, self.loss_last, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_timesteps_in_curr_episode = 0
@@ -443,6 +483,10 @@ class DQNAgent:
         all_episode_avg_reward = sum(total_reward_all_episodes)/float(len(total_reward_all_episodes))
         with tf.name_scope('summaries'):
             self.tf_log_scaler(tag='test_mean_avg_reward', value=all_episode_avg_reward, step=self.iter_ctr)
+<<<<<<< HEAD
+=======
+            self.tf_log_scaler(tag='test_mean_Q_max', value=Q_avg, step=self.iter_ctr)
+>>>>>>> master
         self.dump_test_episode_reward(all_episode_avg_reward)
         self.qavg_list = np.append(self.qavg_list, Q_avg)
         self.reward_list.append(all_episode_avg_reward)
@@ -451,21 +495,5 @@ class DQNAgent:
         
         print "all_episode_avg_reward ", all_episode_avg_reward
         print "\n\n\n self.reward_list \n\n\n", self.reward_list
-
-
-        # plt.plot(np.asarray(range(eval_episode_ctr_valid)), self.reward_list)
-        # plt.xlabel('Epochs')
-        # plt.ylabel('Avg reward per episode')
-        # plt.title('Avg reward per episode during training')
-        # plt.grid(True)
-        # plt.savefig("rewardPlot.png")
-
-        # plt.clear()
-        # plt.plot(np.asarray(range(eval_episode_ctr_valid)), self.qavg_list)
-        # plt.xlabel('Epochs')
-        # plt.ylabel('Avg Q per step')
-        # plt.title('Avg Q per step during training')
-        # plt.grid(True)
-        # plt.savefig("qPlot.png")
 
 

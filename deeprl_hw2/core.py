@@ -246,7 +246,7 @@ class ReplayMemory:
         # print "indices {}".format(indices)
 
         # list of list of samples. (32 outside and 4 inside)
-        current_state_samples = [self.experience[index-4:index] for index in indices]
+        current_state_samples = [self.experience[index-4:index] for index in indices]   
         next_state_samples = [self.experience[index-3:index+1] for index in indices]
 
         # for index in indices:
