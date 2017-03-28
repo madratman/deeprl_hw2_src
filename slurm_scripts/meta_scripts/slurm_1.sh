@@ -6,7 +6,7 @@
 #SBATCH --gres=gpu:1                              # number of GPUs to grab
 #SBATCH --ntasks=1                              # number of CPU cores to grab
 #SBATCH --cpus-per-task=2
-#SBATCH --time=48:00:00                           
+#SBATCH --time=48:00:00
 #SBATCH --mem-per-cpu=8192                        # 500 MB of RAM per CPU core
 
 uname -a                                          # Display assigned cluster info
