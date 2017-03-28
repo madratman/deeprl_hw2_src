@@ -111,13 +111,22 @@ class DQNAgent:
         keras.models.Model
           The Q-model.
         """
+
+        # reference for this piece of code: https://yilundu.github.io/2016/12/24/Deep-Q-Learning-on-Space-Invaders.html
         model = Sequential()
-        model.add(Convolution2D(filters=32, kernel_size=(8,8), strides=(4,4), input_shape=(84,84,4), activation='relu', name='conv_1'))
-        model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='conv_2'))
-        model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='fc_1'))
-        model.add(Flatten())
-        model.add(Dense(512, activation='relu', name='fc_2'))
-        model.add(Dense(self.num_actions, name='final'))
+        input_layer = Input(shape = (84, 84, 4))
+        conv1 = Convolution2D(32, 8, 8, subsample=(4, 4), activation='relu')(input_layer)
+        conv2 = Convolution2D(64, 4, 4, subsample=(2, 2), activation='relu')(conv1)
+        conv3 = Convolution2D(64, 3, 3, activation = 'relu')(conv2)
+        flatten = Flatten()(conv3)
+        fc1 = Dense(512)(flatten)
+        advantage = Dense(self.num_actions)(fc1)
+        fc2 = Dense(512)(flatten)
+        value = Dense(1)(fc2)
+        policy = merge([advantage, value], mode = lambda x: x[0]-K.mean(x[0])+x[1], output_shape = (self.num_actions,))
+
+        model = Model(input=[input_layer], output=[policy])
+
         return model
 
     def compile(self):
