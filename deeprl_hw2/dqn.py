@@ -16,7 +16,7 @@ import tensorflow as tf
 import keras.backend as K
 from keras.backend.tensorflow_backend import set_session
 config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.33
+config.gpu_options.per_process_gpu_memory_fraction = 0.5
 set_session(tf.Session(config=config))
 
 class DQNAgent:
@@ -65,7 +65,7 @@ class DQNAgent:
                  train_freq,
                  batch_size,
                  mode,
-                 log_parent_dir = '/data/datasets/rbonatti/deeprl_hw2/'):
+                 log_parent_dir = '/data/datasets/rbonatti/deeprl_hw2/q4'):
 
         self.env_string = env
         self.env = gym.make(env)
