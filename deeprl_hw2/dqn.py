@@ -1,6 +1,6 @@
 """Main DQN agent."""
 from keras.models import Sequential, Model
-from keras.layers import Dense, Activation, Dropout, Reshape, Flatten, Lambda
+from keras.layers import Dense, Input, merge, Activation, Dropout, Reshape, Flatten, Lambda
 from keras.layers.convolutional import Convolution2D, ZeroPadding2D, AveragePooling2D, MaxPooling2D
 from objectives import mean_huber_loss
 import gym
@@ -16,7 +16,7 @@ import tensorflow as tf
 import keras.backend as K
 from keras.backend.tensorflow_backend import set_session
 config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.33
+config.gpu_options.per_process_gpu_memory_fraction = 0.5
 set_session(tf.Session(config=config))
 
 class DQNAgent:
@@ -65,7 +65,7 @@ class DQNAgent:
                  train_freq,
                  batch_size,
                  mode,
-                 log_parent_dir = '/data/datasets/ratneshm/deeprl_hw2/'):
+                 log_parent_dir = '/data/datasets/rbonatti/deeprl_hw2/q7'):
 
         self.env_string = env
         self.env = gym.make(env)
