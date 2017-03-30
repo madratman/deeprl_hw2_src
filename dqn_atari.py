@@ -12,7 +12,7 @@ from keras.models import Model
 from keras.optimizers import Adam
 
 import deeprl_hw2 as tfrl
-from deeprl_hw2.dqn import DQNAgent
+
 from deeprl_hw2.objectives import mean_huber_loss
 import gym
 
@@ -56,9 +56,21 @@ def main():  # noqa: D103
     parser = argparse.ArgumentParser(description='Run DQN on Atari SpaceInvaders')
     parser.add_argument('--env', default='SpaceInvaders-v0', help='Atari env name')
     parser.add_argument('--mode', default='vanilla', type=str, help='vanilla or double dqn')
+    parser.add_argument('--question', default='deep', type=str, help='q2, q3, q4, deep, q7')
 
     args = parser.parse_args()
     print " MODE IS", args.mode
+
+    if args.question=="q2":
+        from deeprl_hw2.dqn_q2 import DQNAgent
+    elif args.question=="q3":
+        from deeprl_hw2.dqn_q3 import DQNAgent
+    elif args.question=="q4":
+        from deeprl_hw2.dqn_q4 import DQNAgent
+    elif args.question=="q7":
+        from deeprl_hw2.dqn_q7 import DQNAgent
+    else:
+        from deeprl_hw2.dqn import DQNAgent
 
     video_every_nth = 50000
     eval_every_nth = 50000
