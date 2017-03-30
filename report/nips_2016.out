@@ -6,17 +6,3 @@
 \BOOKMARK [1][-]{section.6}{[20pts] Implement the double deep Q-network as described in van2016deep}{}% 6
 \BOOKMARK [1][-]{section.7}{[20pts] Implement the dueling deep Q-network as described in wang2015dueling}{}% 7
 \BOOKMARK [1][-]{section.8}{Table comparing rewards for each fully trained model}{}% 8
-\BOOKMARK [2][-]{subsection.8.1}{Style}{section.8}% 9
-\BOOKMARK [2][-]{subsection.8.2}{Retrieval of style files}{section.8}% 10
-\BOOKMARK [1][-]{section.9}{General formatting instructions}{}% 11
-\BOOKMARK [1][-]{section.10}{Headings: first level}{}% 12
-\BOOKMARK [2][-]{subsection.10.1}{Headings: second level}{section.10}% 13
-\BOOKMARK [3][-]{subsubsection.10.1.1}{Headings: third level}{subsection.10.1}% 14
-\BOOKMARK [1][-]{section.11}{Citations, figures, tables, references}{}% 15
-\BOOKMARK [2][-]{subsection.11.1}{Citations within the text}{section.11}% 16
-\BOOKMARK [2][-]{subsection.11.2}{Footnotes}{section.11}% 17
-\BOOKMARK [2][-]{subsection.11.3}{Figures}{section.11}% 18
-\BOOKMARK [2][-]{subsection.11.4}{Tables}{section.11}% 19
-\BOOKMARK [1][-]{section.12}{Final instructions}{}% 20
-\BOOKMARK [1][-]{section.13}{Preparing PDF files}{}% 21
-\BOOKMARK [2][-]{subsection.13.1}{Margins in LaTeX}{section.13}% 22
