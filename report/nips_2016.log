@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  26 MAR 2017 20:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  30 MAR 2017 10:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -564,24 +564,49 @@ Package: amssymb 2013/01/14 v3.01 AMS font symbols
 Package: mathbbol 1995/01/01
 \symbbold=\mathgroup6
 )
-(./nips_2016.aux)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/05/09 v1.0r Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/01/02 v1.10 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 96.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+\Gread@gobject=\count107
+))
+\Gin@req@height=\dimen129
+\Gin@req@width=\dimen130
+)
+(./nips_2016.aux
+
+LaTeX Warning: Label `sample-table' multiply defined.
+
+)
 \openout1 = `nips_2016.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 68.
-LaTeX Font Info:    ... okay on input line 68.
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 68.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 69.
+LaTeX Font Info:    ... okay on input line 69.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 69.
  (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
@@ -652,24 +677,24 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box26
-Package hyperref Info: Link coloring OFF on input line 68.
+Package hyperref Info: Link coloring OFF on input line 69.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count107
+\c@section@level=\count108
 )
-LaTeX Info: Redefining \ref on input line 68.
-LaTeX Info: Redefining \pageref on input line 68.
-LaTeX Info: Redefining \nameref on input line 68.
+LaTeX Info: Redefining \ref on input line 69.
+LaTeX Info: Redefining \pageref on input line 69.
+LaTeX Info: Redefining \nameref on input line 69.
 
 (./nips_2016.out) (./nips_2016.out)
 \@outlinefile=\write3
 \openout3 = `nips_2016.out'.
 
-LaTeX Info: Redefining \microtypecontext on input line 68.
+LaTeX Info: Redefining \microtypecontext on input line 69.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -683,14 +708,42 @@ Package microtype Info: No adjustment of character kerning.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
+(/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count109
+\scratchdimen=\dimen131
+\scratchbox=\box27
+\nofMPsegments=\count110
+\nofMParguments=\count111
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count112
+\MPscratchDim=\dimen132
+\MPnumerator=\count113
+\makeMPintoPDFobject=\count114
+\everyMPtoPDFconversion=\toks21
+) (/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+
+(/usr/local/texlive/2016/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 72.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 73.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 72.
+LaTeX Font Info:    Try loading font information for U+msa on input line 73.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -698,7 +751,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 72.
+LaTeX Font Info:    Try loading font information for U+msb on input line 73.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -706,12 +759,12 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (/usr/local/texlive/2016/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+bbold on input line 72.
+LaTeX Font Info:    Try loading font information for U+bbold on input line 73.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/bbold/Ubbold.fd)
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 72.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 72.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 73.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 73.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
@@ -721,215 +774,103 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 73.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 74.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 77.
+(hyperref)                removing `subscript' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 77.
+(hyperref)                removing `superscript' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\phi' on input line 77.
+(hyperref)                removing `\phi' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\in' on input line 77.
+(hyperref)                removing `\in' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 77.
+(hyperref)                removing `superscript' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\phi' on input line 77.
+(hyperref)                removing `\phi' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\times' on input line 77.
+(hyperref)                removing `\times' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\rightarrow' on input line 77.
+(hyperref)                removing `\rightarrow' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 77.
+(hyperref)                removing `superscript' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\phi' on input line 77.
+(hyperref)                removing `\phi' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
+(hyperref)                removing `math shift' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\phi' on input line 77.
+(hyperref)                removing `\phi' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 77.
+(hyperref)                removing `subscript' on input line 78.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 77.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\begingroup' on input line 89.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 89.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\NAT@ctype' on input line 89.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\z@' on input line 89.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 89.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 89.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\@ifnextchar' on input line 89.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\begingroup' on input line 93.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 93.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\NAT@ctype' on input line 93.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\z@' on input line 93.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 93.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 93.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\@ifnextchar' on input line 93.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\begingroup' on input line 97.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 97.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\NAT@ctype' on input line 97.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\z@' on input line 97.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 97.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 97.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\@ifnextchar' on input line 97.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\begingroup' on input line 101.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 101.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\NAT@ctype' on input line 101.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\z@' on input line 101.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 101.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 101.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\@ifnextchar' on input line 101.
+(hyperref)                removing `math shift' on input line 78.
 
 [1
 
@@ -937,90 +878,259 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\begingroup' on input line 105.
+(hyperref)                removing `\begingroup' on input line 118.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 105.
+(hyperref)                removing `\<let>-command' on input line 118.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\NAT@ctype' on input line 105.
+(hyperref)                removing `\NAT@ctype' on input line 118.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\z@' on input line 105.
+(hyperref)                removing `\z@' on input line 118.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 105.
+(hyperref)                removing `\let' on input line 118.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 105.
+(hyperref)                removing `\let' on input line 118.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\@ifnextchar' on input line 105.
+(hyperref)                removing `\@ifnextchar' on input line 118.
 
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 124.
 
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\begingroup' on input line 109.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 109.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\NAT@ctype' on input line 109.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\z@' on input line 109.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 109.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 109.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\@ifnextchar' on input line 109.
-
-LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 144.
-[2] [3] [4]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 340.
-
- (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omsptm.fd
+(/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 340.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 124.
 
-(./nips_2016.bbl [5])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 431.
- [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 431.
+<images/q_linearWithoutStuff.png, id=127, 1530.71875pt x 495.8525pt>
+File: images/q_linearWithoutStuff.png Graphic file (type png)
+
+<use images/q_linearWithoutStuff.png>
+Package pdftex.def Info: images/q_linearWithoutStuff.png used on input line 142
+.
+(pdftex.def)             Requested size: 397.48499pt x 128.75972pt.
+
+<images/r_linearWithoutStuff.png, id=129, 1524.69624pt x 468.75125pt>
+File: images/r_linearWithoutStuff.png Graphic file (type png)
+
+<use images/r_linearWithoutStuff.png>
+Package pdftex.def Info: images/r_linearWithoutStuff.png used on input line 148
+.
+(pdftex.def)             Requested size: 397.48499pt x 122.20146pt.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\begingroup' on input line 169.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<let>-command' on input line 169.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\NAT@ctype' on input line 169.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 169.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 169.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 169.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@ifnextchar' on input line 169.
+
+[2 <./images/q_linearWithoutStuff.png>]
+
+LaTeX Warning: Reference `fig:q_q3' on page 3 undefined on input line 189.
+
+
+LaTeX Warning: Reference `fig:r_q3' on page 3 undefined on input line 189.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\begingroup' on input line 219.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<let>-command' on input line 219.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\NAT@ctype' on input line 219.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 219.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 219.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 219.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@ifnextchar' on input line 219.
+
+[3 <./images/r_linearWithoutStuff.png>]
+
+LaTeX Warning: Reference `fig:q_q4' on page 4 undefined on input line 239.
+
+
+LaTeX Warning: Reference `fig:r_q4' on page 4 undefined on input line 239.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\begingroup' on input line 269.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<let>-command' on input line 269.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\NAT@ctype' on input line 269.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 269.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 269.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 269.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@ifnextchar' on input line 269.
+
+[4]
+
+LaTeX Warning: Reference `fig:q_q4' on page 5 undefined on input line 294.
+
+
+LaTeX Warning: Reference `fig:r_q4' on page 5 undefined on input line 294.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\begingroup' on input line 365.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<let>-command' on input line 365.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\NAT@ctype' on input line 365.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 365.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 365.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 365.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@ifnextchar' on input line 365.
+
+[5]
+
+LaTeX Warning: Reference `fig:q_q6' on page 6 undefined on input line 385.
+
+
+LaTeX Warning: Reference `fig:r_q6' on page 6 undefined on input line 385.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\begingroup' on input line 415.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\<let>-command' on input line 415.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\NAT@ctype' on input line 415.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\z@' on input line 415.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 415.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\let' on input line 415.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\@ifnextchar' on input line 415.
+
+
+LaTeX Warning: Reference `fig:q_q7' on page 6 undefined on input line 435.
+
+
+LaTeX Warning: Reference `fig:r_q7' on page 6 undefined on input line 435.
+
+[6]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 528.
+ [7] [8] [9] [10] (./nips_2016.bbl)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 815.
+ [11]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 815.
  (./nips_2016.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 431.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 431.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 815.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 815.
 Package rerunfilecheck Info: File `nips_2016.out' has not changed.
-(rerunfilecheck)             Checksum: 907EB4EACF030E695D836B2B61E25004;2063.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 431.
+(rerunfilecheck)             Checksum: ACE6626FD1DA758BD20CD199237A1E33;2156.
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 815.
  ) 
 Here is how much of TeX's memory you used:
- 7868 strings out of 493014
- 118242 string characters out of 6133351
- 232996 words of memory out of 5000000
- 11129 multiletter control sequences out of 15000+600000
- 50611 words of font info for 154 fonts, out of 8000000 for 9000
+ 8725 strings out of 493014
+ 130464 string characters out of 6133351
+ 250724 words of memory out of 5000000
+ 11937 multiletter control sequences out of 15000+600000
+ 50727 words of font info for 155 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 31i,8n,38p,457b,421s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 31i,8n,38p,457b,377s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
 exlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/tex
 live/2016/texmf-dist/fonts/type1/public/bbold-type1/bbold10.pfb></usr/local/tex
@@ -1041,10 +1151,10 @@ nts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2016/texmf-dist/font
 s/type1/urw/times/utmb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/ur
 w/times/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/ut
 mri8a.pfb>
-Output written on nips_2016.pdf (6 pages, 209385 bytes).
+Output written on nips_2016.pdf (11 pages, 370902 bytes).
 PDF statistics:
- 245 PDF objects out of 1000 (max. 8388607)
- 216 compressed objects within 3 object streams
- 41 named destinations out of 1000 (max. 500000)
- 26281 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 322 PDF objects out of 1000 (max. 8388607)
+ 284 compressed objects within 3 object streams
+ 54 named destinations out of 1000 (max. 500000)
+ 26299 words of extra memory for PDF output out of 29859 (max. 10000000)
 
