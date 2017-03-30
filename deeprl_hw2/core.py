@@ -240,7 +240,10 @@ class ReplayMemory:
         # sample 32 indices. but don't sample 0,1,2. 
         # TODO: if there is a terminal state in the middle of the sample, then resample
         # if len(self.experience) < 1000000:
-        indices = random.sample(range(len(self.experience))[4:], batch_size)
+
+        # indices = random.sample(range(len(self.experience))[4:], batch_size)
+        indices = np.random.randint(4,len(self.experience),batch_size)
+
         # else:
             # indices = random.sample(range(len(self.experience)), batch_size)
         # print "indices {}".format(indices)
@@ -264,3 +267,4 @@ class ReplayMemory:
 
     def clear(self):
         self.experience=[]
+        self.index_for_insertion = 0

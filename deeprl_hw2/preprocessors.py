@@ -92,7 +92,7 @@ class AtariPreprocessor(Preprocessor):
         # if not (state.shape == (84,84)):
             # raise ValueError('AtariPreprocessor.process_state_for_memory : input state is not 84*84')
         state_gray = Image.fromarray(state).convert('L')
-        state_gray = state_gray.resize((84,84)) # section 4.1
+        state_gray = state_gray.resize((110,84)).crop((0, 0, 84, 84)) # section 4.1
         #state_gray = state_gray.crop((0,26,84,110)) #crops looking at the bottom of the image, not at the score
         return np.uint8(np.asarray(state_gray))
 

@@ -150,10 +150,9 @@ class DQNAgent:
         optimizer.
         """
         self.q_network = self.create_model()
-        self.target_q_network = self.create_model()
-        self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics 
-        self.target_q_network = self.create_model()
         self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
+        self.target_q_network = self.create_model()
+        self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics  
         print self.q_network.summary()
 
     def calc_q_values(self, state):
@@ -239,8 +238,8 @@ class DQNAgent:
         next_state_images = self.preprocessor.process_batch(next_state_images)
         # print "current_state_images {} max {} ".format(current_state_images.shape, np.max(current_state_images))
 
-        q_current = self.q_network.predict(current_state_images) # 32*num_actions
-        q_next = self.target_q_network.predict(next_state_images)
+        q_current = self.q_network.predict(current_state_images,batch_size=self.batch_size) # 32*num_actions
+        q_next = self.target_q_network.predict(next_state_images,batch_size=self.batch_size)
 
         # targets
         y_targets_all = q_current #32*num_actions
