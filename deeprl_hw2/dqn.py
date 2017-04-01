@@ -160,9 +160,9 @@ class DQNAgent:
         self.target_q_network = self.create_model()
 
         # set loss function in both 
-        # adam = Adam(lr=1e-4)
-        self.q_network.compile(loss='mean_squared_error', optimizer=Adam(lr=0.00001)) 
-        self.target_q_network.compile(loss='mean_squared_error', optimizer=Adam(lr=0.00001))
+        adam = Adam(lr=1e-4)
+        self.q_network.compile(loss=mean_huber_loss, optimizer=adam) 
+        self.target_q_network.compile(loss=mean_huber_loss, optimizer=adam)
         
         # set the same weights for both initially
         self.target_q_network.set_weights(self.q_network.get_weights())
