@@ -1,7 +1,15 @@
 """Main DQN agent."""
+
+import tensorflow as tf
+
 from keras.models import Sequential, Model
 from keras.layers import Dense, Activation, Dropout, Reshape, Flatten, Lambda
 from keras.layers.convolutional import Convolution2D, ZeroPadding2D, AveragePooling2D, MaxPooling2D
+from keras.optimizers import Adam
+from keras import backend as K
+from keras.backend.tensorflow_backend import set_session
+import keras
+
 from objectives import mean_huber_loss
 import gym
 import numpy as np
@@ -12,12 +20,10 @@ import matplotlib.pyplot as plt
 import cPickle as pkl
 import os
 from gym import wrappers
-import tensorflow as tf
-import keras.backend as K
-from keras.backend.tensorflow_backend import set_session
+
 config = tf.ConfigProto()
 config.gpu_options.per_process_gpu_memory_fraction = 0.33
-set_session(tf.Session(config=config))
+K.set_session(tf.Session(config=config))
 
 class DQNAgent:
     """Class implementing DQN.
@@ -117,19 +123,19 @@ class DQNAgent:
         keras.models.Model
           The Q-model.
         """
-        model = Sequential()
-        model.add(Convolution2D(filters=32, kernel_size=(8,8), strides=(4,4), input_shape=(84,84,4), activation='relu', name='conv_1'))
-        model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='conv_2'))
-        model.add(Convolution2D(filters=64, kernel_size=(3,3), strides=(2,2), activation='relu', name='fc_1'))
+        # reference for creation of the model https://yilundu.github.io/2016/12/24/Deep-Q-Learning-on-Space-Invaders.html
+        model=Sequential()
+        model.add(Convolution2D (32,8,8, subsample = (4,4), input_shape=(84,84,4) ))
+        model.add(Activation('relu'))
+        model.add(Convolution2D (64,4,4, subsample = (2,2) ))
+        model.add(Activation('relu'))
+        model.add(Convolution2D (64,3,3, subsample = (1,1) ))
+        model.add(Activation('relu'))
         model.add(Flatten())
-        model.add(Dense(512, activation='relu', name='fc_2'))
-        model.add(Dense(self.num_actions, name='final'))
-        return model
+        model.add(Dense(512))
+        model.add(Activation('relu'))
+        model.add(Dense(num_actions)) 
 
-    def create_model_linear(self):  # noqa: D103
-        model = Sequential()
-        model.add(Flatten(input_shape=(84,84,4)))
-        model.add(Dense(self.num_actions, name='final'))
         return model
 
     def compile(self):
@@ -149,10 +155,18 @@ class DQNAgent:
         keras.optimizers.Optimizer class. Specifically the Adam
         optimizer.
         """
+        # create both networks
         self.q_network = self.create_model()
-        self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
         self.target_q_network = self.create_model()
-        self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics  
+
+        # set loss function in both 
+        # adam = Adam(lr=1e-4)
+        self.q_network.compile(loss='mean_squared_error', optimizer=Adam(lr=0.00001)) 
+        self.target_q_network.compile(loss='mean_squared_error', optimizer=Adam(lr=0.00001))
+        
+        # set the same weights for both initially
+        self.target_q_network.set_weights(self.q_network.get_weights())
+        
         print self.q_network.summary()
 
     def calc_q_values(self, state):
@@ -163,7 +177,7 @@ class DQNAgent:
         ------
         Q-values for the state(s)
         """ 
-        q_vals = self.q_network.predict(np.swapaxes(state,0,3))
+        q_vals = self.q_network.predict(np.swapaxes(state,0,3),batch_size=1)
         return q_vals
 
     def make_log_dir(self):
