@@ -1,2 +1,2 @@
-tensorboard --logdir=vanilla_enduro:runs/vanilla_enduro, double_enduro:runs/double_enduro, vanilla_space:runs/vanilla_space, double_space:runs/double_space, linear_vanilla_with:runs/q3, linear_double_Q:runs/q4, duelling:runs/q7, linear_vanilla_WITHOUT:runs/linwithoutstuff & > /dev/null 2>&1
+tensorboard --logdir=q2:runs/q2,q3:runs/q3,q4:runs/q4,q5:runs/q5,q6:runs/q6,q7:runs/q7 & > /dev/null 2>&1
 google-chrome http://localhost:6006&
