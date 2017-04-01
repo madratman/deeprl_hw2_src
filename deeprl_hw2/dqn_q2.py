@@ -22,7 +22,7 @@ import os
 from gym import wrappers
 
 config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.33
+config.gpu_options.per_process_gpu_memory_fraction = 0.5
 K.set_session(tf.Session(config=config))
 
 class DQNAgent:
@@ -80,7 +80,7 @@ class DQNAgent:
         self.target_update_freq = target_update_freq
         self.num_burn_in = num_burn_in
         self.train_freq = train_freq
-        self.batch_size = batch_size
+        self.batch_size = 1
         self.iter_ctr = 0
 
         self.eval_episode_ctr = 0
@@ -169,7 +169,7 @@ class DQNAgent:
         ------
         Q-values for the state(s)
         """ 
-        q_vals = self.q_network.predict(np.swapaxes(state,0,3),batch_size=1)
+        q_vals = self.q_network.predict(np.swapaxes(state,0,3))
         return q_vals
 
     def make_log_dir(self):
@@ -229,36 +229,35 @@ class DQNAgent:
         current_state_samples = batch_of_samples['current_state_samples']
         next_state_samples = batch_of_samples['next_state_samples']
         #print type(current_state_samples[0])
+        #print current_state_samples
 
         # fetch stuff we need from samples 32*84*84*4
-        current_state_images = np.zeros([32, 84, 84, 4])
-        for (idx, each_list_of_samples) in enumerate(current_state_samples):
-            current_state_images[idx, ...] = np.dstack([sample.state for sample in each_list_of_samples])
+        current_state_images = np.zeros([1, 84, 84, 4])
+        current_state_images[0,...] = np.dstack([sample.state for sample in current_state_samples])
 
-        next_state_images = np.zeros([32, 84, 84, 4])
-        for (idx, each_list_of_samples) in enumerate(next_state_samples):
-            next_state_images[idx, ...] = np.dstack([sample.state for sample in each_list_of_samples])
+        next_state_images = np.zeros([1, 84, 84, 4])
+        next_state_images[0,...] = np.dstack([sample.state for sample in next_state_samples])
 
         # preprocess
         current_state_images = self.preprocessor.process_batch(current_state_images)
         next_state_images = self.preprocessor.process_batch(next_state_images)
         # print "current_state_images {} max {} ".format(current_state_images.shape, np.max(current_state_images))
-
+        #print current_state_images.shape
         q_current = self.q_network.predict(current_state_images,batch_size=self.batch_size) # 32*num_actions
         q_next = self.q_network.predict(next_state_images,batch_size=self.batch_size)
 
         # targets
-        y_targets_all = q_current #32*num_actions
-
-        for (idx, each_list_of_samples) in enumerate(current_state_samples):
-            last_sample = each_list_of_samples[-1]
-            if last_sample.is_terminal:
-                y_targets_all[idx, last_sample.action] = last_sample.reward
-            else:
-                if self.mode == 'vanilla':
-                    y_targets_all[idx, last_sample.action] = np.float32(last_sample.reward) + self.gamma*np.max(q_next[idx])
-                if self.mode == 'double':               
-                    y_targets_all[idx, last_sample.action] = np.float32(last_sample.reward) + self.gamma*q_next[idx, np.argmax(q_current[idx])] 
+        y_targets_all = q_current #1*num_actions
+        #print y_targets_all.shape # [1,6]
+        idx = 0 
+        last_sample = current_state_samples[-1]
+        if last_sample.is_terminal:
+            y_targets_all[idx, last_sample.action] = last_sample.reward
+        else:
+            if self.mode == 'vanilla':
+                y_targets_all[idx, last_sample.action] = np.float32(last_sample.reward) + self.gamma*np.max(q_next[idx])
+            if self.mode == 'double':               
+                y_targets_all[idx, last_sample.action] = np.float32(last_sample.reward) + self.gamma*q_next[idx, np.argmax(q_current[idx])] 
 
         loss = self.q_network.train_on_batch(current_state_images, np.float32(y_targets_all))
 

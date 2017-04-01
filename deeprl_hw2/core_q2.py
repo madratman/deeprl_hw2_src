@@ -245,17 +245,17 @@ class ReplayMemory:
         # indices = np.random.randint(4,len(self.experience),batch_size)
 
         if self.index_for_insertion-1 < 3:
-            indices=[3]
+            index = 3
         else:
-            indices= [self.index_for_insertion-1]
+            index = self.index_for_insertion-1
 
         # else:
             # indices = random.sample(range(len(self.experience)), batch_size)
         # print "indices {}".format(indices)
 
         # list of list of samples. (32 outside and 4 inside)
-        current_state_samples = [self.experience[index] for index in indices]   
-        next_state_samples = [self.experience[index] for index in indices]
+        current_state_samples = self.experience[index-4:index]  
+        next_state_samples = self.experience[index-3:index+1]
 
         # for index in indices:
         #     current_state_samples = [self.experience[index-4:index]]
