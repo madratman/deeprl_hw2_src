@@ -22,7 +22,7 @@ import os
 from gym import wrappers
 
 config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.33
+config.gpu_options.per_process_gpu_memory_fraction = 0.5
 K.set_session(tf.Session(config=config))
 
 class DQNAgent:
@@ -124,7 +124,7 @@ class DQNAgent:
           The Q-model.
         """
         # reference for creation of the model https://yilundu.github.io/2016/12/24/Deep-Q-Learning-on-Space-Invaders.html
-        
+
         # model=Sequential()
         # model.add(Convolution2D (32,8,8, subsample = (4,4), input_shape=(84,84,4) ))
         # model.add(Activation('relu'))
