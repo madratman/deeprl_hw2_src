@@ -1,0 +1,179 @@
+I am on
+roberto
+I got gpu number
+0
+let the training begin
+ MODE IS vanilla
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d_1 (Conv2D)            (None, 20, 20, 32)        8224      
+_________________________________________________________________
+activation_1 (Activation)    (None, 20, 20, 32)        0         
+_________________________________________________________________
+conv2d_2 (Conv2D)            (None, 9, 9, 64)          32832     
+_________________________________________________________________
+activation_2 (Activation)    (None, 9, 9, 64)          0         
+_________________________________________________________________
+conv2d_3 (Conv2D)            (None, 7, 7, 64)          36928     
+_________________________________________________________________
+activation_3 (Activation)    (None, 7, 7, 64)          0         
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 3136)              0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 512)               1606144   
+_________________________________________________________________
+activation_4 (Activation)    (None, 512)               0         
+_________________________________________________________________
+dense_2 (Dense)              (None, 6)                 3078      
+=================================================================
+Total params: 1,687,206.0
+Trainable params: 1,687,206.0
+Non-trainable params: 0.0
+_________________________________________________________________
+None
+iter_ctr 660, num_episodes : 1, episode_reward : 12.0, loss : None, episode_timesteps : 660, epsilon : 1.0
+iter_ctr 1399, num_episodes : 2, episode_reward : 11.0, loss : None, episode_timesteps : 739, epsilon : 1.0
+iter_ctr 2166, num_episodes : 3, episode_reward : 15.0, loss : None, episode_timesteps : 767, epsilon : 1.0
+iter_ctr 2766, num_episodes : 4, episode_reward : 9.0, loss : None, episode_timesteps : 600, epsilon : 1.0
+iter_ctr 3303, num_episodes : 5, episode_reward : 5.0, loss : None, episode_timesteps : 537, epsilon : 1.0
+iter_ctr 4071, num_episodes : 6, episode_reward : 12.0, loss : None, episode_timesteps : 768, epsilon : 1.0
+iter_ctr 4659, num_episodes : 7, episode_reward : 5.0, loss : None, episode_timesteps : 588, epsilon : 1.0
+iter_ctr 5946, num_episodes : 8, episode_reward : 26.0, loss : None, episode_timesteps : 1287, epsilon : 1.0
+iter_ctr 6767, num_episodes : 9, episode_reward : 11.0, loss : None, episode_timesteps : 821, epsilon : 1.0
+iter_ctr 7381, num_episodes : 10, episode_reward : 12.0, loss : None, episode_timesteps : 614, epsilon : 1.0
+iter_ctr 8013, num_episodes : 11, episode_reward : 8.0, loss : None, episode_timesteps : 632, epsilon : 1.0
+iter_ctr 8607, num_episodes : 12, episode_reward : 7.0, loss : None, episode_timesteps : 594, epsilon : 1.0
+iter_ctr 9230, num_episodes : 13, episode_reward : 12.0, loss : None, episode_timesteps : 623, epsilon : 1.0
+iter_ctr 10197, num_episodes : 14, episode_reward : 18.0, loss : None, episode_timesteps : 967, epsilon : 1.0
+iter_ctr 11055, num_episodes : 15, episode_reward : 12.0, loss : None, episode_timesteps : 858, epsilon : 1.0
+iter_ctr 11628, num_episodes : 16, episode_reward : 11.0, loss : None, episode_timesteps : 573, epsilon : 1.0
+iter_ctr 12164, num_episodes : 17, episode_reward : 9.0, loss : None, episode_timesteps : 536, epsilon : 1.0
+iter_ctr 13079, num_episodes : 18, episode_reward : 10.0, loss : None, episode_timesteps : 915, epsilon : 1.0
+iter_ctr 13582, num_episodes : 19, episode_reward : 4.0, loss : None, episode_timesteps : 503, epsilon : 1.0
+iter_ctr 14204, num_episodes : 20, episode_reward : 8.0, loss : None, episode_timesteps : 622, epsilon : 1.0
+iter_ctr 14794, num_episodes : 21, episode_reward : 6.0, loss : None, episode_timesteps : 590, epsilon : 1.0
+iter_ctr 15345, num_episodes : 22, episode_reward : 7.0, loss : None, episode_timesteps : 551, epsilon : 1.0
+iter_ctr 16034, num_episodes : 23, episode_reward : 8.0, loss : None, episode_timesteps : 689, epsilon : 1.0
+iter_ctr 16812, num_episodes : 24, episode_reward : 12.0, loss : None, episode_timesteps : 778, epsilon : 1.0
+iter_ctr 17721, num_episodes : 25, episode_reward : 12.0, loss : None, episode_timesteps : 909, epsilon : 1.0
+iter_ctr 18298, num_episodes : 26, episode_reward : 7.0, loss : None, episode_timesteps : 577, epsilon : 1.0
+iter_ctr 18965, num_episodes : 27, episode_reward : 11.0, loss : None, episode_timesteps : 667, epsilon : 1.0
+iter_ctr 19748, num_episodes : 28, episode_reward : 13.0, loss : None, episode_timesteps : 783, epsilon : 1.0
+iter_ctr 20154, num_episodes : 29, episode_reward : 4.0, loss : None, episode_timesteps : 406, epsilon : 1.0
+iter_ctr 20653, num_episodes : 30, episode_reward : 6.0, loss : None, episode_timesteps : 499, epsilon : 1.0
+iter_ctr 21170, num_episodes : 31, episode_reward : 8.0, loss : None, episode_timesteps : 517, epsilon : 1.0
+iter_ctr 22454, num_episodes : 32, episode_reward : 26.0, loss : None, episode_timesteps : 1284, epsilon : 1.0
+iter_ctr 22930, num_episodes : 33, episode_reward : 4.0, loss : None, episode_timesteps : 476, epsilon : 1.0
+iter_ctr 23336, num_episodes : 34, episode_reward : 7.0, loss : None, episode_timesteps : 406, epsilon : 1.0
+iter_ctr 23857, num_episodes : 35, episode_reward : 7.0, loss : None, episode_timesteps : 521, epsilon : 1.0
+iter_ctr 24240, num_episodes : 36, episode_reward : 3.0, loss : None, episode_timesteps : 383, epsilon : 1.0
+iter_ctr 24993, num_episodes : 37, episode_reward : 11.0, loss : None, episode_timesteps : 753, epsilon : 1.0
+iter_ctr 25740, num_episodes : 38, episode_reward : 12.0, loss : None, episode_timesteps : 747, epsilon : 1.0
+iter_ctr 26113, num_episodes : 39, episode_reward : 5.0, loss : None, episode_timesteps : 373, epsilon : 1.0
+iter_ctr 26771, num_episodes : 40, episode_reward : 8.0, loss : None, episode_timesteps : 658, epsilon : 1.0
+iter_ctr 27901, num_episodes : 41, episode_reward : 12.0, loss : None, episode_timesteps : 1130, epsilon : 1.0
+iter_ctr 28508, num_episodes : 42, episode_reward : 10.0, loss : None, episode_timesteps : 607, epsilon : 1.0
+iter_ctr 29212, num_episodes : 43, episode_reward : 9.0, loss : None, episode_timesteps : 704, epsilon : 1.0
+iter_ctr 29982, num_episodes : 44, episode_reward : 10.0, loss : None, episode_timesteps : 770, epsilon : 1.0
+iter_ctr 30484, num_episodes : 45, episode_reward : 1.0, loss : None, episode_timesteps : 502, epsilon : 1.0
+iter_ctr 30910, num_episodes : 46, episode_reward : 6.0, loss : None, episode_timesteps : 426, epsilon : 1.0
+iter_ctr 31583, num_episodes : 47, episode_reward : 7.0, loss : None, episode_timesteps : 673, epsilon : 1.0
+iter_ctr 32557, num_episodes : 48, episode_reward : 15.0, loss : None, episode_timesteps : 974, epsilon : 1.0
+iter_ctr 33033, num_episodes : 49, episode_reward : 3.0, loss : None, episode_timesteps : 476, epsilon : 1.0
+iter_ctr 33822, num_episodes : 50, episode_reward : 10.0, loss : None, episode_timesteps : 789, epsilon : 1.0
+iter_ctr 34414, num_episodes : 51, episode_reward : 4.0, loss : None, episode_timesteps : 592, epsilon : 1.0
+iter_ctr 35250, num_episodes : 52, episode_reward : 12.0, loss : None, episode_timesteps : 836, epsilon : 1.0
+iter_ctr 35665, num_episodes : 53, episode_reward : 5.0, loss : None, episode_timesteps : 415, epsilon : 1.0
+iter_ctr 37007, num_episodes : 54, episode_reward : 18.0, loss : None, episode_timesteps : 1342, epsilon : 1.0
+iter_ctr 37688, num_episodes : 55, episode_reward : 10.0, loss : None, episode_timesteps : 681, epsilon : 1.0
+iter_ctr 38543, num_episodes : 56, episode_reward : 12.0, loss : None, episode_timesteps : 855, epsilon : 1.0
+iter_ctr 39320, num_episodes : 57, episode_reward : 11.0, loss : None, episode_timesteps : 777, epsilon : 1.0
+iter_ctr 39972, num_episodes : 58, episode_reward : 10.0, loss : None, episode_timesteps : 652, epsilon : 1.0
+iter_ctr 40529, num_episodes : 59, episode_reward : 8.0, loss : None, episode_timesteps : 557, epsilon : 1.0
+iter_ctr 41145, num_episodes : 60, episode_reward : 8.0, loss : None, episode_timesteps : 616, epsilon : 1.0
+iter_ctr 41776, num_episodes : 61, episode_reward : 7.0, loss : None, episode_timesteps : 631, epsilon : 1.0
+iter_ctr 42309, num_episodes : 62, episode_reward : 9.0, loss : None, episode_timesteps : 533, epsilon : 1.0
+iter_ctr 42826, num_episodes : 63, episode_reward : 6.0, loss : None, episode_timesteps : 517, epsilon : 1.0
+iter_ctr 43622, num_episodes : 64, episode_reward : 12.0, loss : None, episode_timesteps : 796, epsilon : 1.0
+iter_ctr 44307, num_episodes : 65, episode_reward : 10.0, loss : None, episode_timesteps : 685, epsilon : 1.0
+iter_ctr 44691, num_episodes : 66, episode_reward : 5.0, loss : None, episode_timesteps : 384, epsilon : 1.0
+iter_ctr 45243, num_episodes : 67, episode_reward : 6.0, loss : None, episode_timesteps : 552, epsilon : 1.0
+iter_ctr 45870, num_episodes : 68, episode_reward : 4.0, loss : None, episode_timesteps : 627, epsilon : 1.0
+iter_ctr 46282, num_episodes : 69, episode_reward : 6.0, loss : None, episode_timesteps : 412, epsilon : 1.0
+iter_ctr 46795, num_episodes : 70, episode_reward : 5.0, loss : None, episode_timesteps : 513, epsilon : 1.0
+iter_ctr 47451, num_episodes : 71, episode_reward : 10.0, loss : None, episode_timesteps : 656, epsilon : 1.0
+iter_ctr 47966, num_episodes : 72, episode_reward : 8.0, loss : None, episode_timesteps : 515, epsilon : 1.0
+iter_ctr 48679, num_episodes : 73, episode_reward : 8.0, loss : None, episode_timesteps : 713, epsilon : 1.0
+iter_ctr 49208, num_episodes : 74, episode_reward : 6.0, loss : None, episode_timesteps : 529, epsilon : 1.0
+iter_ctr 49878, num_episodes : 75, episode_reward : 9.0, loss : None, episode_timesteps : 670, epsilon : 1.0
+
+
+Evaluating at iter 50000
+Evaluate() : iter_ctr_valid 857, eval_episode_ctr_valid : 1, total_reward_curr_episode : 220.0, num_timesteps_in_curr_episode 857
+Evaluate() : iter_ctr_valid 1673, eval_episode_ctr_valid : 2, total_reward_curr_episode : 260.0, num_timesteps_in_curr_episode 816
+Evaluate() : iter_ctr_valid 2757, eval_episode_ctr_valid : 3, total_reward_curr_episode : 385.0, num_timesteps_in_curr_episode 1084
+Evaluate() : iter_ctr_valid 3399, eval_episode_ctr_valid : 4, total_reward_curr_episode : 100.0, num_timesteps_in_curr_episode 642
+Evaluate() : iter_ctr_valid 4284, eval_episode_ctr_valid : 5, total_reward_curr_episode : 290.0, num_timesteps_in_curr_episode 885
+Evaluate() : iter_ctr_valid 5155, eval_episode_ctr_valid : 6, total_reward_curr_episode : 295.0, num_timesteps_in_curr_episode 871
+Evaluate() : iter_ctr_valid 5799, eval_episode_ctr_valid : 7, total_reward_curr_episode : 165.0, num_timesteps_in_curr_episode 644
+Evaluate() : iter_ctr_valid 6269, eval_episode_ctr_valid : 8, total_reward_curr_episode : 115.0, num_timesteps_in_curr_episode 470
+Evaluate() : iter_ctr_valid 7367, eval_episode_ctr_valid : 9, total_reward_curr_episode : 300.0, num_timesteps_in_curr_episode 1098
+Evaluate() : iter_ctr_valid 8128, eval_episode_ctr_valid : 10, total_reward_curr_episode : 425.0, num_timesteps_in_curr_episode 761
+Evaluate() : iter_ctr_valid 8787, eval_episode_ctr_valid : 11, total_reward_curr_episode : 185.0, num_timesteps_in_curr_episode 659
+Evaluate() : iter_ctr_valid 9661, eval_episode_ctr_valid : 12, total_reward_curr_episode : 235.0, num_timesteps_in_curr_episode 874
+Evaluate() : iter_ctr_valid 10512, eval_episode_ctr_valid : 13, total_reward_curr_episode : 450.0, num_timesteps_in_curr_episode 851
+Evaluate() : iter_ctr_valid 11497, eval_episode_ctr_valid : 14, total_reward_curr_episode : 285.0, num_timesteps_in_curr_episode 985
+Evaluate() : iter_ctr_valid 12445, eval_episode_ctr_valid : 15, total_reward_curr_episode : 285.0, num_timesteps_in_curr_episode 948
+Evaluate() : iter_ctr_valid 13397, eval_episode_ctr_valid : 16, total_reward_curr_episode : 290.0, num_timesteps_in_curr_episode 952
+Evaluate() : iter_ctr_valid 14018, eval_episode_ctr_valid : 17, total_reward_curr_episode : 100.0, num_timesteps_in_curr_episode 621
+Evaluate() : iter_ctr_valid 15144, eval_episode_ctr_valid : 18, total_reward_curr_episode : 335.0, num_timesteps_in_curr_episode 1126
+Evaluate() : iter_ctr_valid 16385, eval_episode_ctr_valid : 19, total_reward_curr_episode : 415.0, num_timesteps_in_curr_episode 1241
+Evaluate() : iter_ctr_valid 17268, eval_episode_ctr_valid : 20, total_reward_curr_episode : 190.0, num_timesteps_in_curr_episode 883
+ sum(total_reward_all_episodes) : 5325.0 , float(len(total_reward_all_episodes)) : 20.0
+all_episode_avg_reward  266.25
+
+
+
+ self.reward_list 
+
+
+[266.25]
+Done Evaluating
+
+
+iter_ctr 50514, num_episodes : 76, episode_reward : 9.0, loss : 7.84612857387e-05, episode_timesteps : 636, epsilon : 0.9995365
+iter_ctr 51195, num_episodes : 77, episode_reward : 6.0, loss : 0.00266741262749, episode_timesteps : 681, epsilon : 0.9989236
+iter_ctr 51956, num_episodes : 78, episode_reward : 11.0, loss : 0.00266741262749, episode_timesteps : 761, epsilon : 0.9982387
+iter_ctr 52641, num_episodes : 79, episode_reward : 9.0, loss : 0.00492252595723, episode_timesteps : 685, epsilon : 0.9976222
+iter_ctr 53371, num_episodes : 80, episode_reward : 6.0, loss : 1.47567407112e-05, episode_timesteps : 730, epsilon : 0.9969652
+iter_ctr 53868, num_episodes : 81, episode_reward : 10.0, loss : 1.47567407112e-05, episode_timesteps : 497, epsilon : 0.9965179
+iter_ctr 54784, num_episodes : 82, episode_reward : 15.0, loss : 0.00256125838496, episode_timesteps : 916, epsilon : 0.9956935
+iter_ctr 55485, num_episodes : 83, episode_reward : 8.0, loss : 2.90431780741e-05, episode_timesteps : 701, epsilon : 0.9950626
+iter_ctr 56292, num_episodes : 84, episode_reward : 16.0, loss : 0.00260218814947, episode_timesteps : 807, epsilon : 0.9943363
+iter_ctr 56916, num_episodes : 85, episode_reward : 9.0, loss : 0.00260218814947, episode_timesteps : 624, epsilon : 0.9937747
+iter_ctr 58333, num_episodes : 86, episode_reward : 25.0, loss : 3.91479807149e-05, episode_timesteps : 1417, epsilon : 0.9924994
+iter_ctr 59192, num_episodes : 87, episode_reward : 11.0, loss : 0.00261628255248, episode_timesteps : 859, epsilon : 0.9917263
+iter_ctr 59982, num_episodes : 88, episode_reward : 15.0, loss : 0.00261628255248, episode_timesteps : 790, epsilon : 0.9910153
+Iter 60000 Updating target Q network
+iter_ctr 60546, num_episodes : 89, episode_reward : 9.0, loss : 0.00253539183177, episode_timesteps : 564, epsilon : 0.9905077
+iter_ctr 61326, num_episodes : 90, episode_reward : 12.0, loss : 5.15540887136e-05, episode_timesteps : 780, epsilon : 0.9898057
+iter_ctr 61968, num_episodes : 91, episode_reward : 6.0, loss : 5.15540887136e-05, episode_timesteps : 642, epsilon : 0.9892279
+iter_ctr 62731, num_episodes : 92, episode_reward : 6.0, loss : 0.0024766784627, episode_timesteps : 763, epsilon : 0.9885412
+iter_ctr 63602, num_episodes : 93, episode_reward : 16.0, loss : 6.65534935251e-06, episode_timesteps : 871, epsilon : 0.9877573
+iter_ctr 64380, num_episodes : 94, episode_reward : 10.0, loss : 2.98677532555e-05, episode_timesteps : 778, epsilon : 0.9870571
+iter_ctr 65303, num_episodes : 95, episode_reward : 13.0, loss : 1.66836798599e-05, episode_timesteps : 923, epsilon : 0.9862264
+iter_ctr 66096, num_episodes : 96, episode_reward : 13.0, loss : 0.00257907691412, episode_timesteps : 793, epsilon : 0.9855127
+iter_ctr 67107, num_episodes : 97, episode_reward : 20.0, loss : 4.21626355092e-05, episode_timesteps : 1011, epsilon : 0.984602800001
+iter_ctr 68283, num_episodes : 98, episode_reward : 26.0, loss : 1.97921854124e-05, episode_timesteps : 1176, epsilon : 0.983544400001
+iter_ctr 69297, num_episodes : 99, episode_reward : 16.0, loss : 8.78416467458e-05, episode_timesteps : 1014, epsilon : 0.982631800001
+iter_ctr 69914, num_episodes : 100, episode_reward : 10.0, loss : 8.78416467458e-05, episode_timesteps : 617, epsilon : 0.982076500001
+Iter 70000 Updating target Q network
+iter_ctr 70851, num_episodes : 101, episode_reward : 11.0, loss : 2.47236639552e-05, episode_timesteps : 937, epsilon : 0.981233200001
+iter_ctr 71446, num_episodes : 102, episode_reward : 6.0, loss : 9.81531193247e-05, episode_timesteps : 595, epsilon : 0.980697700001
+iter_ctr 71841, num_episodes : 103, episode_reward : 5.0, loss : 9.81531193247e-05, episode_timesteps : 395, epsilon : 0.980342200001
+iter_ctr 72482, num_episodes : 104, episode_reward : 7.0, loss : 0.00766952522099, episode_timesteps : 641, epsilon : 0.979765300001
+iter_ctr 73084, num_episodes : 105, episode_reward : 9.0, loss : 8.63024251885e-05, episode_timesteps : 602, epsilon : 0.979223500001
+iter_ctr 73584, num_episodes : 106, episode_reward : 4.0, loss : 8.63024251885e-05, episode_timesteps : 500, epsilon : 0.978773500001
+iter_ctr 74327, num_episodes : 107, episode_reward : 9.0, loss : 0.00481722690165, episode_timesteps : 743, epsilon : 0.978104800001
+iter_ctr 75004, num_episodes : 108, episode_reward : 12.0, loss : 4.43024946435e-05, episode_timesteps : 677, epsilon : 0.977495500001

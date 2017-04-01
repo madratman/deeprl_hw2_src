@@ -1,0 +1,2 @@
+srun: Job step aborted: Waiting up to 42 seconds for job step to finish.
+slurmstepd: error: *** JOB 6339 ON clamps CANCELLED AT 2017-04-01T17:22:49 ***

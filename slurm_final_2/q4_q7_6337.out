@@ -1,0 +1,379 @@
+I am on
+roberto
+I got gpu number
+2
+let the training begin
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcublas.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcublas.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcudnn.so.5 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcudnn.so.5 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcufft.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcufft.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcuda.so.1 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcuda.so.1 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcurand.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcurand.so.8.0 locally
+Using TensorFlow backend.
+Using TensorFlow backend.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:885] Found device 0 with properties: 
+name: TITAN X (Pascal)
+major: 6 minor: 1 memoryClockRate (GHz) 1.531
+pciBusID 0000:81:00.0
+Total memory: 11.93GiB
+Free memory: 11.75GiB
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] DMA: 0 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:916] 0:   Y 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:975] Creating TensorFlow device (/gpu:0) -> (device: 0, name: TITAN X (Pascal), pci bus id: 0000:81:00.0)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:885] Found device 0 with properties: 
+name: TITAN X (Pascal)
+major: 6 minor: 1 memoryClockRate (GHz) 1.531
+pciBusID 0000:81:00.0
+Total memory: 11.93GiB
+Free memory: 5.67GiB
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] DMA: 0 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:916] 0:   Y 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:975] Creating TensorFlow device (/gpu:0) -> (device: 0, name: TITAN X (Pascal), pci bus id: 0000:81:00.0)
+E tensorflow/stream_executor/cuda/cuda_driver.cc:1002] failed to allocate 5.97G (6407553024 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY
+[2017-04-01 21:20:43,248] Making new env: SpaceInvaders-v0
+ MODE IS vanilla
+[2017-04-01 21:20:43,264] Making new env: SpaceInvaders-v0
+ MODE IS vanilla
+/usr/local/lib/python2.7/dist-packages/keras/legacy/interfaces.py:86: UserWarning: Update your `Conv2D` call to the Keras 2 API: `Conv2D(32, (8, 8), strides=(4, 4), activation="relu")`
+  '` call to the Keras 2 API: ' + signature)
+/usr/local/lib/python2.7/dist-packages/keras/legacy/interfaces.py:86: UserWarning: Update your `Conv2D` call to the Keras 2 API: `Conv2D(64, (4, 4), strides=(2, 2), activation="relu")`
+  '` call to the Keras 2 API: ' + signature)
+/usr/local/lib/python2.7/dist-packages/keras/legacy/interfaces.py:86: UserWarning: Update your `Conv2D` call to the Keras 2 API: `Conv2D(64, (3, 3), activation="relu")`
+  '` call to the Keras 2 API: ' + signature)
+/home/ratneshm/courses/deep_final/deeprl_hw2_src/deeprl_hw2/dqn_q7.py:150: UserWarning: The `merge` function is deprecated and will be removed after 08/2017. Use instead layers from `keras.layers.merge`, e.g. `sum`, `concatenate`, etc.
+  policy = merge([advantage, value], mode = lambda x: x[0]-K.mean(x[0])+x[1], output_shape = (self.num_actions,))
+/usr/local/lib/python2.7/dist-packages/keras/legacy/layers.py:456: UserWarning: The `Merge` layer is deprecated and will be removed after 08/2017. Use instead layers from `keras.layers.merge`, e.g. `add`, `concatenate`, etc.
+  name=name)
+/usr/local/lib/python2.7/dist-packages/keras/legacy/interfaces.py:86: UserWarning: Update your `Model` call to the Keras 2 API: `Model(outputs=[<tf.Tenso..., inputs=[<tf.Tenso...)`
+  '` call to the Keras 2 API: ' + signature)
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+flatten_1 (Flatten)          (None, 28224)             0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 6)                 169350    
+=================================================================
+Total params: 169,350.0
+Trainable params: 169,350.0
+Non-trainable params: 0.0
+_________________________________________________________________
+None
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+input_1 (InputLayer)             (None, 84, 84, 4)     0                                            
+____________________________________________________________________________________________________
+conv2d_1 (Conv2D)                (None, 20, 20, 32)    8224                                         
+____________________________________________________________________________________________________
+conv2d_2 (Conv2D)                (None, 9, 9, 64)      32832                                        
+____________________________________________________________________________________________________
+conv2d_3 (Conv2D)                (None, 7, 7, 64)      36928                                        
+____________________________________________________________________________________________________
+flatten_1 (Flatten)              (None, 3136)          0                                            
+____________________________________________________________________________________________________
+dense_1 (Dense)                  (None, 512)           1606144                                      
+____________________________________________________________________________________________________
+dense_3 (Dense)                  (None, 512)           1606144                                      
+____________________________________________________________________________________________________
+dense_2 (Dense)                  (None, 6)             3078                                         
+____________________________________________________________________________________________________
+dense_4 (Dense)                  (None, 1)             513                                          
+____________________________________________________________________________________________________
+merge_1 (Merge)                  (None, 6)             0                                            
+====================================================================================================
+Total params: 3,293,863.0
+Trainable params: 3,293,863.0
+Non-trainable params: 0.0
+____________________________________________________________________________________________________
+None
+iter_ctr 563, num_episodes : 1, episode_reward : 8.0, loss : None, episode_timesteps : 563, epsilon : 1.0
+iter_ctr 657, num_episodes : 1, episode_reward : 9.0, loss : None, episode_timesteps : 657, epsilon : 1.0
+iter_ctr 1264, num_episodes : 2, episode_reward : 8.0, loss : None, episode_timesteps : 701, epsilon : 1.0
+iter_ctr 1399, num_episodes : 2, episode_reward : 11.0, loss : None, episode_timesteps : 742, epsilon : 1.0
+iter_ctr 1817, num_episodes : 3, episode_reward : 6.0, loss : None, episode_timesteps : 553, epsilon : 1.0
+iter_ctr 2430, num_episodes : 4, episode_reward : 7.0, loss : None, episode_timesteps : 613, epsilon : 1.0
+iter_ctr 2704, num_episodes : 3, episode_reward : 33.0, loss : None, episode_timesteps : 1305, epsilon : 1.0
+iter_ctr 2839, num_episodes : 5, episode_reward : 7.0, loss : None, episode_timesteps : 409, epsilon : 1.0
+iter_ctr 3113, num_episodes : 4, episode_reward : 4.0, loss : None, episode_timesteps : 409, epsilon : 1.0
+iter_ctr 3236, num_episodes : 6, episode_reward : 4.0, loss : None, episode_timesteps : 397, epsilon : 1.0
+iter_ctr 3570, num_episodes : 5, episode_reward : 7.0, loss : None, episode_timesteps : 457, epsilon : 1.0
+iter_ctr 4256, num_episodes : 6, episode_reward : 8.0, loss : None, episode_timesteps : 686, epsilon : 1.0
+iter_ctr 4368, num_episodes : 7, episode_reward : 16.0, loss : None, episode_timesteps : 1132, epsilon : 1.0
+iter_ctr 4930, num_episodes : 8, episode_reward : 7.0, loss : None, episode_timesteps : 562, epsilon : 1.0
+iter_ctr 5216, num_episodes : 7, episode_reward : 15.0, loss : None, episode_timesteps : 960, epsilon : 1.0
+iter_ctr 5631, num_episodes : 9, episode_reward : 7.0, loss : None, episode_timesteps : 701, epsilon : 1.0
+iter_ctr 5783, num_episodes : 8, episode_reward : 3.0, loss : None, episode_timesteps : 567, epsilon : 1.0
+iter_ctr 6427, num_episodes : 10, episode_reward : 12.0, loss : None, episode_timesteps : 796, epsilon : 1.0
+iter_ctr 6587, num_episodes : 9, episode_reward : 10.0, loss : None, episode_timesteps : 804, epsilon : 1.0
+iter_ctr 7083, num_episodes : 11, episode_reward : 9.0, loss : None, episode_timesteps : 656, epsilon : 1.0
+iter_ctr 7369, num_episodes : 10, episode_reward : 8.0, loss : None, episode_timesteps : 782, epsilon : 1.0
+iter_ctr 7998, num_episodes : 12, episode_reward : 15.0, loss : None, episode_timesteps : 915, epsilon : 1.0
+iter_ctr 8004, num_episodes : 11, episode_reward : 10.0, loss : None, episode_timesteps : 635, epsilon : 1.0
+iter_ctr 8560, num_episodes : 13, episode_reward : 6.0, loss : None, episode_timesteps : 562, epsilon : 1.0
+iter_ctr 8676, num_episodes : 12, episode_reward : 11.0, loss : None, episode_timesteps : 672, epsilon : 1.0
+iter_ctr 9302, num_episodes : 13, episode_reward : 7.0, loss : None, episode_timesteps : 626, epsilon : 1.0
+iter_ctr 9714, num_episodes : 14, episode_reward : 13.0, loss : None, episode_timesteps : 1154, epsilon : 1.0
+iter_ctr 10083, num_episodes : 14, episode_reward : 13.0, loss : None, episode_timesteps : 781, epsilon : 1.0
+iter_ctr 10368, num_episodes : 15, episode_reward : 7.0, loss : None, episode_timesteps : 654, epsilon : 1.0
+iter_ctr 11006, num_episodes : 15, episode_reward : 17.0, loss : None, episode_timesteps : 923, epsilon : 1.0
+iter_ctr 11663, num_episodes : 16, episode_reward : 19.0, loss : None, episode_timesteps : 1295, epsilon : 1.0
+iter_ctr 11631, num_episodes : 16, episode_reward : 7.0, loss : None, episode_timesteps : 625, epsilon : 1.0
+iter_ctr 12530, num_episodes : 17, episode_reward : 12.0, loss : None, episode_timesteps : 867, epsilon : 1.0
+iter_ctr 12630, num_episodes : 17, episode_reward : 19.0, loss : None, episode_timesteps : 999, epsilon : 1.0
+iter_ctr 13267, num_episodes : 18, episode_reward : 6.0, loss : None, episode_timesteps : 737, epsilon : 1.0
+iter_ctr 13458, num_episodes : 18, episode_reward : 14.0, loss : None, episode_timesteps : 828, epsilon : 1.0
+iter_ctr 13857, num_episodes : 19, episode_reward : 5.0, loss : None, episode_timesteps : 590, epsilon : 1.0
+iter_ctr 14092, num_episodes : 19, episode_reward : 7.0, loss : None, episode_timesteps : 634, epsilon : 1.0
+iter_ctr 14490, num_episodes : 20, episode_reward : 6.0, loss : None, episode_timesteps : 398, epsilon : 1.0
+iter_ctr 14698, num_episodes : 20, episode_reward : 16.0, loss : None, episode_timesteps : 841, epsilon : 1.0
+iter_ctr 15229, num_episodes : 21, episode_reward : 7.0, loss : None, episode_timesteps : 531, epsilon : 1.0
+iter_ctr 15180, num_episodes : 21, episode_reward : 8.0, loss : None, episode_timesteps : 690, epsilon : 1.0
+iter_ctr 15561, num_episodes : 22, episode_reward : 4.0, loss : None, episode_timesteps : 381, epsilon : 1.0
+iter_ctr 16119, num_episodes : 22, episode_reward : 14.0, loss : None, episode_timesteps : 890, epsilon : 1.0
+iter_ctr 16378, num_episodes : 23, episode_reward : 9.0, loss : None, episode_timesteps : 817, epsilon : 1.0
+iter_ctr 16959, num_episodes : 23, episode_reward : 11.0, loss : None, episode_timesteps : 840, epsilon : 1.0
+iter_ctr 16928, num_episodes : 24, episode_reward : 6.0, loss : None, episode_timesteps : 550, epsilon : 1.0
+iter_ctr 17540, num_episodes : 24, episode_reward : 3.0, loss : None, episode_timesteps : 581, epsilon : 1.0
+iter_ctr 17404, num_episodes : 25, episode_reward : 8.0, loss : None, episode_timesteps : 476, epsilon : 1.0
+iter_ctr 17911, num_episodes : 26, episode_reward : 5.0, loss : None, episode_timesteps : 507, epsilon : 1.0
+iter_ctr 18135, num_episodes : 25, episode_reward : 6.0, loss : None, episode_timesteps : 595, epsilon : 1.0
+iter_ctr 18722, num_episodes : 26, episode_reward : 6.0, loss : None, episode_timesteps : 587, epsilon : 1.0
+iter_ctr 18610, num_episodes : 27, episode_reward : 10.0, loss : None, episode_timesteps : 699, epsilon : 1.0
+iter_ctr 19391, num_episodes : 27, episode_reward : 10.0, loss : None, episode_timesteps : 669, epsilon : 1.0
+iter_ctr 19439, num_episodes : 28, episode_reward : 14.0, loss : None, episode_timesteps : 829, epsilon : 1.0
+iter_ctr 20616, num_episodes : 28, episode_reward : 14.0, loss : None, episode_timesteps : 1225, epsilon : 1.0
+iter_ctr 20391, num_episodes : 29, episode_reward : 10.0, loss : None, episode_timesteps : 952, epsilon : 1.0
+iter_ctr 21125, num_episodes : 29, episode_reward : 2.0, loss : None, episode_timesteps : 509, epsilon : 1.0
+iter_ctr 21266, num_episodes : 30, episode_reward : 12.0, loss : None, episode_timesteps : 875, epsilon : 1.0
+iter_ctr 21942, num_episodes : 31, episode_reward : 9.0, loss : None, episode_timesteps : 676, epsilon : 1.0
+iter_ctr 22365, num_episodes : 30, episode_reward : 21.0, loss : None, episode_timesteps : 1240, epsilon : 1.0
+iter_ctr 22595, num_episodes : 32, episode_reward : 6.0, loss : None, episode_timesteps : 653, epsilon : 1.0
+iter_ctr 23223, num_episodes : 31, episode_reward : 21.0, loss : None, episode_timesteps : 858, epsilon : 1.0
+iter_ctr 23469, num_episodes : 33, episode_reward : 8.0, loss : None, episode_timesteps : 874, epsilon : 1.0
+iter_ctr 24306, num_episodes : 32, episode_reward : 18.0, loss : None, episode_timesteps : 1083, epsilon : 1.0
+iter_ctr 24217, num_episodes : 34, episode_reward : 8.0, loss : None, episode_timesteps : 748, epsilon : 1.0
+iter_ctr 24776, num_episodes : 33, episode_reward : 6.0, loss : None, episode_timesteps : 470, epsilon : 1.0
+iter_ctr 24750, num_episodes : 35, episode_reward : 6.0, loss : None, episode_timesteps : 533, epsilon : 1.0
+iter_ctr 25425, num_episodes : 34, episode_reward : 6.0, loss : None, episode_timesteps : 649, epsilon : 1.0
+iter_ctr 25805, num_episodes : 35, episode_reward : 5.0, loss : None, episode_timesteps : 380, epsilon : 1.0
+iter_ctr 25520, num_episodes : 36, episode_reward : 11.0, loss : None, episode_timesteps : 770, epsilon : 1.0
+iter_ctr 26257, num_episodes : 36, episode_reward : 7.0, loss : None, episode_timesteps : 452, epsilon : 1.0
+iter_ctr 26546, num_episodes : 37, episode_reward : 17.0, loss : None, episode_timesteps : 1026, epsilon : 1.0
+iter_ctr 26956, num_episodes : 37, episode_reward : 8.0, loss : None, episode_timesteps : 699, epsilon : 1.0
+iter_ctr 27062, num_episodes : 38, episode_reward : 6.0, loss : None, episode_timesteps : 516, epsilon : 1.0
+iter_ctr 27712, num_episodes : 38, episode_reward : 9.0, loss : None, episode_timesteps : 756, epsilon : 1.0
+iter_ctr 27658, num_episodes : 39, episode_reward : 8.0, loss : None, episode_timesteps : 596, epsilon : 1.0
+iter_ctr 28361, num_episodes : 39, episode_reward : 6.0, loss : None, episode_timesteps : 649, epsilon : 1.0
+iter_ctr 28844, num_episodes : 40, episode_reward : 15.0, loss : None, episode_timesteps : 1186, epsilon : 1.0
+iter_ctr 29250, num_episodes : 40, episode_reward : 11.0, loss : None, episode_timesteps : 889, epsilon : 1.0
+iter_ctr 29383, num_episodes : 41, episode_reward : 10.0, loss : None, episode_timesteps : 539, epsilon : 1.0
+iter_ctr 29627, num_episodes : 41, episode_reward : 3.0, loss : None, episode_timesteps : 377, epsilon : 1.0
+iter_ctr 30131, num_episodes : 42, episode_reward : 3.0, loss : None, episode_timesteps : 504, epsilon : 1.0
+iter_ctr 30238, num_episodes : 42, episode_reward : 13.0, loss : None, episode_timesteps : 855, epsilon : 1.0
+iter_ctr 30635, num_episodes : 43, episode_reward : 9.0, loss : None, episode_timesteps : 504, epsilon : 1.0
+iter_ctr 30982, num_episodes : 43, episode_reward : 11.0, loss : None, episode_timesteps : 744, epsilon : 1.0
+iter_ctr 31338, num_episodes : 44, episode_reward : 10.0, loss : None, episode_timesteps : 703, epsilon : 1.0
+iter_ctr 31825, num_episodes : 45, episode_reward : 7.0, loss : None, episode_timesteps : 487, epsilon : 1.0
+iter_ctr 31969, num_episodes : 44, episode_reward : 13.0, loss : None, episode_timesteps : 987, epsilon : 1.0
+iter_ctr 32574, num_episodes : 46, episode_reward : 8.0, loss : None, episode_timesteps : 749, epsilon : 1.0
+iter_ctr 32648, num_episodes : 45, episode_reward : 6.0, loss : None, episode_timesteps : 679, epsilon : 1.0
+iter_ctr 33412, num_episodes : 47, episode_reward : 18.0, loss : None, episode_timesteps : 838, epsilon : 1.0
+iter_ctr 33377, num_episodes : 46, episode_reward : 11.0, loss : None, episode_timesteps : 729, epsilon : 1.0
+iter_ctr 33915, num_episodes : 48, episode_reward : 4.0, loss : None, episode_timesteps : 503, epsilon : 1.0
+iter_ctr 33761, num_episodes : 47, episode_reward : 9.0, loss : None, episode_timesteps : 384, epsilon : 1.0
+iter_ctr 34854, num_episodes : 49, episode_reward : 16.0, loss : None, episode_timesteps : 939, epsilon : 1.0
+iter_ctr 34809, num_episodes : 48, episode_reward : 11.0, loss : None, episode_timesteps : 1048, epsilon : 1.0
+iter_ctr 35523, num_episodes : 50, episode_reward : 8.0, loss : None, episode_timesteps : 669, epsilon : 1.0
+iter_ctr 35760, num_episodes : 49, episode_reward : 16.0, loss : None, episode_timesteps : 951, epsilon : 1.0
+iter_ctr 36235, num_episodes : 51, episode_reward : 9.0, loss : None, episode_timesteps : 712, epsilon : 1.0
+iter_ctr 36478, num_episodes : 50, episode_reward : 13.0, loss : None, episode_timesteps : 718, epsilon : 1.0
+iter_ctr 37203, num_episodes : 52, episode_reward : 18.0, loss : None, episode_timesteps : 968, epsilon : 1.0
+iter_ctr 37137, num_episodes : 51, episode_reward : 17.0, loss : None, episode_timesteps : 659, epsilon : 1.0
+iter_ctr 37688, num_episodes : 53, episode_reward : 6.0, loss : None, episode_timesteps : 485, epsilon : 1.0
+iter_ctr 37783, num_episodes : 52, episode_reward : 11.0, loss : None, episode_timesteps : 646, epsilon : 1.0
+iter_ctr 38342, num_episodes : 54, episode_reward : 8.0, loss : None, episode_timesteps : 654, epsilon : 1.0
+iter_ctr 38175, num_episodes : 53, episode_reward : 4.0, loss : None, episode_timesteps : 392, epsilon : 1.0
+iter_ctr 39174, num_episodes : 55, episode_reward : 12.0, loss : None, episode_timesteps : 832, epsilon : 1.0
+iter_ctr 39039, num_episodes : 54, episode_reward : 15.0, loss : None, episode_timesteps : 864, epsilon : 1.0
+iter_ctr 39811, num_episodes : 56, episode_reward : 10.0, loss : None, episode_timesteps : 637, epsilon : 1.0
+iter_ctr 39554, num_episodes : 55, episode_reward : 6.0, loss : None, episode_timesteps : 515, epsilon : 1.0
+iter_ctr 40605, num_episodes : 57, episode_reward : 11.0, loss : None, episode_timesteps : 794, epsilon : 1.0
+iter_ctr 40547, num_episodes : 56, episode_reward : 18.0, loss : None, episode_timesteps : 993, epsilon : 1.0
+iter_ctr 41263, num_episodes : 58, episode_reward : 11.0, loss : None, episode_timesteps : 658, epsilon : 1.0
+iter_ctr 41055, num_episodes : 57, episode_reward : 6.0, loss : None, episode_timesteps : 508, epsilon : 1.0
+iter_ctr 41627, num_episodes : 58, episode_reward : 8.0, loss : None, episode_timesteps : 572, epsilon : 1.0
+iter_ctr 42064, num_episodes : 59, episode_reward : 10.0, loss : None, episode_timesteps : 801, epsilon : 1.0
+iter_ctr 42563, num_episodes : 59, episode_reward : 22.0, loss : None, episode_timesteps : 936, epsilon : 1.0
+iter_ctr 42857, num_episodes : 60, episode_reward : 13.0, loss : None, episode_timesteps : 793, epsilon : 1.0
+iter_ctr 43176, num_episodes : 60, episode_reward : 9.0, loss : None, episode_timesteps : 613, epsilon : 1.0
+iter_ctr 43447, num_episodes : 61, episode_reward : 4.0, loss : None, episode_timesteps : 590, epsilon : 1.0
+iter_ctr 43844, num_episodes : 62, episode_reward : 7.0, loss : None, episode_timesteps : 397, epsilon : 1.0
+iter_ctr 44441, num_episodes : 61, episode_reward : 12.0, loss : None, episode_timesteps : 1265, epsilon : 1.0
+iter_ctr 44517, num_episodes : 63, episode_reward : 10.0, loss : None, episode_timesteps : 673, epsilon : 1.0
+iter_ctr 44899, num_episodes : 64, episode_reward : 5.0, loss : None, episode_timesteps : 382, epsilon : 1.0
+iter_ctr 45188, num_episodes : 62, episode_reward : 11.0, loss : None, episode_timesteps : 747, epsilon : 1.0
+iter_ctr 45926, num_episodes : 63, episode_reward : 12.0, loss : None, episode_timesteps : 738, epsilon : 1.0
+iter_ctr 45794, num_episodes : 65, episode_reward : 12.0, loss : None, episode_timesteps : 895, epsilon : 1.0
+iter_ctr 46321, num_episodes : 64, episode_reward : 7.0, loss : None, episode_timesteps : 395, epsilon : 1.0
+iter_ctr 46690, num_episodes : 66, episode_reward : 20.0, loss : None, episode_timesteps : 896, epsilon : 1.0
+iter_ctr 46959, num_episodes : 65, episode_reward : 5.0, loss : None, episode_timesteps : 638, epsilon : 1.0
+iter_ctr 47482, num_episodes : 67, episode_reward : 16.0, loss : None, episode_timesteps : 792, epsilon : 1.0
+iter_ctr 47808, num_episodes : 66, episode_reward : 12.0, loss : None, episode_timesteps : 849, epsilon : 1.0
+iter_ctr 47967, num_episodes : 68, episode_reward : 2.0, loss : None, episode_timesteps : 485, epsilon : 1.0
+iter_ctr 48599, num_episodes : 69, episode_reward : 9.0, loss : None, episode_timesteps : 632, epsilon : 1.0
+iter_ctr 49032, num_episodes : 67, episode_reward : 17.0, loss : None, episode_timesteps : 1224, epsilon : 1.0
+iter_ctr 49293, num_episodes : 70, episode_reward : 8.0, loss : None, episode_timesteps : 694, epsilon : 1.0
+iter_ctr 49484, num_episodes : 68, episode_reward : 7.0, loss : None, episode_timesteps : 452, epsilon : 1.0
+iter_ctr 49893, num_episodes : 71, episode_reward : 4.0, loss : None, episode_timesteps : 600, epsilon : 1.0
+
+
+Evaluating at iter 50000
+[2017-04-01 21:23:32,129] Making new env: SpaceInvaders-v0
+[2017-04-01 21:23:32,185] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000000.mp4
+
+
+Evaluating at iter 50000
+[2017-04-01 21:23:32,215] Making new env: SpaceInvaders-v0
+[2017-04-01 21:23:32,292] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000000.mp4
+Evaluate() : iter_ctr_valid 828, eval_episode_ctr_valid : 1, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 828
+Evaluate() : iter_ctr_valid 836, eval_episode_ctr_valid : 1, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 836
+[2017-04-01 21:23:36,774] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000001.mp4
+[2017-04-01 21:23:36,818] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000001.mp4
+Evaluate() : iter_ctr_valid 1491, eval_episode_ctr_valid : 2, total_reward_curr_episode : 105.0, num_timesteps_in_curr_episode 663
+[2017-04-01 21:23:40,514] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000002.mp4
+Evaluate() : iter_ctr_valid 1645, eval_episode_ctr_valid : 2, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 809
+[2017-04-01 21:23:41,079] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000002.mp4
+Evaluate() : iter_ctr_valid 2307, eval_episode_ctr_valid : 3, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 816
+[2017-04-01 21:23:45,142] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000003.mp4
+Evaluate() : iter_ctr_valid 2472, eval_episode_ctr_valid : 3, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 827
+[2017-04-01 21:23:45,422] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000003.mp4
+Evaluate() : iter_ctr_valid 3123, eval_episode_ctr_valid : 4, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 816
+Evaluate() : iter_ctr_valid 3275, eval_episode_ctr_valid : 4, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 803
+[2017-04-01 21:23:49,704] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000004.mp4
+[2017-04-01 21:23:49,714] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000004.mp4
+Evaluate() : iter_ctr_valid 4098, eval_episode_ctr_valid : 5, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 823
+[2017-04-01 21:23:53,997] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000005.mp4
+Evaluate() : iter_ctr_valid 3945, eval_episode_ctr_valid : 5, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 822
+[2017-04-01 21:23:54,311] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000005.mp4
+Evaluate() : iter_ctr_valid 4901, eval_episode_ctr_valid : 6, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 803
+[2017-04-01 21:23:58,271] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000006.mp4
+Evaluate() : iter_ctr_valid 4766, eval_episode_ctr_valid : 6, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 821
+[2017-04-01 21:23:58,996] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000006.mp4
+Evaluate() : iter_ctr_valid 5711, eval_episode_ctr_valid : 7, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 810
+[2017-04-01 21:24:02,548] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000007.mp4
+Evaluate() : iter_ctr_valid 5573, eval_episode_ctr_valid : 7, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 807
+[2017-04-01 21:24:03,525] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000007.mp4
+Evaluate() : iter_ctr_valid 6525, eval_episode_ctr_valid : 8, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 814
+[2017-04-01 21:24:06,791] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000008.mp4
+Evaluate() : iter_ctr_valid 6404, eval_episode_ctr_valid : 8, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 831
+[2017-04-01 21:24:08,236] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000008.mp4
+Evaluate() : iter_ctr_valid 7333, eval_episode_ctr_valid : 9, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 808
+[2017-04-01 21:24:11,074] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000009.mp4
+Evaluate() : iter_ctr_valid 7219, eval_episode_ctr_valid : 9, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 815
+[2017-04-01 21:24:13,022] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000009.mp4
+Evaluate() : iter_ctr_valid 8154, eval_episode_ctr_valid : 10, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 821
+[2017-04-01 21:24:15,323] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000010.mp4
+Evaluate() : iter_ctr_valid 8041, eval_episode_ctr_valid : 10, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 822
+[2017-04-01 21:24:17,655] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000010.mp4
+Evaluate() : iter_ctr_valid 8970, eval_episode_ctr_valid : 11, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 816
+[2017-04-01 21:24:19,574] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000011.mp4
+Evaluate() : iter_ctr_valid 8848, eval_episode_ctr_valid : 11, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 807
+[2017-04-01 21:24:22,411] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000011.mp4
+Evaluate() : iter_ctr_valid 9786, eval_episode_ctr_valid : 12, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 816
+[2017-04-01 21:24:23,894] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000012.mp4
+Evaluate() : iter_ctr_valid 9670, eval_episode_ctr_valid : 12, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 822
+[2017-04-01 21:24:27,194] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000012.mp4
+Evaluate() : iter_ctr_valid 10610, eval_episode_ctr_valid : 13, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 824
+[2017-04-01 21:24:28,112] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000013.mp4
+Evaluate() : iter_ctr_valid 10487, eval_episode_ctr_valid : 13, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 817
+[2017-04-01 21:24:31,797] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000013.mp4
+Evaluate() : iter_ctr_valid 11427, eval_episode_ctr_valid : 14, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 817
+[2017-04-01 21:24:32,358] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000014.mp4
+Evaluate() : iter_ctr_valid 11311, eval_episode_ctr_valid : 14, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 824
+[2017-04-01 21:24:36,404] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000014.mp4
+Evaluate() : iter_ctr_valid 12241, eval_episode_ctr_valid : 15, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 814
+[2017-04-01 21:24:36,567] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000015.mp4
+Evaluate() : iter_ctr_valid 13061, eval_episode_ctr_valid : 16, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 820
+[2017-04-01 21:24:40,957] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000016.mp4
+Evaluate() : iter_ctr_valid 12142, eval_episode_ctr_valid : 15, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 831
+[2017-04-01 21:24:41,135] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000015.mp4
+Evaluate() : iter_ctr_valid 13893, eval_episode_ctr_valid : 17, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 832
+[2017-04-01 21:24:45,344] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000017.mp4
+Evaluate() : iter_ctr_valid 12950, eval_episode_ctr_valid : 16, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 808
+[2017-04-01 21:24:45,634] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000016.mp4
+Evaluate() : iter_ctr_valid 14721, eval_episode_ctr_valid : 18, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 828
+[2017-04-01 21:24:49,627] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000018.mp4
+Evaluate() : iter_ctr_valid 13770, eval_episode_ctr_valid : 17, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 820
+[2017-04-01 21:24:50,415] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000017.mp4
+Evaluate() : iter_ctr_valid 15552, eval_episode_ctr_valid : 19, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 831
+[2017-04-01 21:24:53,957] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.7.video000019.mp4
+Evaluate() : iter_ctr_valid 14589, eval_episode_ctr_valid : 18, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 819
+[2017-04-01 21:24:54,893] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000018.mp4
+Evaluate() : iter_ctr_valid 16370, eval_episode_ctr_valid : 20, total_reward_curr_episode : 180.0, num_timesteps_in_curr_episode 818
+ sum(total_reward_all_episodes) : 3600.0 , float(len(total_reward_all_episodes)) : 20.0
+all_episode_avg_reward  180.0
+
+
+
+ self.reward_list 
+
+
+[180.0]
+[2017-04-01 21:24:58,192] Finished writing results. You can upload them to the scoreboard via gym.upload('/data/datasets/ratneshm/deeprl_hw2/q4/SpaceInvaders-v0/double/2017-04-01_21-20-43/gym_monitor/0050000')
+Done Evaluating
+
+
+Evaluate() : iter_ctr_valid 15419, eval_episode_ctr_valid : 19, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 830
+[2017-04-01 21:24:59,609] Starting new video recorder writing to /data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000/openaigym.video.0.8.video000019.mp4
+Evaluate() : iter_ctr_valid 16239, eval_episode_ctr_valid : 20, total_reward_curr_episode : 210.0, num_timesteps_in_curr_episode 820
+ sum(total_reward_all_episodes) : 3945.0 , float(len(total_reward_all_episodes)) : 20.0
+all_episode_avg_reward  197.25
+
+
+
+ self.reward_list 
+
+
+[197.25]
+[2017-04-01 21:25:04,781] Finished writing results. You can upload them to the scoreboard via gym.upload('/data/datasets/ratneshm/deeprl_hw2/q7/SpaceInvaders-v0/vanilla/2017-04-01_21-20-43/gym_monitor/0050000')
+Done Evaluating
+
+
+iter_ctr 50054, num_episodes : 69, episode_reward : 10.0, loss : 0.000229134631809, episode_timesteps : 570, epsilon : 0.9999505
+iter_ctr 50867, num_episodes : 72, episode_reward : 13.0, loss : 0.0282372962683, episode_timesteps : 974, epsilon : 0.9992188
+iter_ctr 51556, num_episodes : 73, episode_reward : 10.0, loss : 0.005411346443, episode_timesteps : 689, epsilon : 0.9985987
+iter_ctr 51344, num_episodes : 70, episode_reward : 22.0, loss : 0.00267923227511, episode_timesteps : 1290, epsilon : 0.9987895
+iter_ctr 52267, num_episodes : 74, episode_reward : 10.0, loss : 0.00929963961244, episode_timesteps : 711, epsilon : 0.9979588
+iter_ctr 52882, num_episodes : 75, episode_reward : 4.0, loss : 0.00929963961244, episode_timesteps : 615, epsilon : 0.9974053
+iter_ctr 52363, num_episodes : 71, episode_reward : 14.0, loss : 5.50741351617e-05, episode_timesteps : 1019, epsilon : 0.9978724
+iter_ctr 53431, num_episodes : 76, episode_reward : 9.0, loss : 0.00598049443215, episode_timesteps : 549, epsilon : 0.9969112
+iter_ctr 54353, num_episodes : 77, episode_reward : 14.0, loss : 0.0157423950732, episode_timesteps : 922, epsilon : 0.9960814
+iter_ctr 53561, num_episodes : 72, episode_reward : 15.0, loss : 2.81564989564e-05, episode_timesteps : 1198, epsilon : 0.9967942
+iter_ctr 54741, num_episodes : 78, episode_reward : 5.0, loss : 0.0157423950732, episode_timesteps : 388, epsilon : 0.9957322
+iter_ctr 54260, num_episodes : 73, episode_reward : 11.0, loss : 0.00497514987364, episode_timesteps : 699, epsilon : 0.9961651
+iter_ctr 55534, num_episodes : 79, episode_reward : 8.0, loss : 0.0141487587243, episode_timesteps : 793, epsilon : 0.9950185
+iter_ctr 54930, num_episodes : 74, episode_reward : 9.0, loss : 0.00497514987364, episode_timesteps : 670, epsilon : 0.9955621
+iter_ctr 56216, num_episodes : 80, episode_reward : 9.0, loss : 0.0119857694954, episode_timesteps : 682, epsilon : 0.9944047
+iter_ctr 55858, num_episodes : 75, episode_reward : 14.0, loss : 4.64827426185e-05, episode_timesteps : 928, epsilon : 0.9947269
+iter_ctr 56877, num_episodes : 81, episode_reward : 7.0, loss : 0.0119857694954, episode_timesteps : 661, epsilon : 0.9938098
+iter_ctr 56233, num_episodes : 76, episode_reward : 7.0, loss : 7.19134113751e-05, episode_timesteps : 375, epsilon : 0.9943894
+iter_ctr 57487, num_episodes : 82, episode_reward : 6.0, loss : 0.00403665285558, episode_timesteps : 610, epsilon : 0.9932608
+iter_ctr 57310, num_episodes : 77, episode_reward : 14.0, loss : 0.00697334157303, episode_timesteps : 1077, epsilon : 0.9934201
+iter_ctr 58725, num_episodes : 83, episode_reward : 12.0, loss : 0.00958141405135, episode_timesteps : 1238, epsilon : 0.9921466
+iter_ctr 57979, num_episodes : 78, episode_reward : 5.0, loss : 0.00697334157303, episode_timesteps : 669, epsilon : 0.992818

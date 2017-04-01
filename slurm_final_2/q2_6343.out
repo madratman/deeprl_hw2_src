@@ -1,0 +1,50 @@
+I am on
+clamps
+I got gpu number
+0
+let the training begin
+ MODE IS vanilla
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+flatten_1 (Flatten)          (None, 28224)             0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 6)                 169350    
+=================================================================
+Total params: 169,350.0
+Trainable params: 169,350.0
+Non-trainable params: 0.0
+_________________________________________________________________
+None
+iter_ctr 1001, num_episodes : 1, episode_reward : 14.0, loss : None, episode_timesteps : 1001, epsilon : 1.0
+iter_ctr 1565, num_episodes : 2, episode_reward : 9.0, loss : None, episode_timesteps : 564, epsilon : 1.0
+iter_ctr 2305, num_episodes : 3, episode_reward : 12.0, loss : None, episode_timesteps : 740, epsilon : 1.0
+iter_ctr 2710, num_episodes : 4, episode_reward : 7.0, loss : None, episode_timesteps : 405, epsilon : 1.0
+iter_ctr 3337, num_episodes : 5, episode_reward : 6.0, loss : None, episode_timesteps : 627, epsilon : 1.0
+iter_ctr 3838, num_episodes : 6, episode_reward : 6.0, loss : None, episode_timesteps : 501, epsilon : 1.0
+iter_ctr 4566, num_episodes : 7, episode_reward : 11.0, loss : None, episode_timesteps : 728, epsilon : 1.0
+iter_ctr 5147, num_episodes : 8, episode_reward : 4.0, loss : None, episode_timesteps : 581, epsilon : 1.0
+iter_ctr 5767, num_episodes : 9, episode_reward : 6.0, loss : None, episode_timesteps : 620, epsilon : 1.0
+iter_ctr 6117, num_episodes : 10, episode_reward : 4.0, loss : None, episode_timesteps : 350, epsilon : 1.0
+iter_ctr 7010, num_episodes : 11, episode_reward : 12.0, loss : None, episode_timesteps : 893, epsilon : 1.0
+iter_ctr 7506, num_episodes : 12, episode_reward : 5.0, loss : None, episode_timesteps : 496, epsilon : 1.0
+iter_ctr 8117, num_episodes : 13, episode_reward : 3.0, loss : None, episode_timesteps : 611, epsilon : 1.0
+iter_ctr 8790, num_episodes : 14, episode_reward : 8.0, loss : None, episode_timesteps : 673, epsilon : 1.0
+iter_ctr 9758, num_episodes : 15, episode_reward : 18.0, loss : None, episode_timesteps : 968, epsilon : 1.0
+iter_ctr 10441, num_episodes : 16, episode_reward : 7.0, loss : None, episode_timesteps : 683, epsilon : 1.0
+iter_ctr 10949, num_episodes : 17, episode_reward : 6.0, loss : None, episode_timesteps : 508, epsilon : 1.0
+iter_ctr 11677, num_episodes : 18, episode_reward : 11.0, loss : None, episode_timesteps : 728, epsilon : 1.0
+iter_ctr 12423, num_episodes : 19, episode_reward : 9.0, loss : None, episode_timesteps : 746, epsilon : 1.0
+iter_ctr 12841, num_episodes : 20, episode_reward : 5.0, loss : None, episode_timesteps : 418, epsilon : 1.0
+iter_ctr 13226, num_episodes : 21, episode_reward : 6.0, loss : None, episode_timesteps : 385, epsilon : 1.0
+iter_ctr 14018, num_episodes : 22, episode_reward : 10.0, loss : None, episode_timesteps : 792, epsilon : 1.0
+iter_ctr 14663, num_episodes : 23, episode_reward : 8.0, loss : None, episode_timesteps : 645, epsilon : 1.0
+iter_ctr 15067, num_episodes : 24, episode_reward : 5.0, loss : None, episode_timesteps : 404, epsilon : 1.0
+iter_ctr 15708, num_episodes : 25, episode_reward : 8.0, loss : None, episode_timesteps : 641, epsilon : 1.0
+iter_ctr 16420, num_episodes : 26, episode_reward : 10.0, loss : None, episode_timesteps : 712, epsilon : 1.0
+iter_ctr 16915, num_episodes : 27, episode_reward : 6.0, loss : None, episode_timesteps : 495, epsilon : 1.0
+iter_ctr 17434, num_episodes : 28, episode_reward : 2.0, loss : None, episode_timesteps : 519, epsilon : 1.0
+iter_ctr 17824, num_episodes : 29, episode_reward : 8.0, loss : None, episode_timesteps : 390, epsilon : 1.0
+iter_ctr 18360, num_episodes : 30, episode_reward : 6.0, loss : None, episode_timesteps : 536, epsilon : 1.0
+iter_ctr 19896, num_episodes : 31, episode_reward : 17.0, loss : None, episode_timesteps : 1536, epsilon : 1.0
+iter_ctr 20660, num_episodes : 32, episode_reward : 12.0, loss : None, episode_timesteps : 764, epsilon : 1.0
