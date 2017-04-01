@@ -71,7 +71,7 @@ class DQNAgent:
                  train_freq,
                  batch_size,
                  mode,
-                 log_parent_dir = '/data/datasets/ratneshm/deeprl_hw2/'):
+                 log_parent_dir = '/data/datasets/ratneshm/deeprl_hw2/q7'):
 
         self.env_string = env
         self.env = gym.make(env)
