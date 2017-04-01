@@ -1,8 +1,16 @@
 """Main DQN agent."""
+
+import tensorflow as tf
+
 from keras.models import Sequential, Model
 from keras.layers import Dense, Activation, Dropout, Reshape, Flatten, Lambda
 from keras.layers.convolutional import Convolution2D, ZeroPadding2D, AveragePooling2D, MaxPooling2D
-from objectives import mean_huber_loss
+from keras.optimizers import Adam
+from keras import backend as K
+from keras.backend.tensorflow_backend import set_session
+import keras
+
+from objectives import *
 import gym
 import numpy as np
 from policy import *
@@ -12,12 +20,10 @@ import matplotlib.pyplot as plt
 import cPickle as pkl
 import os
 from gym import wrappers
-import tensorflow as tf
-import keras.backend as K
-from keras.backend.tensorflow_backend import set_session
+
 config = tf.ConfigProto()
 config.gpu_options.per_process_gpu_memory_fraction = 0.33
-set_session(tf.Session(config=config))
+K.set_session(tf.Session(config=config))
 
 class DQNAgent:
     """Class implementing DQN.
@@ -65,7 +71,7 @@ class DQNAgent:
                  train_freq,
                  batch_size,
                  mode,
-                 log_parent_dir = '/data/datasets/rbonatti/deeprl_hw2/q3'):
+                 log_parent_dir = '/data/datasets/ratneshm/deeprl_hw2/'):
 
         self.env_string = env
         self.env = gym.make(env)
@@ -85,7 +91,7 @@ class DQNAgent:
         self.reward_list = []
         self.loss_log = []
         self.loss_last = None
-        self.mode = mode
+        self.mode = 'vanilla'
         self.log_parent_dir = log_parent_dir
         self.make_log_dir() # makes empty dir and logfiles based on current timestamp inside self.log_parent_dir
 
@@ -117,14 +123,11 @@ class DQNAgent:
         keras.models.Model
           The Q-model.
         """
-        # model.add(Convolution2D(filters=32, kernel_size=(8,8), strides=(4,4), input_shape=(84,84,4), activation='relu', name='conv_1'))
-        # model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='conv_2'))
-        # model.add(Convolution2D(filters=64, kernel_size=(4,4), strides=(2,2), activation='relu', name='fc_1'))
-        # model.add(Flatten())
-
-        model = Sequential()
+        # reference for creation of the model https://yilundu.github.io/2016/12/24/Deep-Q-Learning-on-Space-Invaders.html
+        model=Sequential()
         model.add(Flatten( input_shape=(84,84,4)))
-        model.add(Dense(self.num_actions, activation=None,  name='final'))
+        model.add(Dense(self.num_actions)) 
+
         return model
 
     def compile(self):
@@ -144,15 +147,19 @@ class DQNAgent:
         keras.optimizers.Optimizer class. Specifically the Adam
         optimizer.
         """
+        # create both networks
         self.q_network = self.create_model()
         self.target_q_network = self.create_model()
-        self.q_network.compile(loss=mean_huber_loss, optimizer='adam') 
-        self.target_q_network.compile(optimizer='adam', loss=mean_huber_loss) #todo metrics 
-        print self.q_network.summary()
 
-    def tf_log_scaler(self, tag, value, step):
-        summary = tf.Summary(value=[tf.Summary.Value(tag=tag, simple_value=value)])
-        self.tf_summary_writer.add_summary(summary, step)
+        # set loss function in both 
+        adam = Adam(lr=1e-4)
+        self.q_network.compile(loss=mean_huber_loss, optimizer=adam) 
+        self.target_q_network.compile(loss=mean_huber_loss, optimizer=adam)
+        
+        # set the same weights for both initially
+        self.target_q_network.set_weights(self.q_network.get_weights())
+        
+        print self.q_network.summary()
 
     def calc_q_values(self, state):
         """Given a state (or batch of states) calculate the Q-values.
@@ -162,7 +169,7 @@ class DQNAgent:
         ------
         Q-values for the state(s)
         """ 
-        q_vals = self.q_network.predict(np.swapaxes(state,0,3))
+        q_vals = self.q_network.predict(np.swapaxes(state,0,3),batch_size=1)
         return q_vals
 
     def make_log_dir(self):
@@ -194,6 +201,12 @@ class DQNAgent:
     def dump_test_episode_reward(self, episode_reward):
         with open(self.log_files['test_episode_reward'], "a") as f:
             f.write(str(episode_reward) + '\n')
+
+    # ref http://stackoverflow.com/questions/37902705/how-to-manually-create-a-tf-summary 
+    # https://gist.github.com/gyglim/1f8dfb1b5c82627ae3efcfbbadb9f514#file-tensorboard_logging-py-L41
+    def tf_log_scaler(self, tag, value, step):
+        summary = tf.Summary(value=[tf.Summary.Value(tag=tag, simple_value=value)])
+        self.tf_summary_writer.add_summary(summary, step)
 
     def update_policy(self):
         """Update your policy.
@@ -231,8 +244,8 @@ class DQNAgent:
         next_state_images = self.preprocessor.process_batch(next_state_images)
         # print "current_state_images {} max {} ".format(current_state_images.shape, np.max(current_state_images))
 
-        q_current = self.q_network.predict(current_state_images) # 32*num_actions
-        q_next = self.target_q_network.predict(next_state_images)
+        q_current = self.q_network.predict(current_state_images,batch_size=self.batch_size) # 32*num_actions
+        q_next = self.target_q_network.predict(next_state_images,batch_size=self.batch_size)
 
         # targets
         y_targets_all = q_current #32*num_actions
@@ -248,8 +261,10 @@ class DQNAgent:
                     y_targets_all[idx, last_sample.action] = np.float32(last_sample.reward) + self.gamma*q_next[idx, np.argmax(q_current[idx])] 
 
         loss = self.q_network.train_on_batch(current_state_images, np.float32(y_targets_all))
+
         with tf.name_scope('summaries'):
             self.tf_log_scaler(tag='train_loss', value=loss, step=self.iter_ctr)
+
         if not (self.iter_ctr % self.log_loss_every_nth):
             self.dump_train_loss(loss)
 
@@ -291,8 +306,11 @@ class DQNAgent:
         self.log_loss_every_nth = log_loss_every_nth
         random_policy = UniformRandomPolicy(num_actions=self.num_actions) # for burn in 
         num_episodes = 0
+
+        # tf logging
         self.tf_session = K.get_session()
         self.tf_summary_writer = tf.summary.FileWriter(self.log_dir, self.tf_session.graph)
+
         while self.iter_ctr < num_iterations:
             state = self.env.reset()
             self.preprocessor.reset_history_memory()
@@ -325,6 +343,9 @@ class DQNAgent:
                     if is_terminal or (num_timesteps_in_curr_episode > max_episode_length-1):
                         state = self.env.reset()
                         num_episodes += 1
+                        with tf.name_scope('summaries'):
+                            self.tf_log_scaler(tag='train_reward_per_episode_wrt_no_of_episodes', value=total_reward_curr_episode, step=num_episodes)
+                            self.tf_log_scaler(tag='train_reward_per_episode_wrt_iterations', value=total_reward_curr_episode, step=self.iter_ctr)
                         print "iter_ctr {}, num_episodes : {}, episode_reward : {}, loss : {}, episode_timesteps : {}, epsilon : {}".format\
                                 (self.iter_ctr, num_episodes, total_reward_curr_episode, self.loss_last, num_timesteps_in_curr_episode, self.policy.epsilon)
                         num_timesteps_in_curr_episode = 0
@@ -391,7 +412,7 @@ class DQNAgent:
         You can also call the render function here if you want to
         visually inspect your policy.
         """
-        evaluation_policy = GreedyEpsilonPolicy(epsilon=0.05, num_actions=self.num_actions)
+        evaluation_policy = GreedyPolicy()
         eval_preprocessor = preprocessors.PreprocessorSequence()
         env_valid = gym.make(self.env_string)
 
@@ -452,21 +473,5 @@ class DQNAgent:
         
         print "all_episode_avg_reward ", all_episode_avg_reward
         print "\n\n\n self.reward_list \n\n\n", self.reward_list
-
-
-        # plt.plot(np.asarray(range(eval_episode_ctr_valid)), self.reward_list)
-        # plt.xlabel('Epochs')
-        # plt.ylabel('Avg reward per episode')
-        # plt.title('Avg reward per episode during training')
-        # plt.grid(True)
-        # plt.savefig("rewardPlot.png")
-
-        # plt.clear()
-        # plt.plot(np.asarray(range(eval_episode_ctr_valid)), self.qavg_list)
-        # plt.xlabel('Epochs')
-        # plt.ylabel('Avg Q per step')
-        # plt.title('Avg Q per step during training')
-        # plt.grid(True)
-        # plt.savefig("qPlot.png")
 
 

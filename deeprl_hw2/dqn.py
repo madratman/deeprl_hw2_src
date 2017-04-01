@@ -10,7 +10,7 @@ from keras import backend as K
 from keras.backend.tensorflow_backend import set_session
 import keras
 
-from objectives import mean_huber_loss
+from objectives import *
 import gym
 import numpy as np
 from policy import *
@@ -420,7 +420,7 @@ class DQNAgent:
         You can also call the render function here if you want to
         visually inspect your policy.
         """
-        evaluation_policy = GreedyEpsilonPolicy(epsilon=0.05, num_actions=self.num_actions)
+        evaluation_policy = GreedyPolicy()
         eval_preprocessor = preprocessors.PreprocessorSequence()
         env_valid = gym.make(self.env_string)
 

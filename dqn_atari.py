@@ -13,7 +13,7 @@ from keras.optimizers import Adam
 
 import deeprl_hw2 as tfrl
 
-from deeprl_hw2.objectives import mean_huber_loss
+from deeprl_hw2.objectives import *
 import gym
 
 def get_output_folder(parent_dir, env_name):
