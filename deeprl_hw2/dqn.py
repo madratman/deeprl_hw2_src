@@ -134,7 +134,7 @@ class DQNAgent:
         model.add(Flatten())
         model.add(Dense(512))
         model.add(Activation('relu'))
-        model.add(Dense(num_actions)) 
+        model.add(Dense(self.num_actions)) 
 
         return model
 
