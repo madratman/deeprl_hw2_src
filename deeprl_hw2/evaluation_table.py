@@ -343,7 +343,7 @@ class DQNAgent:
 
         # q2
         self.compile_linear(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q2.h5')
-        self.evaluate(num_episodes=10, max_episode_length=max_episode_length, gen_video=False)
+        self.evaluate(num_episodes=4, max_episode_length=max_episode_length, gen_video=False)
 
         # while self.iter_ctr < num_iterations:
         #     state = self.env.reset()
@@ -502,7 +502,7 @@ class DQNAgent:
         mean_calc=np.mean(all_episode_avg_reward_np)
         std_calc=np.std(all_episode_avg_reward_np)
         print all_episode_avg_reward_np.dtype
-        print all_episode_avg_reward_np.std()
+        print all_episode_avg_reward_np.astype(int).std()
         print all_episode_avg_reward_np.mean()
 
         print "-------"
