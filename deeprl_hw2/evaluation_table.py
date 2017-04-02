@@ -501,6 +501,9 @@ class DQNAgent:
         all_episode_avg_reward_np = np.array(all_episode_avg_reward)
         mean_calc=np.mean(all_episode_avg_reward_np)
         std_calc=np.std(all_episode_avg_reward_np)
+        print all_episode_avg_reward_np.dtype
+        print all_episode_avg_reward_np.std()
+        print all_episode_avg_reward_np.mean()
 
         print "-------"
         print "MEAN===", mean_calc
