@@ -73,10 +73,10 @@ class GreedyPolicy(Policy):
 
     This is a pure exploitation policy.
     """
-    def __init__(self, epsilon, num_actions):
+    def __init__(self):
         pass
-        
-    def select_action(self, q_values, **kwargs):  # noqa: D102
+
+    def select_action(self, q_values):  # noqa: D102
         return np.argmax(q_values)
 
 

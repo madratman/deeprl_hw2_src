@@ -24,6 +24,11 @@
 \usepackage{mathbbol}
 \usepackage{graphicx}
 
+\hypersetup{
+     colorlinks   = true,
+     linkcolor    = blue
+}
+
 \title{10-703 - Homework 2: Playing Atari With Deep Reinforcement Learning}
 
 % The \author macro works with any number of authors. There are two
@@ -117,7 +122,7 @@ And this we proved that Eq~\ref{eq:updatew} is the same as Eq~\ref{eq:updateQ}.
 
 \section{[5pts] Implement a linear Q-network (no experience replay or target fixing). Use the experimental setup of \cite{mnih2013playing,mnih2015human} to the extent possible}
 
-We implemented a linear Q-network, and to run the training process, one needs to run the command ``python dqn.py --modes ''.
+We implemented a linear Q-network, and to run the training process, one needs to run the command ``python dqn.py --modes='q2' ''.
 
 We used the following hyper-parameters for this network:
 \begin{itemize}
@@ -135,40 +140,42 @@ We used the following hyper-parameters for this network:
   \item Maximum episode length: 100,000 steps (basically we chose to allow any game size)
 \end{itemize}
 
-We plotted the performance plots of this network in Figs~\ref{fig:q_q2}-\ref{fig:r_q2}.
+We plotted the performance plot of this network in Fig~\ref{fig:r_q2}.
 
-\begin{figure}[ht] \label{fig:q_q2}
-  \centering
-  \includegraphics[width=1.0\textwidth]{images/q_linearWithoutStuff}
-  \caption{Mean Q per step plot for the case of linear network without target fixing and without experience replay}
-\end{figure}
+% \begin{figure}[ht] \label{fig:q_q2}
+%   \centering
+%   \includegraphics[width=1.0\textwidth]{images/q_q2}
+%   \caption{Mean Q per step plot for the case of linear network without target fixing and without experience replay}
+% \end{figure}
 
-\begin{figure}[ht] \label{fig:r_q2}
+\begin{figure}[h] 
   \centering
-  \includegraphics[width=1.0\textwidth]{images/r_linearWithoutStuff}
+  \includegraphics[width=1.0\textwidth]{images/r_q2} 
   \caption{Mean reward per episode plot for the case of linear network without target fixing and without experience replay}
+  \label{fig:r_q2}
 \end{figure}
 
 Using the \textit{Monitor} wrapper of the gym environment, we generated videos of the behavior of the agent across different stages of training:
 
 \begin{itemize}
-  \item 0/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 1/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 2/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 3/3 of training: \href{http://www.sharelatex.com}{Youtube video}
+  \item 0/3 of training: \href{https://youtu.be/i_g-5hSg1L0}{Youtube video}
+  \item 1/3 of training: \href{https://youtu.be/89zyC4tFDcE}{Youtube video}
+  \item 2/3 of training: \href{https://youtu.be/AeCbh3gh-gg}{Youtube video}
+  \item 3/3 of training: \href{https://youtu.be/mXS99LlisDc}{Youtube video}
 \end{itemize}
 
 Here are also some comments about the behavior and training of this specific network:
 
 \begin{itemize}
-  \item Bla
-  \item Bla
+  \item In terms of coding, this was the last network we implemented in this assignment, and in order to remove target fixing and experience replay (which were implemented first) we simply set the target network to in training to be the current network, and set the size of the batch from experience replay to be 1 (we only look at the last sample added to the memory), and train at every step the agent gives
+  \item This network's performance, if filtering for noise, was practically stable during the 5M iterations, being the same as a random policy. Therefore we can assume that training in this condition was unstable
+  \item It was already expected that using a linear network we would not obtain a good testing performance, because we are not able to learn all the game's complexity, specially given the unstable training conditions 
 \end{itemize}
 
 
 \section{[10pts] Implement a linear Q-network with experience replay and target fixing. Use the experimental setup of \cite{mnih2013playing,mnih2015human} to the extent possible}
 
-We implemented a linear Q-network, and to run the training process, one needs to run the command ``python dqn.py --modes ''.
+We implemented a linear Q-network with experience replay and target fixing, and to run the training process, one needs to run the command ``python dqn.py --modes='q3' ''.
 
 We used the following hyper-parameters for this network:
 \begin{itemize}
@@ -186,7 +193,7 @@ We used the following hyper-parameters for this network:
   \item Maximum episode length: 100,000 steps (basically we chose to allow any game size)
 \end{itemize}
 
-We plotted the performance plots of this network in Figs~\ref{fig:q_q3}-\ref{fig:r_q3}.
+We plotted the performance plot of this network in Fig~\ref{fig:r_q3}.
 
 % \begin{figure}[ht] \label{fig:q_q3}
 %   \centering
@@ -194,31 +201,32 @@ We plotted the performance plots of this network in Figs~\ref{fig:q_q3}-\ref{fig
 %   \caption{Mean Q per step plot for the case of linear network with target fixing and with experience replay}
 % \end{figure}
 
-% \begin{figure}[ht] \label{fig:r_q3}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{images/r_q3}
-%   \caption{Mean reward per episode plot for the case of linear network with target fixing and with experience replay}
-% \end{figure}
+\begin{figure}[h] 
+  \centering
+  \includegraphics[width=1.0\textwidth]{images/r_q3}
+  \caption{Mean reward per episode plot for the case of linear network with target fixing and with experience replay}
+  \label{fig:r_q3}
+\end{figure}
 
 Using the \textit{Monitor} wrapper of the gym environment, we generated videos of the behavior of the agent across different stages of training:
 
 \begin{itemize}
-  \item 0/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 1/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 2/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 3/3 of training: \href{http://www.sharelatex.com}{Youtube video}
+  \item 0/3 of training: \href{https://youtu.be/fKvWyR8PrZc}{Youtube video}
+  \item 1/3 of training: \href{https://youtu.be/NRdpff7ivfA}{Youtube video}
+  \item 2/3 of training: \href{https://youtu.be/i-Voiqwufic}{Youtube video}
+  \item 3/3 of training: \href{https://youtu.be/CXvo_i6CVeM}{Youtube video}
 \end{itemize}
 
 Here are also some comments about the behavior and training of this specific network:
 
 \begin{itemize}
-  \item Bla
-  \item Bla
+  \item Similar to the case of the linear network without target fixing and experience replay, even after introducing target fixing and experience replay we obtained a resulting linear network that did not show improvement in training in comparison with a random policy. The reward / episode plot in Fig~\ref{fig:q_q3} shows a practically stable value close to 170 mean reward/episode during testing conditions.
+  \item It was already expected that using a linear network we would not obtain a good testing performance, because we are not able to learn all the game's complexity
 \end{itemize}
 
 \section{[5pts] Implement a linear double Q-network. Use the the experimental setup of \cite{mnih2013playing,mnih2015human} to the extent possible.}
 
-We implemented a double linear Q-network, and to run the training process, one needs to run the command ``python dqn.py --modes ''.
+We implemented a double linear Q-network, and to run the training process, one needs to run the command ``python dqn.py --modes='q4' ''.
 
 We used the following hyper-parameters for this network:
 \begin{itemize}
@@ -236,7 +244,7 @@ We used the following hyper-parameters for this network:
   \item Maximum episode length: 100,000 steps (basically we chose to allow any game size)
 \end{itemize}
 
-We plotted the performance plots of this network in Figs~\ref{fig:q_q4}-\ref{fig:r_q4}.
+We plotted the performance plot of this network in Fig~\ref{fig:q_q4}.
 
 % \begin{figure}[ht] \label{fig:q_q4}
 %   \centering
@@ -244,36 +252,32 @@ We plotted the performance plots of this network in Figs~\ref{fig:q_q4}-\ref{fig
 %   \caption{Mean Q per step plot for the case of double linear network with target fixing and with experience replay}
 % \end{figure}
 
-% \begin{figure}[ht] \label{fig:r_q4}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{images/r_q4}
-%   \caption{Mean reward per episode plot for the case of double linear network with target fixing and with experience replay}
-% \end{figure}
+\begin{figure}[h]
+  \label{fig:r_q4} 
+  \centering
+  \includegraphics[width=1.0\textwidth]{images/r_q4}
+  \caption{Mean reward per episode plot for the case of double linear network with target fixing and with experience replay}
+\end{figure}
 
 Using the \textit{Monitor} wrapper of the gym environment, we generated videos of the behavior of the agent across different stages of training:
 
 \begin{itemize}
-  \item 0/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 1/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 2/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 3/3 of training: \href{http://www.sharelatex.com}{Youtube video}
+  \item 0/3 of training: \href{https://youtu.be/dXuBxXwdYLI}{Youtube video}
+  \item 1/3 of training: \href{https://youtu.be/TShwk_6CKaQ}{Youtube video}
+  \item 2/3 of training: \href{https://youtu.be/Ii8oEaGhTCs}{Youtube video}
+  \item 3/3 of training: \href{https://youtu.be/7BcIHBRCN1I}{Youtube video}
 \end{itemize}
 
 Here are also some comments about the behavior and training of this specific network:
 
 \begin{itemize}
-  \item Bla
-  \item Bla
+  \item Similar to the other two cases of linear networks, even after introducing target fixing and experience replay we obtained a resulting linear network that did not show improvement in training in comparison with a random policy. The reward / episode plot in Fig~\ref{fig:q_q3} shows a practically stable value close to 170 mean reward/episode during testing conditions.
+  \item It was already expected that using a linear network we would not obtain a good testing performance, because we are not able to learn all the game's complexity
 \end{itemize}
 
 \section{[35pts] Implement the deep Q-network as described in \cite{mnih2013playing,mnih2015human}}
 
-We implemented a deep Q-network. We tested the performance of this network with different games, and to run them, one can use the following commands:
-\begin{itemize}
-  \item Space invaders: ``python dqn.py --modes ''
-  \item Enduro: ``python dqn.py --modes ''
-  \item Breakout: ``python dqn.py --modes ''
-\end{itemize}
+We implemented a linear Q-network with experience replay and target fixing, and to run the training process, one needs to run the command ``python dqn.py --modes='deep' --question='vanilla' ''.
 
 We used the following hyper-parameters for this network:
 \begin{itemize}
@@ -291,7 +295,7 @@ We used the following hyper-parameters for this network:
   \item Maximum episode length: 100,000 steps (basically we chose to allow any game size)
 \end{itemize}
 
-We plotted the performance plots of this network in for different games in Figs~\ref{fig:q_q4}-\ref{fig:r_q4}.
+We plotted the performance plots of this network in Fig~\ref{fig:r_q5}.
 
 % \begin{figure}[ht] \label{fig:q_q5_space}
 %   \centering
@@ -299,72 +303,34 @@ We plotted the performance plots of this network in for different games in Figs~
 %   \caption{Mean Q per step plot for Space Invaders for the case of deep Q network with target fixing and with experience replay}
 % \end{figure}
 
-% \begin{figure}[ht] \label{fig:r_q5_space}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{images/r_q5_space}
-%   \caption{Mean reward per episode plot for Space Invaders for the case of deep Q network with target fixing and with experience replay}
-% \end{figure}
+\begin{figure}[h]
+  \label{fig:r_q5} 
+  \centering
+  \includegraphics[width=1.0\textwidth]{images/r_q5}
+  \caption{Mean reward per episode plot for Space Invaders for the case of deep Q network with target fixing and with experience replay}
+\end{figure}
 
-% \begin{figure}[ht] \label{fig:q_q5_enduro}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{images/q_q5_enduro}
-%   \caption{Mean Q per step plot for Enduro for the case of deep Q network with target fixing and with experience replay}
-% \end{figure}
-
-% \begin{figure}[ht] \label{fig:r_q5_enduro}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{images/r_q5_enduro}
-%   \caption{Mean reward per episode plot for Enduro for the case of deep Q network with target fixing and with experience replay}
-% \end{figure}
-
-% \begin{figure}[ht] \label{fig:q_q5_breakout}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{images/q_q5_breakout}
-%   \caption{Mean Q per step plot for Breakout for the case of deep Q network with target fixing and with experience replay}
-% \end{figure}
-
-% \begin{figure}[ht] \label{fig:r_q5_breakout}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{images/r_q5_breakout}
-%   \caption{Mean reward per episode plot for Breakout for the case of deep Q network with target fixing and with experience replay}
-% \end{figure}
-
-Using the \textit{Monitor} wrapper of the gym environment, we generated videos of the behavior of the agent across different stages of training, for the 3 games considered:
+Using the \textit{Monitor} wrapper of the gym environment, we generated videos of the behavior of the agent across different stages of training:
 
 For Space invaders:
 \begin{itemize}
-  \item 0/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 1/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 2/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 3/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-\end{itemize}
-
-For Enduro:
-\begin{itemize}
-  \item 0/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 1/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 2/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 3/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-\end{itemize}
-
-For Breakout:
-\begin{itemize}
-  \item 0/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 1/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 2/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 3/3 of training: \href{http://www.sharelatex.com}{Youtube video}
+  \item 0/3 of training: \href{https://youtu.be/vY9SEmtxhKk}{Youtube video}
+  \item 1/3 of training: \href{https://youtu.be/UjY8P2kfdUI}{Youtube video}
+  \item 2/3 of training: \href{https://youtu.be/mJXHLZ30AlY}{Youtube video}
+  \item 3/3 of training: \href{https://youtu.be/ddNLULEoE5A}{Youtube video}
 \end{itemize}
 
 Here are also some comments about the behavior and training of this specific network:
 
 \begin{itemize}
-  \item Bla
-  \item Bla
+  \item We implemented a deep Q network equal to the setup described in \cite{mnih2015human}, using 3 convolutional layers
+  \item Using the deep Q network we achieved performance significantly higher than the random policy. While the random policy presents mean reward/episode around 160 or 170, with at the end of training we obtained mean reward/episode of about 350 points
+  \item It was interesting to notice a improvement rate of reward/episode which was, if you consider a highly smoothed curve, almost linear with respect to the number of iterations. Since we did not observe any significant plateuing of this curve during the 5M iterations, we can suppose that if we allowed the system to run for longer we could observe even better performances
 \end{itemize}
 
 \section{[20pts] Implement the double deep Q-network as described in \cite{van2016deep}}
 
-We implemented a double deep Q-network, and to run the training process, one needs to run the command ``python dqn.py --modes ''.
+We implemented a double deep Q-network, and to run the training process, one needs to run the command ``python dqn.py --modes='deep' --question='double' ''.
 
 We used the following hyper-parameters for this network:
 \begin{itemize}
@@ -382,7 +348,7 @@ We used the following hyper-parameters for this network:
   \item Maximum episode length: 100,000 steps (basically we chose to allow any game size)
 \end{itemize}
 
-We plotted the performance plots of this network for Space Invaders in Figs~\ref{fig:q_q6}-\ref{fig:r_q6}.
+We plotted the performance plots of this network for Space Invaders in Fig~\ref{fig:r_q6}.
 
 % \begin{figure}[ht] \label{fig:q_q6}
 %   \centering
@@ -390,31 +356,32 @@ We plotted the performance plots of this network for Space Invaders in Figs~\ref
 %   \caption{Mean Q per step plot for the case of double linear network with target fixing and with experience replay}
 % \end{figure}
 
-% \begin{figure}[ht] \label{fig:r_q6}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{images/r_q6}
-%   \caption{Mean reward per episode plot for the case of double linear network with target fixing and with experience replay}
-% \end{figure}
+\begin{figure}[h] 
+  \centering
+  \label{fig:r_q6}
+  \includegraphics[width=1.0\textwidth]{images/r_q6}
+  \caption{Mean reward per episode plot for the case of double deep network with target fixing and with experience replay}
+\end{figure}
 
 Using the \textit{Monitor} wrapper of the gym environment, we generated videos of the behavior of the agent across different stages of training:
 
 \begin{itemize}
-  \item 0/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 1/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 2/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 3/3 of training: \href{http://www.sharelatex.com}{Youtube video}
+  \item 0/3 of training: \href{https://youtu.be/gQyl3_41mNg}{Youtube video}
+  \item 1/3 of training: \href{https://youtu.be/HhjOkGd-0XQ}{Youtube video}
+  \item 2/3 of training: \href{https://youtu.be/uM4EIknVpzw}{Youtube video}
+  \item 3/3 of training: \href{https://youtu.be/_uGdpp2GWYU}{Youtube video}
 \end{itemize}
 
 Here are also some comments about the behavior and training of this specific network:
 
 \begin{itemize}
-  \item Bla
-  \item Bla
+  \item Using the double deep Q network we did not observe a significant improvement over the ``single'' deep Q network, both in terms of training time nor increase in mean reward/episode
+  \item Perhaps a significant difference of the use of the double deep Q network can be noted for a larger number of iterations
 \end{itemize}
 
 \section{[20pts] Implement the dueling deep Q-network as described in \cite{wang2015dueling}}
 
-We implemented a dueling deep Q-network, and to run the training process, one needs to run the command ``python dqn.py --modes ''.
+We implemented a dueling deep Q-network, and to run the training process, one needs to run the command ``python dqn.py --modes='q7' ''.
 
 We used the following hyper-parameters for this network:
 \begin{itemize}
@@ -432,7 +399,7 @@ We used the following hyper-parameters for this network:
   \item Maximum episode length: 100,000 steps (basically we chose to allow any game size)
 \end{itemize}
 
-We plotted the performance plots of this network in Figs~\ref{fig:q_q7}-\ref{fig:r_q7}.
+We plotted the performance plot of this network in Fig~\ref{fig:r_q7}.
 
 % \begin{figure}[ht] \label{fig:q_q7}
 %   \centering
@@ -440,26 +407,27 @@ We plotted the performance plots of this network in Figs~\ref{fig:q_q7}-\ref{fig
 %   \caption{Mean Q per step plot for the case of double linear network with target fixing and with experience replay}
 % \end{figure}
 
-% \begin{figure}[ht] \label{fig:r_q7}
-%   \centering
-%   \includegraphics[width=1.0\textwidth]{images/r_q7}
-%   \caption{Mean reward per episode plot for the case of double linear network with target fixing and with experience replay}
-% \end{figure}
+\begin{figure}[ht] 
+  \centering
+  \label{fig:r_q7}
+  \includegraphics[width=1.0\textwidth]{images/r_q7}
+  \caption{Mean reward per episode plot for the case of dueling deep network with target fixing and with experience replay}
+\end{figure}
 
 Using the \textit{Monitor} wrapper of the gym environment, we generated videos of the behavior of the agent across different stages of training:
 
 \begin{itemize}
-  \item 0/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 1/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 2/3 of training: \href{http://www.sharelatex.com}{Youtube video}
-  \item 3/3 of training: \href{http://www.sharelatex.com}{Youtube video}
+  \item 0/3 of training: \href{https://youtu.be/TYlwYw5Xfgcm}{Youtube video}
+  \item 1/3 of training: \href{https://youtu.be/j5yEKPD1qms}{Youtube video}
+  \item 2/3 of training: \href{https://youtu.be/B_zpHyC6Vus}{Youtube video}
+  \item 3/3 of training: \href{https://youtu.be/tQ2TG76iQ0U}{Youtube video}
 \end{itemize}
 
 Here are also some comments about the behavior and training of this specific network:
 
 \begin{itemize}
-  \item Bla
-  \item Bla
+  \item As stated in \cite{wang2015dueling}, we achieved faster training and higher rewards with the use of the dueling network architecture. which performed equal or better than the other deep Q-network architectures
+  \item We also expect results to be significantly better for the dueling architecture if we allowed it to run for more iterations with the environment
 \end{itemize}
 
 \section{Table comparing rewards for each fully trained model} % (fold)
@@ -494,6 +462,18 @@ Here are some comments about the results in the table:
 \end{itemize}
 % section table_comparing_rewards_for_each_fully_trained_model (end)
 
+\section{Conclusion and overall comparison of architectures} % (fold)
+\label{sec:conclusion_and_overall_comparison_of_architectures}
+In this assignment we compared the performance of different neural network architectures for the function-approximation task in the reinforcement learning problem, trying to learn how to play Atari games, more specifically Space Invaders. We obtained significantly better results using deep architectures rather than linear networks. Linear networks did now show great improvement in comparison with a purely random policy.
+
+We plotted all performance curves together in Fig~\ref{fig:r_all} for comparison:
+
+\begin{figure}[h!] 
+  \centering
+  \label{fig:r_all}
+  \includegraphics[width=1.0\textwidth]{images/r_all}
+  \caption{Mean reward per episode plot for all architectures. Orange: linear without target fixing and replay. Cyan: linear without target fixing and replay. Purple: double linear. Blue: deep network. Green: double-deep network. Yellow: dueling deep network}
+\end{figure}
 
 \small
 \medskip
