@@ -341,27 +341,27 @@ class DQNAgent:
         self.tf_session = K.get_session()
         self.tf_summary_writer = tf.summary.FileWriter(self.log_dir, self.tf_session.graph)
         
-        num_ep=2
-        
-        # # q2
-        # self.compile_linear(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q2.h5')
-        # self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
+        num_ep=100
 
-        # # q3
-        # self.compile_linear(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q3.h5')
-        # self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
+        # q2
+        self.compile_linear(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q2.h5')
+        self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
 
-        # # q4
-        # self.compile_linear(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q4.h5')
-        # self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
+        # q3
+        self.compile_linear(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q3.h5')
+        self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
 
-        # # q5
-        # self.compile_deep(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q5.h5')
-        # self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
+        # q4
+        self.compile_linear(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q4.h5')
+        self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
 
-        # # q6
-        # self.compile_deep(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q6.h5')
-        # self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
+        # q5
+        self.compile_deep(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q5.h5')
+        self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
+
+        # q6
+        self.compile_deep(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q6.h5')
+        self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
 
         # q7
         self.compile_duel(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q7.h5')
