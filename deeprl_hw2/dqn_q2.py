@@ -233,6 +233,7 @@ class DQNAgent:
 
         # fetch stuff we need from samples 32*84*84*4
         current_state_images = np.zeros([1, 84, 84, 4])
+        #print current_state_samples
         current_state_images[0,...] = np.dstack([sample.state for sample in current_state_samples])
 
         next_state_images = np.zeros([1, 84, 84, 4])
