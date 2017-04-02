@@ -340,9 +340,10 @@ class DQNAgent:
         # tf logging
         self.tf_session = K.get_session()
         self.tf_summary_writer = tf.summary.FileWriter(self.log_dir, self.tf_session.graph)
-
+        
+        num_ep=2
+        
         # # q2
-        # num_ep=2
         # self.compile_linear(weights_name='/home/rbonatti/desperate/deeprl_hw2_src/final_weights/q2.h5')
         # self.evaluate(num_episodes=num_ep, max_episode_length=max_episode_length, gen_video=False)
 
