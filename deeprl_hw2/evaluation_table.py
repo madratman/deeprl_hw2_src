@@ -342,7 +342,7 @@ class DQNAgent:
         self.tf_summary_writer = tf.summary.FileWriter(self.log_dir, self.tf_session.graph)
 
         # q2
-        self.compile_linear(weights_name='q2.h5')
+        self.compile_linear(weights_name='../final_weights/q2.h5')
         self.evaluate(num_episodes=10, max_episode_length=max_episode_length, gen_video=False)
 
         # while self.iter_ctr < num_iterations:
