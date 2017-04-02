@@ -213,6 +213,7 @@ class ReplayMemory:
         We recommend using a list as a ring buffer. Just track the
         index where the next sample should be inserted in the list.
         """
+        #self.max_size = 1000 # for debugging
         self.max_size = max_size
         self.experience = [] # list of tuples
         self.index_for_insertion = 0
@@ -244,19 +245,19 @@ class ReplayMemory:
         # indices = random.sample(range(len(self.experience))[4:], batch_size)
         # indices = np.random.randint(4,len(self.experience),batch_size)
 
-        if self.index_for_insertion-1 < 3:
-            indices=[3]
+        if self.index_for_insertion-1 < 4:
+            index = 4
         else:
-            indices= [self.index_for_insertion-1]
+            index = self.index_for_insertion-1
 
         # else:
             # indices = random.sample(range(len(self.experience)), batch_size)
         # print "indices {}".format(indices)
 
         # list of list of samples. (32 outside and 4 inside)
-        current_state_samples = [self.experience[index] for index in indices]   
-        next_state_samples = [self.experience[index] for index in indices]
-
+        current_state_samples = self.experience[index-4:index]  
+        next_state_samples = self.experience[index-3:index+1]
+        #print index, current_state_samples
         # for index in indices:
         #     current_state_samples = [self.experience[index-4:index]]
         #     for (idx, each_list_of_samples) in enumerate(current_state_samples):

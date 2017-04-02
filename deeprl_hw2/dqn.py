@@ -21,9 +21,9 @@ import cPickle as pkl
 import os
 from gym import wrappers
 
-config = tf.ConfigProto()
-config.gpu_options.per_process_gpu_memory_fraction = 0.33
-K.set_session(tf.Session(config=config))
+#config = tf.ConfigProto()
+#config.gpu_options.per_process_gpu_memory_fraction = 0.5
+#K.set_session(tf.Session(config=config))
 
 class DQNAgent:
     """Class implementing DQN.

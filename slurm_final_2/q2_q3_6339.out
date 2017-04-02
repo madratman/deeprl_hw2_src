@@ -1,0 +1,101 @@
+I am on
+clamps
+I got gpu number
+0
+let the training begin
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcublas.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcublas.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcudnn.so.5 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcudnn.so.5 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcufft.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcufft.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcuda.so.1 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcuda.so.1 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcurand.so.8.0 locally
+I tensorflow/stream_executor/dso_loader.cc:135] successfully opened CUDA library libcurand.so.8.0 locally
+Using TensorFlow backend.
+Using TensorFlow backend.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE3 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:885] Found device 0 with properties: 
+name: TITAN X (Pascal)
+major: 6 minor: 1 memoryClockRate (GHz) 1.531
+pciBusID 0000:02:00.0
+Total memory: 11.93GiB
+Free memory: 11.75GiB
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] DMA: 0 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:916] 0:   Y 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:975] Creating TensorFlow device (/gpu:0) -> (device: 0, name: TITAN X (Pascal), pci bus id: 0000:02:00.0)
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:885] Found device 0 with properties: 
+name: TITAN X (Pascal)
+major: 6 minor: 1 memoryClockRate (GHz) 1.531
+pciBusID 0000:02:00.0
+Total memory: 11.93GiB
+Free memory: 11.63GiB
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:906] DMA: 0 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:916] 0:   Y 
+I tensorflow/core/common_runtime/gpu/gpu_device.cc:975] Creating TensorFlow device (/gpu:0) -> (device: 0, name: TITAN X (Pascal), pci bus id: 0000:02:00.0)
+E tensorflow/stream_executor/cuda/cuda_driver.cc:1002] failed to allocate 5.97G (6407553024 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY
+[2017-04-01 21:22:24,055] Making new env: SpaceInvaders-v0
+[2017-04-01 21:22:24,059] Making new env: SpaceInvaders-v0
+ MODE IS vanilla
+ MODE IS vanilla
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+flatten_1 (Flatten)          (None, 28224)             0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 6)                 169350    
+=================================================================
+Total params: 169,350.0
+Trainable params: 169,350.0
+Non-trainable params: 0.0
+_________________________________________________________________
+None
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+flatten_1 (Flatten)          (None, 28224)             0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 6)                 169350    
+=================================================================
+Total params: 169,350.0
+Trainable params: 169,350.0
+Non-trainable params: 0.0
+_________________________________________________________________
+None
+iter_ctr 825, num_episodes : 1, episode_reward : 11.0, loss : None, episode_timesteps : 825, epsilon : 1.0
+iter_ctr 851, num_episodes : 1, episode_reward : 13.0, loss : None, episode_timesteps : 851, epsilon : 1.0
+iter_ctr 1467, num_episodes : 2, episode_reward : 5.0, loss : None, episode_timesteps : 642, epsilon : 1.0
+iter_ctr 1390, num_episodes : 2, episode_reward : 4.0, loss : None, episode_timesteps : 539, epsilon : 1.0
+iter_ctr 2184, num_episodes : 3, episode_reward : 11.0, loss : None, episode_timesteps : 717, epsilon : 1.0
+iter_ctr 2243, num_episodes : 3, episode_reward : 12.0, loss : None, episode_timesteps : 853, epsilon : 1.0
+iter_ctr 2707, num_episodes : 4, episode_reward : 6.0, loss : None, episode_timesteps : 523, epsilon : 1.0
+iter_ctr 2757, num_episodes : 4, episode_reward : 4.0, loss : None, episode_timesteps : 514, epsilon : 1.0
+iter_ctr 3210, num_episodes : 5, episode_reward : 7.0, loss : None, episode_timesteps : 453, epsilon : 1.0
+iter_ctr 3383, num_episodes : 5, episode_reward : 7.0, loss : None, episode_timesteps : 676, epsilon : 1.0
+iter_ctr 4052, num_episodes : 6, episode_reward : 10.0, loss : None, episode_timesteps : 669, epsilon : 1.0
+iter_ctr 4054, num_episodes : 6, episode_reward : 13.0, loss : None, episode_timesteps : 844, epsilon : 1.0
+iter_ctr 4561, num_episodes : 7, episode_reward : 3.0, loss : None, episode_timesteps : 507, epsilon : 1.0
+iter_ctr 5085, num_episodes : 7, episode_reward : 20.0, loss : None, episode_timesteps : 1033, epsilon : 1.0
+iter_ctr 5259, num_episodes : 8, episode_reward : 12.0, loss : None, episode_timesteps : 698, epsilon : 1.0
+iter_ctr 5902, num_episodes : 8, episode_reward : 7.0, loss : None, episode_timesteps : 817, epsilon : 1.0
+iter_ctr 6008, num_episodes : 9, episode_reward : 9.0, loss : None, episode_timesteps : 749, epsilon : 1.0
+iter_ctr 6466, num_episodes : 9, episode_reward : 3.0, loss : None, episode_timesteps : 564, epsilon : 1.0
+iter_ctr 6396, num_episodes : 10, episode_reward : 6.0, loss : None, episode_timesteps : 388, epsilon : 1.0
+iter_ctr 6777, num_episodes : 11, episode_reward : 6.0, loss : None, episode_timesteps : 381, epsilon : 1.0
+iter_ctr 7083, num_episodes : 10, episode_reward : 7.0, loss : None, episode_timesteps : 617, epsilon : 1.0
+iter_ctr 7391, num_episodes : 12, episode_reward : 7.0, loss : None, episode_timesteps : 614, epsilon : 1.0
+iter_ctr 7690, num_episodes : 11, episode_reward : 9.0, loss : None, episode_timesteps : 607, epsilon : 1.0
+iter_ctr 7767, num_episodes : 13, episode_reward : 6.0, loss : None, episode_timesteps : 376, epsilon : 1.0
+iter_ctr 8174, num_episodes : 12, episode_reward : 6.0, loss : None, episode_timesteps : 484, epsilon : 1.0

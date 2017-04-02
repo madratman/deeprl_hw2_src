@@ -1,0 +1,31 @@
+I am on
+clamps
+I got gpu number
+1
+let the training begin
+ MODE IS vanilla
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+flatten_1 (Flatten)          (None, 28224)             0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 6)                 169350    
+=================================================================
+Total params: 169,350.0
+Trainable params: 169,350.0
+Non-trainable params: 0.0
+_________________________________________________________________
+None
+iter_ctr 882, num_episodes : 1, episode_reward : 13.0, loss : None, episode_timesteps : 882, epsilon : 1.0
+iter_ctr 1386, num_episodes : 2, episode_reward : 8.0, loss : None, episode_timesteps : 504, epsilon : 1.0
+iter_ctr 1782, num_episodes : 3, episode_reward : 4.0, loss : None, episode_timesteps : 396, epsilon : 1.0
+iter_ctr 2235, num_episodes : 4, episode_reward : 8.0, loss : None, episode_timesteps : 453, epsilon : 1.0
+iter_ctr 2986, num_episodes : 5, episode_reward : 8.0, loss : None, episode_timesteps : 751, epsilon : 1.0
+iter_ctr 3860, num_episodes : 6, episode_reward : 15.0, loss : None, episode_timesteps : 874, epsilon : 1.0
+iter_ctr 4497, num_episodes : 7, episode_reward : 7.0, loss : None, episode_timesteps : 637, epsilon : 1.0
+iter_ctr 5014, num_episodes : 8, episode_reward : 6.0, loss : None, episode_timesteps : 517, epsilon : 1.0
+iter_ctr 5640, num_episodes : 9, episode_reward : 6.0, loss : None, episode_timesteps : 626, epsilon : 1.0
+iter_ctr 7171, num_episodes : 10, episode_reward : 28.0, loss : None, episode_timesteps : 1531, epsilon : 1.0
+iter_ctr 7767, num_episodes : 11, episode_reward : 8.0, loss : None, episode_timesteps : 596, epsilon : 1.0
+iter_ctr 8703, num_episodes : 12, episode_reward : 16.0, loss : None, episode_timesteps : 936, epsilon : 1.0
+iter_ctr 9521, num_episodes : 13, episode_reward : 15.0, loss : None, episode_timesteps : 818, epsilon : 1.0
