@@ -56,7 +56,7 @@ def main():  # noqa: D103
     parser = argparse.ArgumentParser(description='Run DQN on Atari SpaceInvaders')
     parser.add_argument('--env', default='SpaceInvaders-v0', help='Atari env name')
     parser.add_argument('--mode', default='vanilla', type=str, help='vanilla or double dqn')
-    parser.add_argument('--question', default='deep', type=str, help='q2, q3, q4, deep, q7')
+    parser.add_argument('--question', default='deep', type=str, help='q2, q3, q4, deep, q7, eval_table')
 
     args = parser.parse_args()
     print " MODE IS", args.mode
@@ -69,6 +69,8 @@ def main():  # noqa: D103
         from deeprl_hw2.dqn_q4 import DQNAgent
     elif args.question=="q7":
         from deeprl_hw2.dqn_q7 import DQNAgent
+    elif args.question=="eval_table":
+        from deeprl_hw2.evaluation_table import DQNAgent
     else:
         from deeprl_hw2.dqn import DQNAgent
 
