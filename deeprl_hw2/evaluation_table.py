@@ -330,7 +330,7 @@ class DQNAgent:
           How long a single episode should last before the agent
           resets. Can help exploration.
         """
-        self.compile()
+        # self.compile()
         self.policy = LinearDecayGreedyEpsilonPolicy(start_value=1., end_value=0.1, num_steps=1e6, num_actions=self.num_actions) # for training
         self.replay_memory = ReplayMemory(max_size=1000000)
         self.log_loss_every_nth = log_loss_every_nth
@@ -342,7 +342,7 @@ class DQNAgent:
         self.tf_summary_writer = tf.summary.FileWriter(self.log_dir, self.tf_session.graph)
 
         # q2
-        compile_linear(self,'q2.h5')
+        self.compile_linear(self,'q2.h5')
         self.evaluate(num_episodes=10, max_episode_length=max_episode_length, gen_video=False)
 
         # while self.iter_ctr < num_iterations:
