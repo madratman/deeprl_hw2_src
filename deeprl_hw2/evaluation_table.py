@@ -498,12 +498,12 @@ class DQNAgent:
 
         all_episode_avg_reward = sum(total_reward_all_episodes)/float(len(total_reward_all_episodes))
 
-        all_episode_avg_reward_np = np.array(all_episode_avg_reward)
+        all_episode_avg_reward_np = np.array(total_reward_all_episodes)
         mean_calc=np.mean(all_episode_avg_reward_np)
         std_calc=np.std(all_episode_avg_reward_np)
-        print all_episode_avg_reward_np.dtype
-        print all_episode_avg_reward_np.astype(int).std()
-        print all_episode_avg_reward_np.mean()
+        # print all_episode_avg_reward_np.dtype
+        # print all_episode_avg_reward_np.astype(int).std()
+        # print all_episode_avg_reward_np.mean()
 
         print "-------"
         print "MEAN===", mean_calc
