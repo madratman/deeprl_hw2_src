@@ -220,7 +220,7 @@ Using the \textit{Monitor} wrapper of the gym environment, we generated videos o
 Here are also some comments about the behavior and training of this specific network:
 
 \begin{itemize}
-  \item Similar to the case of the linear network without target fixing and experience replay, even after introducing target fixing and experience replay we obtained a resulting linear network that did not show improvement in training in comparison with a random policy. The reward / episode plot in Fig~\ref{fig:q_q3} shows a practically stable value close to 170 mean reward/episode during testing conditions.
+  \item Similar to the case of the linear network without target fixing and experience replay, even after introducing target fixing and experience replay we obtained a resulting linear network that did not show improvement in training in comparison with a random policy. The reward / episode plot in Fig~\ref{fig:r_q3} shows a practically stable value close to 170 mean reward/episode during testing conditions.
   \item It was already expected that using a linear network we would not obtain a good testing performance, because we are not able to learn all the game's complexity
 \end{itemize}
 
@@ -244,7 +244,7 @@ We used the following hyper-parameters for this network:
   \item Maximum episode length: 100,000 steps (basically we chose to allow any game size)
 \end{itemize}
 
-We plotted the performance plot of this network in Fig~\ref{fig:q_q4}.
+We plotted the performance plot of this network in Fig~\ref{fig:r_q4}.
 
 % \begin{figure}[ht] \label{fig:q_q4}
 %   \centering
@@ -271,7 +271,7 @@ Using the \textit{Monitor} wrapper of the gym environment, we generated videos o
 Here are also some comments about the behavior and training of this specific network:
 
 \begin{itemize}
-  \item Similar to the other two cases of linear networks, even after introducing target fixing and experience replay we obtained a resulting linear network that did not show improvement in training in comparison with a random policy. The reward / episode plot in Fig~\ref{fig:q_q3} shows a practically stable value close to 170 mean reward/episode during testing conditions.
+  \item Similar to the other two cases of linear networks, even after introducing target fixing and experience replay we obtained a resulting linear network that did not show improvement in training in comparison with a random policy. The reward / episode plot in Fig~\ref{fig:r_q3} shows a practically stable value close to 150 mean reward/episode during testing conditions.
   \item It was already expected that using a linear network we would not obtain a good testing performance, because we are not able to learn all the game's complexity
 \end{itemize}
 
@@ -432,7 +432,7 @@ Here are also some comments about the behavior and training of this specific net
 
 \section{Table comparing rewards for each fully trained model} % (fold)
 \label{sec:table_comparing_rewards_for_each_fully_trained_model}
-We constructed a table comparing the average total reward found in 100 episodes for each fully trained model we implemented:
+We constructed a table comparing the average total reward found in 100 episodes for each fully trained model we implemented. To generate the table one has to run the command ``python dqn.py --modes='deep' --question='double' ''
 
 \begin{table}[h]
   \caption{Avg reward per episode for 100 episodes in implemented networks}
@@ -443,25 +443,28 @@ We constructed a table comparing the average total reward found in 100 episodes 
 
     Model     & Game     & Avg Reward 100 episodes \\
     \midrule
-    Linear, no target fix, no exp replay & Space Invaders  & $50\pm5$     \\
-    Linear, with target fix, with exp replay & Space Invaders  & $50\pm5$     \\
-    Double Linear & Space Invaders  & $50\pm5$     \\
-    Deep Q & Space Invaders  & $50\pm5$     \\
-    Deep Q & Enduro  & $50\pm5$     \\
-    Deep Q & Breakout  & $50\pm5$     \\
-    Double Deep Q & Space Invaders  & $50\pm5$     \\
-    Dueling Deep Q & Space Invaders  & $50\pm5$     \\
+    Linear, no target fix, no exp replay & Space Invaders  & $146.3\pm76.2$     \\
+    Linear, with target fix, with exp replay & Space Invaders  & $138.1\pm100.9$     \\
+    Double Linear & Space Invaders  & $184.5\pm144.1$     \\
+    Deep Q & Space Invaders  & $319.7\pm148.7$     \\
+    Double Deep Q & Space Invaders  & $315.9\pm154.2$     \\
+    Dueling Deep Q & Space Invaders  & $343.5\pm135.6$     \\
+    % Double Deep Q & Space Invaders  & $50\pm5$     \\
+    % Dueling Deep Q & Space Invaders  & $50\pm5$     \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 Here are some comments about the results in the table:
 \begin{itemize}
-  \item Bla
-  \item Bla
+  \item Both linear networks (with and without target fixing) had very similar results with low performance
+  \item The double linear network performed, on average, a bit better than the other linear networks, but the difference was not very significant, and includes with much higher variance
+  \item Both deep Q networks had very similar performances, well above the linear cases, and similar variances
+  \item The dueling deep Q network obtained the best performance of all cases, and in addition had a variance slightly smaller than the other deep networks 
 \end{itemize}
 % section table_comparing_rewards_for_each_fully_trained_model (end)
 
+\newpage
 \section{Conclusion and overall comparison of architectures} % (fold)
 \label{sec:conclusion_and_overall_comparison_of_architectures}
 In this assignment we compared the performance of different neural network architectures for the function-approximation task in the reinforcement learning problem, trying to learn how to play Atari games, more specifically Space Invaders. We obtained significantly better results using deep architectures rather than linear networks. Linear networks did now show great improvement in comparison with a purely random policy.

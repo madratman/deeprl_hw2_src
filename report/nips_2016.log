@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  2 APR 2017 18:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  2 APR 2017 21:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -962,9 +962,6 @@ Package pdftex.def Info: images/r_q3.png used on input line 206.
 
 [3 <./images/r_q3.png>]
 
-LaTeX Warning: Reference `fig:q_q3' on page 4 undefined on input line 223.
-
-
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\begingroup' on input line 227.
 
@@ -992,19 +989,13 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\@ifnextchar' on input line 227.
 
-
-LaTeX Warning: Reference `fig:q_q4' on page 4 undefined on input line 247.
-
-<images/r_q4.png, id=107, 1516.66624pt x 473.77pt>
+<images/r_q4.png, id=109, 1516.66624pt x 473.77pt>
 File: images/r_q4.png Graphic file (type png)
  <use images/r_q4.png>
 Package pdftex.def Info: images/r_q4.png used on input line 258.
 (pdftex.def)             Requested size: 397.48499pt x 124.16045pt.
 
 [4 <./images/r_q4.png>]
-
-LaTeX Warning: Reference `fig:q_q3' on page 5 undefined on input line 274.
-
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\begingroup' on input line 278.
@@ -1033,7 +1024,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\@ifnextchar' on input line 278.
 
-<images/r_q5.png, id=121, 1518.67375pt x 455.7025pt>
+<images/r_q5.png, id=124, 1518.67375pt x 455.7025pt>
 File: images/r_q5.png Graphic file (type png)
  <use images/r_q5.png>
 Package pdftex.def Info: images/r_q5.png used on input line 309.
@@ -1068,7 +1059,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\@ifnextchar' on input line 331.
 
-<images/r_q6.png, id=135, 1511.6475pt x 450.68375pt>
+<images/r_q6.png, id=138, 1511.6475pt x 450.68375pt>
 File: images/r_q6.png Graphic file (type png)
  <use images/r_q6.png>
 Package pdftex.def Info: images/r_q6.png used on input line 362.
@@ -1105,43 +1096,36 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\@ifnextchar' on input line 382.
 
-[6] <images/r_q7.png, id=147, 1510.64375pt x 457.71pt>
+[6] <images/r_q7.png, id=150, 1518.67375pt x 462.72874pt>
 File: images/r_q7.png Graphic file (type png)
- <use images/r_q7.png>
-Package pdftex.def Info: images/r_q7.png used on input line 413.
-(pdftex.def)             Requested size: 397.48499pt x 120.43353pt.
 
-[7 <./images/r_q6.png> <./images/r_q7.png>]
-<images/r_all.png, id=165, 1515.6625pt x 456.70625pt>
+<use images/r_q7.png>
+Package pdftex.def Info: images/r_q7.png used on input line 413.
+(pdftex.def)             Requested size: 397.48499pt x 121.11154pt.
+ [7 <./images/r_q6.png> <./images/r_q7.png>] [8]
+<images/r_all.png, id=173, 1533.73pt x 459.7175pt>
 File: images/r_all.png Graphic file (type png)
  <use images/r_all.png>
-Package pdftex.def Info: images/r_all.png used on input line 474.
-(pdftex.def)             Requested size: 397.48499pt x 119.76523pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+Package pdftex.def Info: images/r_all.png used on input line 477.
+(pdftex.def)             Requested size: 397.48499pt x 119.13791pt.
 
 (./nips_2016.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 507.
- [8] [9 <./images/r_all.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 507.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 510.
+ [9 <./images/r_all.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 510.
  (./nips_2016.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 507.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 507.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 510.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 510.
 Package rerunfilecheck Info: File `nips_2016.out' has not changed.
 (rerunfilecheck)             Checksum: 00C086F1BE10621DFC1C1A44B7AA19FD;1322.
-
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 507.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 510.
  ) 
 Here is how much of TeX's memory you used:
- 8714 strings out of 493014
- 130503 string characters out of 6133351
- 251244 words of memory out of 5000000
- 11957 multiletter control sequences out of 15000+600000
- 39795 words of font info for 131 fonts, out of 8000000 for 9000
+ 8706 strings out of 493014
+ 130432 string characters out of 6133351
+ 251208 words of memory out of 5000000
+ 11955 multiletter control sequences out of 15000+600000
+ 39535 words of font info for 127 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  31i,9n,38p,457b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/t
@@ -1163,10 +1147,10 @@ st/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2016/texmf-dist
 onts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
 /urw/times/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times
 /utmri8a.pfb>
-Output written on nips_2016.pdf (9 pages, 666643 bytes).
+Output written on nips_2016.pdf (9 pages, 690703 bytes).
 PDF statistics:
- 248 PDF objects out of 1000 (max. 8388607)
- 203 compressed objects within 3 object streams
+ 251 PDF objects out of 1000 (max. 8388607)
+ 206 compressed objects within 3 object streams
  38 named destinations out of 1000 (max. 500000)
  24172 words of extra memory for PDF output out of 24883 (max. 10000000)
 

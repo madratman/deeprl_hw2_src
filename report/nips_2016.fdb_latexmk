@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex nips_2016"] 1491170848 "nips_2016.aux" "nips_2016.bbl" "nips_2016" 1491170933
+["bibtex nips_2016"] 1491181515 "nips_2016.aux" "nips_2016.bbl" "nips_2016" 1491182610
   "/usr/local/texlive/2016/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
   "bibliography.bib" 1490627518 1227 a675f205e95974fa6e61764d1a5c1f56 ""
-  "nips_2016.aux" 1491170933 8404 83b497f0566345a364d3e62530e7935f ""
+  "nips_2016.aux" 1491182593 8404 ca806a5a836c9c08352e0334126920c5 ""
   "nips_2016.bcf" 0 -1 0 ""
   (generated)
-  "nips_2016.blg"
   "nips_2016.bbl"
-["pdflatex"] 1491170931 "nips_2016.tex" "nips_2016.pdf" "nips_2016" 1491170933
+  "nips_2016.blg"
+["pdflatex"] 1491182592 "nips_2016.tex" "nips_2016.pdf" "nips_2016" 1491182610
   "/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2016/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
@@ -124,20 +124,20 @@
   "/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1472697456 1888048 f2c5faed5981a516f406b2ccc20bff71 ""
   "/usr/local/texlive/2016/texmf-var/web2c/pdftex/pdflatex.fmt" 1463979169 3873397 413fbfbbedb8e719ddc392043a7add02 ""
   "/usr/local/texlive/2016/texmf.cnf" 1463979140 577 2938757e76f31531e65cc647e3507693 ""
-  "images/r_all.png" 1491167269 236215 808d2c90039e2b5e7e43f17840e3e863 ""
+  "images/r_all.png" 1491181743 265351 6b8f31c8252b3525b7c26c0422a9f827 ""
   "images/r_q2.png" 1491167162 90112 b30553f7fef739ec258d589368427e02 ""
   "images/r_q3.png" 1491167208 101568 a47fcb13afe95f0bba66d62fc895f337 ""
   "images/r_q4.png" 1491167217 89203 3ec48df611dc7815c60a5c80c6b8feaf ""
   "images/r_q5.png" 1491167225 86500 7dac87242cfa16fe275b6a5936a97b88 ""
   "images/r_q6.png" 1491167232 89391 9c9255d6755adde8b4637859e646e84a ""
-  "images/r_q7.png" 1491167241 84635 2f117fe30b73105cfcac3d05d2acd23d ""
-  "nips_2016.aux" 1491170933 8404 83b497f0566345a364d3e62530e7935f ""
-  "nips_2016.bbl" 1491170849 1061 4d225042c37f678eceee0d8086e3a285 "bibtex nips_2016"
-  "nips_2016.out" 1491170933 1322 00c086f1be10621dfc1c1a44b7aa19fd ""
+  "images/r_q7.png" 1491181787 87976 c24d188a853cdd48c639eeb700e776f6 ""
+  "nips_2016.aux" 1491182593 8404 ca806a5a836c9c08352e0334126920c5 ""
+  "nips_2016.bbl" 1491181516 1061 4d225042c37f678eceee0d8086e3a285 "bibtex nips_2016"
+  "nips_2016.out" 1491182593 1322 00c086f1be10621dfc1c1a44b7aa19fd ""
   "nips_2016.sty" 1490627518 10197 d25d34a62a72e01f0e3c5c10faea0dc1 ""
-  "nips_2016.tex" 1491170930 24956 e0e567cb225c0dc087e1f2498fc8fec2 ""
+  "nips_2016.tex" 1491182591 25683 5feef62dd3d0a2dd404baf4a66be8fed ""
   (generated)
   "nips_2016.aux"
   "nips_2016.pdf"
-  "nips_2016.out"
   "nips_2016.log"
+  "nips_2016.out"
